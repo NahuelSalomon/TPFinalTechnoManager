@@ -10,6 +10,10 @@ public class Persona {
 	private String genero;
 	private Date fechaNac;
 	
+	public Persona(){
+		super();
+	}
+	
 	public Persona(String nombre, String apellido, String dni, String genero, Date fechaNac) {
 		super();
 		this.nombre = nombre;
@@ -61,6 +65,11 @@ public class Persona {
 		
 		
 		return generoComprobado;
+	}
+	
+	public String toString() {
+		return "Nombre: "+getNombre()+"\nApellido: "+getApellido()+"\nDNI: "+getDni()+
+				"\nGenero: "+getGenero()+"\nFecha de nacimiento:"+getFechaNac();
 	}
 	
 	
