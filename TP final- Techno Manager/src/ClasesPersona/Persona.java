@@ -2,6 +2,11 @@ package ClasesPersona;
 
 import java.util.Date;
 
+/**
+ * Super clase Persona, reune todas las caracteristicas de todas las clases que sean personas *
+ * @author Nicolas
+ *
+ */
 public class Persona {
 	
 	private String nombre;
@@ -59,14 +64,14 @@ public class Persona {
 	public String comprobarGenero(String genero) {
 		String generoComprobado = "Personalizado";
 		
-		if(genero.equalsIgnoreCase("Masculino") && genero.equalsIgnoreCase("Femenino") && genero.equalsIgnoreCase("Personalizado")) {
+		if(genero.equalsIgnoreCase("Masculino") && genero.equalsIgnoreCase("Femenino")
+				&& genero.equalsIgnoreCase("Personalizado")) {
 			generoComprobado = genero;
 		}
-		
-		
 		return generoComprobado;
 	}
 	
+	@Override
 	public String toString() {
 		return "Nombre: "+getNombre()+"\nApellido: "+getApellido()+"\nDNI: "+getDni()+
 				"\nGenero: "+getGenero()+"\nFecha de nacimiento:"+getFechaNac();
