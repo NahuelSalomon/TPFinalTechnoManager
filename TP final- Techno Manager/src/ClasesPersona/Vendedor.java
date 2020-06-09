@@ -2,15 +2,15 @@ package ClasesPersona;
 
 import java.util.Date;
 
-public class Vendedores extends Empleado{
+public class Vendedor extends Empleado{
 	
 	private String telefono;
 
-	public Vendedores() {
+	public Vendedor() {
 		super();
 	}
 
-	public Vendedores(String nombre, String apellido, String dni, String genero,
+	public Vendedor(String nombre, String apellido, String dni, String genero,
 			Date fechaNac, String estadoCivil, String telefono, String legajo, String contraseña) {
 		super(nombre, apellido, dni, genero, fechaNac, estadoCivil, legajo, contraseña);
 		this.telefono = telefono;
