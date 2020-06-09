@@ -1,4 +1,4 @@
-package ListasGenericas;
+package ContenedorGenericas;
 
 import java.util.ArrayList;
 
@@ -84,5 +84,8 @@ public class ContenedorClientesYVentas <E>{
 		return builder.toString();
 	}
 
-
+	public E buscarElemento(int index) {
+		return contenedor.get(index);
+	}
+		
 }
