@@ -16,10 +16,18 @@ public class TallesYStock {
 
 	private HashMap<String, Integer> tallesYStock;
 
+	/**
+	 * Constructor de la Clase
+	 */
 	public TallesYStock() {
 		tallesYStock = new HashMap<String, Integer>();
 	}
 
+	/**
+	 * Confirma si el talle ingresado por parametro esta precente en el HashMap de la prenda
+	 * @param talle valor a comparar con los que conforman el HashMap
+	 * @return boolean Retorna True si se encontro el talle en el HashMap, False en caso contrario
+	 */
 	private boolean existeTalle(String talle) {
 		return tallesYStock.containsKey(talle);
 	}
