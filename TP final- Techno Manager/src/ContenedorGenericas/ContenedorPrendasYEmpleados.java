@@ -1,4 +1,4 @@
-package ListasGenericas;
+package ContenedorGenericas;
 
 import java.util.HashMap;
 import java.util.Iterator;
