@@ -2,38 +2,39 @@ package Listas;
 
 import ClaseVenta.Venta;
 import ContenedorGenericas.ContenedorClientesYVentas;
-import Interfaces.IFuncionesListasClientesYVentas;
+import Interfaces.IFuncionesBasicasListaVentas;
 
-public class ListaDeVentas implements IFuncionesListasClientesYVentas<Venta>{
+
+public class ListaDeVentas implements IFuncionesBasicasListaVentas{
 	
 	ContenedorClientesYVentas<Venta> ventas;
 	
 	public ListaDeVentas() {
 		ventas = new ContenedorClientesYVentas<Venta>();
 	}
-
+	
 	@Override
-	public boolean agregarElemento(Venta elemento) {
+	public boolean agregarVenta(Venta elemento) {
 		return ventas.agragarElemento(elemento);
 	}
 
 	@Override
-	public boolean bajaElemento(Venta elemento) {
+	public boolean bajaVenta(Venta elemento) {
 		return ventas.bajaElemento(elemento);
 	}
 
 	@Override
-	public Venta bajaElemento(int index) {
+	public Venta bajaVenta(int index) {
 		return ventas.bajaElemento(index);
 	}
 
 	@Override
-	public String listarElementos() {
+	public String listarVentas() {
 		return ventas.listarElementos();
 	}
 
 	@Override
-	public Venta buscarElemento(int index) {
+	public Venta buscarVenta(int index) {
 		return ventas.buscarElemento(index);
 	}
 

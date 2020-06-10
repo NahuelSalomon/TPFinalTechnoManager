@@ -4,15 +4,15 @@ package Listas;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
+import Interfaces.IFuncionesBasicasListaPrendas;
 
-import Interfaces.IFuncionesListasPrendasYEmpleados;
 
 /**
  * Esta clase se va a encargar de crear una coleccion con un tipo de dato "PrendaDeVestir"
  * @author Lucas Zelaya_
  *
  */
-public class ListaDePrendas implements IFuncionesListasPrendasYEmpleados<String ,PrendaDeVestir>{
+public class ListaDePrendas implements IFuncionesBasicasListaPrendas{
 		
 		ContenedorPrendasYEmpleados<String ,PrendaDeVestir> prendas;
 		
@@ -20,37 +20,30 @@ public class ListaDePrendas implements IFuncionesListasPrendasYEmpleados<String 
 			prendas = new ContenedorPrendasYEmpleados<String, PrendaDeVestir>();
 		}
 
-		@Override
-		public boolean agregarElemento(String clave, PrendaDeVestir valor) {
 		
+		@Override
+		public boolean agregarPrenda(String clave, PrendaDeVestir valor) {
 			return prendas.agragarElemento(clave, valor);
 		}
 
 		@Override
-		public boolean bajaElemento(String clave) {
-			
+		public boolean bajaPrenda(String clave) {
 			return prendas.bajaElemento(clave);
 		}
 
-
 		@Override
-		public String listarElementos(String nom_clave, PrendaDeVestir nom_valor) {
-			// TODO Auto-generated method stub
-			return null;
+		public boolean modificarPrenda(String clave, PrendaDeVestir NuevoValor) {
+			return prendas.modificarElemento(clave, NuevoValor);
 		}
 
 		@Override
-		public PrendaDeVestir buscarElemento(String clave) {
-			// TODO Auto-generated method stub
-			return null;
+		public String listarPrenda(String nom_clave, String nom_valor) {
+			return prendas.listarElementos(nom_clave, nom_valor);
 		}
 
 		@Override
-		public boolean modificarElemento(String clave) {
-			// TODO Auto-generated method stub
-			return false;
+		public PrendaDeVestir buscarPrenda(String clave) {
+			return prendas.buscarElemento(clave);
 		}
-
-	
 
 }
