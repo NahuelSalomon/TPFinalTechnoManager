@@ -87,5 +87,6 @@ public class ContenedorClientesYVentas <E>{
 	public E buscarElemento(int index) {
 		return contenedor.get(index);
 	}
-		
+	
+	
 }

@@ -96,4 +96,21 @@ public class ContenedorPrendasYEmpleados <K,V>{
 	public boolean existeClave(K clave) {
 		return contenedor.containsKey(clave);
 	}
+
+	/**
+	 * Este metodo busca un elemento por la clave y lo retorna S
+	 * @param clave
+	 * @return el elemento si existe y sino retorna null.
+	 */
+	public V buscarElemento(K clave) {
+		
+		if(existeClave(clave)) {
+			return contenedor.get(clave);
+		}
+		else {
+			return null;
+		}
+		
+	}
+
 }
