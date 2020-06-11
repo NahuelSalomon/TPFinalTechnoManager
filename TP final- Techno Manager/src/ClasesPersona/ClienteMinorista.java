@@ -2,6 +2,11 @@ package ClasesPersona;
 
 import java.util.Date;
 
+/**
+ * Clase que extiende de cliente, este es un cliente minorista.
+ * @author Nahuel 
+ *
+ */
 public class ClienteMinorista extends Cliente{
 	
 	private String cuil;
@@ -14,11 +19,6 @@ public class ClienteMinorista extends Cliente{
 	public ClienteMinorista(String nombre, String apellido, String dni, String genero, Date fechaNac, String domicilio,
 			String email) {
 		super(nombre, apellido, dni, genero, fechaNac, domicilio, email);
-	}
-
-	@Override
-	public String tipoDeCliente() {
-		return "Minorista";
 	}
 
 	public String getCuil() {
@@ -55,4 +55,9 @@ public class ClienteMinorista extends Cliente{
 		return condicionComprobada;
 	}
 	
+	@Override
+	public String tipoDeCliente() {
+		return "Minorista";
+	}
+
 }

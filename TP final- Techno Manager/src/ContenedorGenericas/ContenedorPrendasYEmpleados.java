@@ -8,16 +8,15 @@ import java.util.Map.Entry;
 /**
  * Contenedor generico que esta pensado para abstraer el comportamiento del HashMap.
  * @author Nicolas
- * Tipo de dato, esperando un Objeto.
- * @param <K>
- * @param <V>
+ * @param <K> clave esperando por el Objeto
+ * @param <V> valor esperado por el objeto, podria se una prenda o un empleado
  */
 public class ContenedorPrendasYEmpleados <K,V>{
 	
 	private HashMap<K,V> contenedor;
 	
 	/**
-	 * Constructor cel contenedor de Personas y Empleados
+	 * Constructor del contenedor de Personas y Empleados
 	 */
 	public ContenedorPrendasYEmpleados() {
 		super();

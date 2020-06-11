@@ -2,11 +2,46 @@ package Interfaces;
 
 import ClasesPersona.Empleado;
 
+/**
+ * Esta intefaz se utiliza para que la lista de los empleados utilice los métodos básicos.
+ * @author Nicolas
+ *
+ */
 public interface IFuncionesBasicasListaEmpleados {
 	
-	boolean agregarEmpleado(String clave, Empleado valor);
-	boolean bajaEmpleado(String clave);
-	boolean modificarEmpleado(String clave, Empleado NuevoValor);
-	String listarEmpleados(String nom_clave, String nom_valor);
-	Empleado buscarEmpleado(String clave);
+	/**
+	 * Agrega un empleado a la lista
+	 * @param legajo del empleado a agregar
+	 * @param empleado agregado
+	 * @return true si se agrega correctamente, false en caso contrario
+	 */
+	boolean agregarEmpleado(String legajo, Empleado empleado);
+
+	/**
+	 * Da de baja un empleado de la lista.
+	 * @param legajo del empleado a dar de baja.
+	 * @return true si lo da de baja, false en caso contrario
+	 */
+	boolean bajaEmpleado(String legajo);
+	
+	/**
+	 * Modifica un empleado de la lista
+	 * @param legajo del empleado a modificar
+	 * @param empleadoModificado empleado ya modificado
+	 * @return true si se modifica correctamente el empleado, false en caso contrario.
+	 */
+	boolean modificarEmpleado(String legajo, Empleado empleadoModificado);
+	
+	/**
+	 * Lista todos los empleado de la lista
+	 * @return la lista de empleados en forma de String
+	 */
+	String listarEmpleados();
+	
+	/**
+	 * Busca un empleado en la lista
+	 * @param legajo del empleado buscado
+	 * @return el emepleado buscado
+	 */
+	Empleado buscarEmpleado(String legajo);
 }
