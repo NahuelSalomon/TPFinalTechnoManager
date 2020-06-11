@@ -37,8 +37,8 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas{
 		}
 
 		@Override
-		public String listarPrenda(String nom_clave, String nom_valor) {
-			return prendas.listarElementos(nom_clave, nom_valor);
+		public String listarPrendas() {
+			return prendas.listarElementos("Codigo", "Prenda");
 		}
 
 		@Override

@@ -2,6 +2,11 @@ package ClasesPersona;
 
 import java.util.Date;
 
+/**
+ * Clase gerente que extiende de empleado. 
+ * @author Nahuel
+ *
+ */
 public class Gerente extends Empleado{
 
 	public Gerente() {
@@ -16,6 +21,11 @@ public class Gerente extends Empleado{
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public String tipoEmpleado() {
+		return "Gerente";
 	}
 	
 }

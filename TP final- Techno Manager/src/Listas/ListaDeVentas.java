@@ -14,13 +14,13 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas{
 	}
 	
 	@Override
-	public boolean agregarVenta(Venta elemento) {
-		return ventas.agragarElemento(elemento);
+	public boolean agregarVenta(Venta venta) {
+		return ventas.agragarElemento(venta);
 	}
 
 	@Override
-	public boolean bajaVenta(Venta elemento) {
-		return ventas.bajaElemento(elemento);
+	public boolean bajaVenta(Venta venta) {
+		return ventas.bajaElemento(venta);
 	}
 
 	@Override

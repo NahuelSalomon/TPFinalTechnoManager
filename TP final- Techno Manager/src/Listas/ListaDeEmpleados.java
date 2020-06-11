@@ -34,8 +34,8 @@ public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados {
 
 
 	@Override
-	public String listarEmpleados(String nom_clave, String nom_valor) {
-		return empleados.listarElementos(nom_clave, nom_valor);
+	public String listarEmpleados() {
+		return empleados.listarElementos("Legajo", "Empleado");
 	}
 
 

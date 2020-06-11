@@ -5,8 +5,7 @@ import java.util.ArrayList;
 /**
  * Contenedor generico que esta pensado para abstraer el comportamiento del ArrayList.
  * @author Nicolas
- * Tipo de dato, esperando un Objeto.  
- * @param <E> 
+ * @param <E>  Tipo de dato esperodo por el objeto. podria se un cliente o una venta.
  */
 public class ContenedorClientesYVentas <E>{
 	
