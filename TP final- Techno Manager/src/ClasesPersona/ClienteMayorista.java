@@ -2,6 +2,11 @@ package ClasesPersona;
 
 import java.util.Date;
 
+/**
+ * Clase que extiende de cliente, este es un cliente mayorista.
+ * @author Nahuel
+ *
+ */
 public class ClienteMayorista extends Cliente{
 
 	
