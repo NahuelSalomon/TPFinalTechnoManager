@@ -7,6 +7,8 @@ package ClasesPrendasDeVestir;
  */
 public abstract class PrendaDeVestir {
 
+	private String codigo;
+
 	private String marca;
 	private String modelo;
 	private String color;
@@ -59,6 +61,14 @@ public abstract class PrendaDeVestir {
 		this.color = color;
 	}
 
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+	
 	/**
 	 * Lista el stock disponible
 	 * @return el stock en forma de String

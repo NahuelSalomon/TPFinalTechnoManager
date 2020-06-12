@@ -4,7 +4,11 @@ import ClaseVenta.Venta;
 import ContenedorGenericas.ContenedorClientesYVentas;
 import Interfaces.IFuncionesBasicasListaVentas;
 
-
+/**
+ * Lista la cual contiene un contenedor de la logica del manejo de las ventas
+ * @author Nahuel
+ *
+ */
 public class ListaDeVentas implements IFuncionesBasicasListaVentas{
 	
 	ContenedorClientesYVentas<Venta> ventas;
@@ -38,5 +42,13 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas{
 		return ventas.buscarElemento(index);
 	}
 
+	/**
+	 * 
+	 * @param venta a verificar si existe
+	 * @return true si existe la venta, false en caso contrario
+	 */
+	public boolean existeVenta(Venta venta) {
+		return ventas.existeElemento(venta);
+	}
 
 }
