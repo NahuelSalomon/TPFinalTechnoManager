@@ -20,7 +20,7 @@ public class Gerente extends Empleado{
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return super.toString()+"Tipo de empleado: "+tipoEmpleado();
 	}
 
 	@Override
