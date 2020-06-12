@@ -46,4 +46,18 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas{
 			return prendas.buscarElemento(clave);
 		}
 
+	
+		public boolean existePrendaDeVestir(PrendaDeVestir prendaDeVestir) {
+			return prendas.existeClave(prendaDeVestir.getCodigo());
+		}   
+		
+		/**
+		 * Verifica si existe una prenda
+		 * @param codigo de la prenda a verificar
+		 * @return true si la prenda existe, false en caso contrario.
+		 */
+		public boolean existePrendaDeVesitr(String codigo) {
+			return prendas.existeClave(codigo);
+		}
+
 }

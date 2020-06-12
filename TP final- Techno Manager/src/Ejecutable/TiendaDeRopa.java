@@ -209,4 +209,40 @@ public class TiendaDeRopa {
 		return ventas.buscarVenta(index);
 	}
 
+	/**
+	 * Metodo para verificar si existe un cliente en la tienda de ropa
+	 * @param cliente a verificar
+	 * @return true si existe , false en caso contrario
+	 */
+	public boolean existeCliente(Cliente cliente) {
+		return clientes.existeCliente(cliente);
+	}
+	
+	/**
+	 * Metodo para verificar si existe una venta en la tienda de ropa
+	 * @param venta a verificar
+	 * @return true si existe , false en caso contrario
+	 */
+	public boolean existeVenta(Venta venta) {
+		return ventas.existeVenta(venta);
+	}
+	
+	/**
+	 * Metodo para verificar si existe un empleado en la tienda de ropa
+	 * @param legajo del empleado a verificar
+	 * @return true si existe , false en caso contrario
+	 */
+	public boolean existeEmpleado(String legajo) {
+		return empleados.existeEmpleado(legajo);
+	}
+
+	/**
+	 * Metodo para verificar si existe una prenda en la tienda de ropa
+	 * @param codigo de la prenda a verificar
+	 * @return true si existe , false en caso contrario
+	 */
+	public boolean existePrenda(String codigo) {
+		return prendasDeVestir.existePrendaDeVesitr(codigo);
+	}
 }
+

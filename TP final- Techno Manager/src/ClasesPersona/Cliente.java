@@ -40,6 +40,11 @@ public abstract class Cliente extends Persona {
 		this.email = email;
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString()+"\nDomicilio: "+getDomicilio()+"\nEmail: "+getEmail();
+	} 
+	
 	/**
 	 * Metodo que devuelve el tipo de cliente 
 	 * @return el tipo de cliente en forma de String
