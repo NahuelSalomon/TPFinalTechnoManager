@@ -1,15 +1,16 @@
 package ClasesPrendasDeVestir;
 
 /**
- * Clase para definir objetos del tipo remera
- * Hija de clase abstracta PrendaDeVestir y de PrendaInferior
+ * Clase para definir objetos del tipo remera Hija de clase abstracta
+ * PrendaDeVestir y de PrendaInferior
+ * 
  * @author Techno Manager
  *
  */
-public class Pantalon extends PrendaDeVestir{
+public class Pantalon extends PrendaDeVestir {
 
-	private boolean esAlCuerpo; 
-	
+	private boolean esAlCuerpo;
+
 	public boolean isEsAlCuerpo() {
 		return esAlCuerpo;
 	}
@@ -29,6 +30,6 @@ public class Pantalon extends PrendaDeVestir{
 	}
 
 	public String toString() {
-		return super.toString()+"\nEs al cuerpo: "+isEsAlCuerpo();
+		return super.toString() + "\nEs al cuerpo: " + isEsAlCuerpo();
 	}
 }

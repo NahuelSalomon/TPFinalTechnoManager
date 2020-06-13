@@ -6,17 +6,18 @@ import Interfaces.IFuncionesBasicasListaVentas;
 
 /**
  * Lista la cual contiene un contenedor de la logica del manejo de las ventas
+ * 
  * @author Nahuel
  *
  */
-public class ListaDeVentas implements IFuncionesBasicasListaVentas{
-	
+public class ListaDeVentas implements IFuncionesBasicasListaVentas {
+
 	ContenedorClientesYVentas<Venta> ventas;
-	
+
 	public ListaDeVentas() {
 		ventas = new ContenedorClientesYVentas<Venta>();
 	}
-	
+
 	@Override
 	public boolean agregarVenta(Venta venta) {
 		return ventas.agragarElemento(venta);

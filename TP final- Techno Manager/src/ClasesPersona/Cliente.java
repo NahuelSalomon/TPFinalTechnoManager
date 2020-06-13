@@ -3,8 +3,9 @@ package ClasesPersona;
 import java.util.Date;
 
 /**
- * Clase que engloba todas las características de un cliente.
- * No se puede instanciar esta clase ya que se tiene que definir de que tipo es el cliente. 
+ * Clase que engloba todas las características de un cliente. No se puede
+ * instanciar esta clase ya que se tiene que definir de que tipo es el cliente.
+ * 
  * @author Nahuel
  *
  */
@@ -12,13 +13,13 @@ public abstract class Cliente extends Persona {
 
 	private String domicilio;
 	private String email;
-	
+
 	public Cliente() {
 		super();
 	}
-	
-	
-	public Cliente(String nombre, String apellido, String dni, String genero, Date fechaNac, String domicilio, String email) {
+
+	public Cliente(String nombre, String apellido, String dni, String genero, Date fechaNac, String domicilio,
+			String email) {
 		super(nombre, apellido, dni, genero, fechaNac);
 		this.email = email;
 		this.domicilio = domicilio;
@@ -39,15 +40,21 @@ public abstract class Cliente extends Persona {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	public String tipoDeCliente() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public String toString() {
-		return super.toString()+"\nDomicilio: "+getDomicilio()+"\nEmail: "+getEmail();
-	} 
-	
+		return super.toString() + "\nDomicilio: " + getDomicilio() + "\nEmail: " + getEmail();
+	}
+
 	/**
-	 * Metodo que devuelve el tipo de cliente 
+	 * Metodo que devuelve el tipo de cliente
+	 * 
 	 * @return el tipo de cliente en forma de String
 	 */
-	public abstract String tipoDeCliente();
+	// public abstract String tipoDeCliente();
 }

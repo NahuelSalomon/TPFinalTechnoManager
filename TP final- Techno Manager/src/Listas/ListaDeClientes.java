@@ -1,22 +1,32 @@
 package Listas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import ClasesPersona.Cliente;
 import ContenedorGenericas.ContenedorClientesYVentas;
 import Interfaces.IFuncionesBasicasListaClientes;
 
 /**
  * Lista la cual contiene un contenedor de la logica del manejo de los clientes
+ * 
  * @author Nahuel
  *
  */
-public class ListaDeClientes implements IFuncionesBasicasListaClientes{
-	
+
+public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializable {
+
 	ContenedorClientesYVentas<Cliente> clientes;
-	
+
 	public ListaDeClientes() {
 		clientes = new ContenedorClientesYVentas<Cliente>();
-	}	
-	
+	}
+
 	@Override
 	public boolean agregarCliente(Cliente elemento) {
 		return clientes.agragarElemento(elemento);
@@ -41,11 +51,11 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes{
 	public Cliente buscarCliente(int index) {
 		return clientes.buscarElemento(index);
 	}
-	
-	
+
 	/**
-	 * Modifica un cliente de la lista 
-	 * @param index del cliente a modificar
+	 * Modifica un cliente de la lista
+	 * 
+	 * @param index             del cliente a modificar
 	 * @param clienteModificado cliente ya modificado
 	 * @return true si se modifica correctamente, false en caso contrario.
 	 */
@@ -53,12 +63,42 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes{
 		return clientes.modificarElemento(index, clienteModificado);
 	}
 
+	public void guardarListaClientes() {
+		String file = "listaCliente.bin";
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			oos.writeObject(this);
+			oos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void guardar() throws FileNotFoundException, IOException {
+		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("file"));
+		output.writeObject(this);
+		output.close();
+	}
+
+	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("file"));
+		ListaDeClientes lista = (ListaDeClientes) input.readObject();
+		input.close();
+
+		lista.listarClientes();
+	}
+
 	/**
 	 * Metodo para comprobar si existe un cliente
+	 * 
 	 * @param cliente a verificar
 	 * @return true si existe, false en caso contrario
 	 */
-	public boolean existeCliente(Cliente cliente) { 
+	public boolean existeCliente(Cliente cliente) {
 		return clientes.existeElemento(cliente);
 	}
 }

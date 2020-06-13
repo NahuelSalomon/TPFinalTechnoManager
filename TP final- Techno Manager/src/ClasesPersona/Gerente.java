@@ -3,11 +3,12 @@ package ClasesPersona;
 import java.util.Date;
 
 /**
- * Clase gerente que extiende de empleado. 
+ * Clase gerente que extiende de empleado.
+ * 
  * @author Nahuel
  *
  */
-public class Gerente extends Empleado{
+public class Gerente extends Empleado {
 
 	public Gerente() {
 		super();
@@ -20,12 +21,12 @@ public class Gerente extends Empleado{
 
 	@Override
 	public String toString() {
-		return super.toString()+"Tipo de empleado: "+tipoEmpleado();
+		return super.toString() + "Tipo de empleado: " + tipoEmpleado();
 	}
 
 	@Override
 	public String tipoEmpleado() {
 		return "Gerente";
 	}
-	
+
 }

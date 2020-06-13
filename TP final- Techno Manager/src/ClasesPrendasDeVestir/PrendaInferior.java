@@ -1,12 +1,13 @@
 package ClasesPrendasDeVestir;
 
 /**
- * Clase para prendas inferiores de ropa
- * Es abstracta con la finalidad de que una prenda inferior tiene que ser bien definida que tipo de prenda es
+ * Clase para prendas inferiores de ropa Es abstracta con la finalidad de que
+ * una prenda inferior tiene que ser bien definida que tipo de prenda es
+ * 
  * @author Techno Manager
  *
  */
-public abstract class PrendaInferior extends PrendaDeVestir{
+public abstract class PrendaInferior extends PrendaDeVestir {
 
 	public PrendaInferior() {
 		super();
@@ -18,5 +19,5 @@ public abstract class PrendaInferior extends PrendaDeVestir{
 
 	public String toString() {
 		return super.toString();
-	}	
+	}
 }
