@@ -1,5 +1,6 @@
 package ClasesPersona;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @author Nicolas
  *
  */
-public class Persona {
+public class Persona implements Serializable{
 	
 	private String nombre;
 	private String apellido;

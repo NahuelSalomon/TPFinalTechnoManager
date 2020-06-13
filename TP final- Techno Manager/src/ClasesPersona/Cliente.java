@@ -33,10 +33,16 @@ public abstract class Cliente extends Persona {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+
+	public String tipoDeCliente() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	/**
 	 * Metodo que devuelve el tipo de cliente 
 	 * @return el tipo de cliente en forma de String
 	 */
-	public abstract String tipoDeCliente();
+	//public abstract String tipoDeCliente();
 }

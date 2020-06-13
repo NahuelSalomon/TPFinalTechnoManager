@@ -1,5 +1,6 @@
 package ContenedorGenericas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * Tipo de dato, esperando un Objeto.  
  * @param <E> 
  */
-public class ContenedorClientesYVentas <E>{
+public class ContenedorClientesYVentas <E> implements Serializable{
 	
 	private ArrayList<E> contenedor;
 	
@@ -79,6 +80,7 @@ public class ContenedorClientesYVentas <E>{
 		
 		for(E elemento : contenedor) {
 			builder.append(elemento.toString());
+			System.out.println(elemento);
 		}
 				
 		return builder.toString();

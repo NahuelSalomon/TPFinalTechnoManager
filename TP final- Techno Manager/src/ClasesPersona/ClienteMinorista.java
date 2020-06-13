@@ -47,7 +47,8 @@ public class ClienteMinorista extends Cliente{
 		
 		if(condicion.equalsIgnoreCase("Responsable inscripto") || condicion.equalsIgnoreCase("Exento de IVA") 
 				|| condicion.equalsIgnoreCase("Consumidor final") || condicion.equalsIgnoreCase("IVA al 10 1/2") ||
-				condicion.equalsIgnoreCase("Monotributista") || condicion.equalsIgnoreCase("No respónsable") || condicion.equalsIgnoreCase("Responsable Monotributo")) {
+				condicion.equalsIgnoreCase("Monotributista") || condicion.equalsIgnoreCase("No respónsable") || 
+				condicion.equalsIgnoreCase("Responsable Monotributo")) {
 			condicionComprobada = condicion;
 		}
 		

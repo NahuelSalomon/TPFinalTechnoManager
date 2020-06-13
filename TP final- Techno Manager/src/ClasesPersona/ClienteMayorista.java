@@ -1,8 +1,9 @@
 package ClasesPersona;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ClienteMayorista extends Cliente{
+public class ClienteMayorista extends Cliente implements Serializable{
 
 	
 	
