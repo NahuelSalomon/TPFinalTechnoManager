@@ -11,17 +11,30 @@ public class Pantalon extends PrendaDeVestir {
 
 	private boolean esAlCuerpo;
 
+	public Pantalon() {
+		super();
+		this.esAlCuerpo = (Boolean) null;
+	}
+
+	public Pantalon(int marca, String modelo, String color, int tipoDeMaterial, boolean esAlCuerpo) {
+		super(marca, modelo, color, tipoDeMaterial);
+		this.esAlCuerpo = esAlCuerpo;
+	}
+
 	public boolean isEsAlCuerpo() {
 		return esAlCuerpo;
 	}
-
-	public Pantalon() {
-		super();
-	}
-
-	public Pantalon(String marca, String modelo, String color, String tipoDeMaterial, boolean esAlCuerpo) {
-		super(marca, modelo, color, tipoDeMaterial);
+	
+	public void setEsAlCuerpo(boolean esAlCuerpo) {
 		this.esAlCuerpo = esAlCuerpo;
+	}
+	
+	public String getEsAlCuerpo() {
+		String rta = "";
+		if(esAlCuerpo) rta = "Es al cuerpo";
+		if(!esAlCuerpo) rta = "No es al cuerpo";
+		else rta = "No definido";
+		return rta;
 	}
 
 	@Override
@@ -30,6 +43,6 @@ public class Pantalon extends PrendaDeVestir {
 	}
 
 	public String toString() {
-		return super.toString() + "\nEs al cuerpo: " + isEsAlCuerpo();
+		return super.toString() + "\n" + getEsAlCuerpo();
 	}
 }

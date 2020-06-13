@@ -14,9 +14,15 @@ public class Vendedor extends Empleado {
 
 	public Vendedor() {
 		super();
+		this.telefono = null;
 	}
 
-	public Vendedor(String nombre, String apellido, String dni, String genero, Date fechaNac, String estadoCivil,
+	public Vendedor(String nombre, String apellido, String legajo, String contraseña) {
+		super(nombre, apellido, legajo, contraseña);
+		this.telefono = null;
+	}
+	
+	public Vendedor(String nombre, String apellido, String dni, int genero, Date fechaNac, int estadoCivil,
 			String telefono, String legajo, String contraseña) {
 		super(nombre, apellido, dni, genero, fechaNac, estadoCivil, legajo, contraseña);
 		this.telefono = telefono;

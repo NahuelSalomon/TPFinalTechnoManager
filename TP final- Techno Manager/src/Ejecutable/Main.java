@@ -19,8 +19,8 @@ public class Main {
 		Date fecha = new Date(1990,05,20);
 		@SuppressWarnings("deprecation")
 		Date fecha1 = new Date(2001,10,7);
-		Cliente cliente1 = new ClienteMayorista("Pepe", "Lopes", "23412342", "Masculino", fecha, "casa3701", "pepe@gmailcom");
-		Cliente cliente2 = new ClienteMinorista("Lara", "Taylor", "76584657", "Femenino", fecha1, "casa9867", "lara@gmailcom");
+		Cliente cliente1 = new ClienteMayorista("Pepe", "Lopes", "23415432235", 3);
+		Cliente cliente2 = new ClienteMinorista("Lara", "Taylor", "76584657", 2, fecha1, "casa9867", "lara@gmailcom");
 		
 		ListaDeClientes listaClientes = new ListaDeClientes();
 		listaClientes.agregarCliente(cliente1);

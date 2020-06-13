@@ -13,16 +13,21 @@ public class Remera extends PrendaSuperior {
 
 	public Remera() {
 		super();
+		this.tipoEstampado = null;
 	}
 
-	public Remera(String marca, String modelo, String color, boolean esMangaCorta, String tipoDeMaterial,
+	public Remera(int marca, String modelo, String color, int tipoDeMaterial, boolean esMangaCorta,
 			String tipoEstampado) {
-		super(marca, modelo, color, esMangaCorta, tipoDeMaterial);
+		super(marca, modelo, color, tipoDeMaterial, esMangaCorta);
 		this.tipoEstampado = tipoEstampado;
 	}
 
 	public String getTipoEstampado() {
 		return tipoEstampado;
+	}
+
+	public void setTipoEstampado(String tipoEstampado) {
+		this.tipoEstampado = tipoEstampado;
 	}
 
 	@Override

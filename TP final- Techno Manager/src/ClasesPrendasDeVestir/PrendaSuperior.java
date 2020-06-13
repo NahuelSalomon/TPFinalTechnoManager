@@ -13,16 +13,20 @@ public abstract class PrendaSuperior extends PrendaDeVestir {
 
 	public PrendaSuperior() {
 		super();
-
+		this.esMangaCorta = (Boolean) null;
 	}
 
-	public PrendaSuperior(String marca, String modelo, String color, boolean esMangaCorta, String tipoDeMaterial) {
+	public PrendaSuperior(int marca, String modelo, String color, int tipoDeMaterial, boolean esMangaCorta) {
 		super(marca, modelo, color, tipoDeMaterial);
 		this.esMangaCorta = esMangaCorta;
 	}
 
-	public boolean isEsMangaCorta() {
-		return esMangaCorta;
+	public String getEsMangaCorta() {
+		String rta = "";
+		if(esMangaCorta) rta = "Es manga corta";
+		if(!esMangaCorta) rta = "No es manga corta";
+		else rta = "No definido";
+		return rta;
 	}
 
 	public void setEsMangaCorta(boolean esMangaCorta) {
@@ -30,6 +34,6 @@ public abstract class PrendaSuperior extends PrendaDeVestir {
 	}
 
 	public String toString() {
-		return super.toString() + "\nEs manga corta: " + isEsMangaCorta();
+		return super.toString() + "\n" + getEsMangaCorta();
 	}
 }

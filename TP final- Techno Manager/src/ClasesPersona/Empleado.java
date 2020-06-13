@@ -10,11 +10,25 @@ import java.util.Date;
  *
  */
 public abstract class Empleado extends Persona {
-	private String estadoCivil;
+	private int estadoCivil;
 	private String legajo;
 	private String contraseña;
+	
+	public Empleado() {
+		super();
+		this.estadoCivil = (Integer)null;
+		this.legajo = null;
+		this.contraseña = null;
+	}
+	
+	public Empleado(String nombre, String apellido, String legajo, String contraseña) {
+		super(nombre, apellido);
+		this.estadoCivil = (Integer)null;
+		this.legajo = legajo;
+		this.contraseña = contraseña;
+	}
 
-	public Empleado(String nombre, String apellido, String dni, String genero, Date fechaNac, String estadoCivil,
+	public Empleado(String nombre, String apellido, String dni, int genero, Date fechaNac, int estadoCivil,
 			String legajo, String contraseña) {
 		super(nombre, apellido, dni, genero, fechaNac);
 		this.estadoCivil = estadoCivil;
@@ -30,15 +44,44 @@ public abstract class Empleado extends Persona {
 		this.contraseña = contraseña;
 	}
 
-	public Empleado() {
-		super();
-	}
-
 	public String getEstadoCivil() {
-		return estadoCivil;
+		String rta = "";
+		switch(this.estadoCivil) {
+		case(1):
+			rta = "Soltero/a";
+			break;
+		case(2):
+			rta = "Comprometido/a";
+			break;
+		case(3):
+			rta = "Noviazgo";
+			break;
+		case(4):
+			rta = "Relacion";
+			break;
+		case(5):
+			rta = "Casado/a";
+			break;
+		case(6):
+			rta = "Union Libre";
+			break;
+		case(7):
+			rta = "Separado/a";
+			break;
+		case(8):
+			rta = "Divorciado/a";
+			break;
+		case(9):
+			rta = "Viudo/a";
+			break;
+		default:
+			rta = "No definido";
+			break;
+		}
+		return rta;
 	}
 
-	public void setEstadoCivil(String estadoCivil) {
+	public void setEstadoCivil(int estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 
@@ -51,8 +94,8 @@ public abstract class Empleado extends Persona {
 	}
 
 	public String toString() {
-		return super.toString() + "\nEstado Civil:" + getEstadoCivil() + "\nLegajo:" + getLegajo() + "\nContraseña:"
-				+ getContraseña();
+		return super.toString() + "\nEstado Civil:" + getEstadoCivil() + "\nLegajo:" + getLegajo() + 
+				"\nContraseña:"+ getContraseña();
 	}
 
 	/**

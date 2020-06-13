@@ -13,7 +13,7 @@ public abstract class PrendaInferior extends PrendaDeVestir {
 		super();
 	}
 
-	public PrendaInferior(String marca, String modelo, String color, String tipoDeMaterial) {
+	public PrendaInferior(int marca, String modelo, String color, int tipoDeMaterial) {
 		super(marca, modelo, color, tipoDeMaterial);
 	}
 

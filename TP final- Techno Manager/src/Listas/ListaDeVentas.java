@@ -20,7 +20,7 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas {
 
 	@Override
 	public boolean agregarVenta(Venta venta) {
-		return ventas.agragarElemento(venta);
+		return ventas.agregarElemento(venta);
 	}
 
 	@Override

@@ -13,9 +13,13 @@ public class ClienteMinorista extends Cliente {
 	public ClienteMinorista() {
 		super();
 	}
+	
+	public ClienteMinorista(String nombre, String apellido) {
+		super(nombre, apellido);
+	}
 
-	public ClienteMinorista(String nombre, String apellido, String dni, String genero, Date fechaNac, String domicilio,
-			String email) {
+	public ClienteMinorista(String nombre, String apellido, String dni, int genero, Date fechaNac, 
+			String domicilio, String email) {
 		super(nombre, apellido, dni, genero, fechaNac, domicilio, email);
 	}
 

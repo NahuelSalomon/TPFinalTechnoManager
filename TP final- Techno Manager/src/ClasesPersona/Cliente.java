@@ -15,10 +15,18 @@ public abstract class Cliente extends Persona {
 	private String email;
 
 	public Cliente() {
-		super();
+		super(null, null, null, (Integer)null, null);
+		this.email = null;
+		this.domicilio = null;
+	}
+	
+	public Cliente(String nombre, String apellido) {
+		super(nombre, apellido);
+		this.email = null;
+		this.domicilio = null;
 	}
 
-	public Cliente(String nombre, String apellido, String dni, String genero, Date fechaNac, String domicilio,
+	public Cliente(String nombre, String apellido, String dni, int genero, Date fechaNac, String domicilio,
 			String email) {
 		super(nombre, apellido, dni, genero, fechaNac);
 		this.email = email;

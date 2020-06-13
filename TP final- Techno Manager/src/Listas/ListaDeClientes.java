@@ -29,7 +29,7 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 
 	@Override
 	public boolean agregarCliente(Cliente elemento) {
-		return clientes.agragarElemento(elemento);
+		return clientes.agregarElemento(elemento);
 	}
 
 	@Override

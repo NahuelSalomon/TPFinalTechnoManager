@@ -33,7 +33,7 @@ public class ContenedorPrendasYEmpleados<K, V> {
 	 * @return boolean Retorna True si se agrego el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean agragarElemento(K clave, V valor) {
+	public boolean agregarElemento(K clave, V valor) {
 		boolean agregado = false;
 		if (!existeClave(clave)) {
 			contenedor.put(clave, valor);

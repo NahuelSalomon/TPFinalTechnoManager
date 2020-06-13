@@ -30,7 +30,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * @return boolean Retorna True si se agrego el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean agragarElemento(E elemento) {
+	public boolean agregarElemento(E elemento) {
 		return contenedor.add(elemento);
 	}
 

@@ -9,19 +9,39 @@ package ClasesPrendasDeVestir;
  */
 public class Calzado extends PrendaDeVestir {
 
-	private String tipoDeSuela;
+	private int tipoDeSuela;
 
 	public Calzado() {
 		super();
+		this.tipoDeSuela = (Integer)null;
 	}
 
-	public Calzado(String marca, String modelo, String color, String tipoDeMaterial, String tipoDeSuela) {
+	public Calzado(int marca, String modelo, String color, int tipoDeMaterial, int tipoDeSuela) {
 		super(marca, modelo, color, tipoDeMaterial);
+		this.tipoDeSuela = tipoDeSuela;
+	}
+	
+	public void setTipoDeSuela(int tipoDeSuela) {
 		this.tipoDeSuela = tipoDeSuela;
 	}
 
 	public String getTipoDeSuela() {
-		return tipoDeSuela;
+		String rta = "";
+		switch(this.tipoDeSuela) {
+		case(1):
+			rta = "Poliuretano";
+			break;
+		case(2):
+			rta = "Crepe";
+			break;
+		case(3):
+			rta = "Cuero";
+			break;
+		default:
+			rta = "No definido";
+			break;
+		}
+		return rta;
 	}
 
 	@Override

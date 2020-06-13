@@ -22,7 +22,7 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas {
 
 	@Override
 	public boolean agregarPrenda(String clave, PrendaDeVestir valor) {
-		return prendas.agragarElemento(clave, valor);
+		return prendas.agregarElemento(clave, valor);
 	}
 
 	@Override

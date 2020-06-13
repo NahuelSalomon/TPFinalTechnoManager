@@ -81,14 +81,14 @@ public class TallesYStock {
 	 * @return true si se quita, false en caso contrario
 	 */
 	public boolean quitarUnTalle(String talle) {
-		boolean seQUito = false;
+		boolean seQuito = false;
 
 		if (existeTalle(talle)) {
 			tallesYStock.remove(talle);
-			seQUito = true;
+			seQuito = true;
 		}
 
-		return seQUito;
+		return seQuito;
 	}
 
 	/**

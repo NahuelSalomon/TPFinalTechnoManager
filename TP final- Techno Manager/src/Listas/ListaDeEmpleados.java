@@ -20,7 +20,7 @@ public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados {
 
 	@Override
 	public boolean agregarEmpleado(String clave, Empleado valor) {
-		return empleados.agragarElemento(clave, valor);
+		return empleados.agregarElemento(clave, valor);
 	}
 
 	@Override

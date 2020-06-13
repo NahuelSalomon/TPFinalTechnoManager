@@ -13,14 +13,28 @@ public class Buzo extends PrendaSuperior {
 
 	public Buzo() {
 		super();
+		this.esTipoCanguro = (Boolean) null;
 	}
 
-	public Buzo(String marca, String modelo, String color, boolean esMangaCorta, String tipoDeMaterial) {
-		super(marca, modelo, color, esMangaCorta, tipoDeMaterial);
+	public Buzo(int marca, String modelo, String color, int tipoDeMaterial, boolean esMangaCorta, boolean esTipoCanguro) {
+		super(marca, modelo, color, tipoDeMaterial, esMangaCorta);
+		this.esTipoCanguro = esTipoCanguro;
 	}
 
 	public boolean esTipoCanguro() {
 		return esTipoCanguro;
+	}
+
+	public String getEsTipoCanguro() {
+		String rta = "";
+		if(esTipoCanguro) rta = "Tiene Canguro";
+		if(!esTipoCanguro) rta = "No tiene Canguro";
+		else rta = "No definido";
+		return rta;
+	}
+
+	public void setEsTipoCanguro(boolean esTipoCanguro) {
+		this.esTipoCanguro = esTipoCanguro;
 	}
 
 	@Override
