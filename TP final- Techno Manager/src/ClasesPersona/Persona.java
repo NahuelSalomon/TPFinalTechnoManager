@@ -3,7 +3,7 @@ package ClasesPersona;
 import java.util.Date;
 
 /**
- * Super clase Persona, reune todas las caracteristicas de todas las clases que sean personas *
+ * Super clase Persona, reune todas las caracteristicas de todas las clases que sean "personas".
  * @author Nicolas
  *
  */
@@ -61,11 +61,16 @@ public class Persona {
 		this.genero = comprobarGenero(genero);
 	}
 	
+	/**
+	 * Método para comprobar que el genero ingresado sea correcto, solo hay tres opciones. 
+	 * @param genero es el genero a comprobar
+	 * @return el genero comprobado, si es incorrecto asigna "Personalizado" por default 
+	 */
 	public String comprobarGenero(String genero) {
 		String generoComprobado = "Personalizado";
 		
-		if(genero.equalsIgnoreCase("Masculino") && genero.equalsIgnoreCase("Femenino")
-				&& genero.equalsIgnoreCase("Personalizado")) {
+		if(genero.equalsIgnoreCase("Masculino") || genero.equalsIgnoreCase("Femenino")
+				|| genero.equalsIgnoreCase("Personalizado")) {
 			generoComprobado = genero;
 		}
 		return generoComprobado;

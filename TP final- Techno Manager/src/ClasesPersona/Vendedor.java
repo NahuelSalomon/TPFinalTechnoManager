@@ -2,6 +2,11 @@ package ClasesPersona;
 
 import java.util.Date;
 
+/**
+ * Subclase vendedor que extiende de empleado.
+ * @author Nahuel
+ *
+ */
 public class Vendedor extends Empleado{
 	
 	private String telefono;
@@ -25,7 +30,12 @@ public class Vendedor extends Empleado{
 	}
 	
 	public String toString() {
-		return super.toString()+"\nTelefono:"+getTelefono();
+		return super.toString()+"\nTelefono:"+getTelefono()+"Tipo de empleado: "+tipoEmpleado();
+	}
+
+	@Override
+	public String tipoEmpleado() {
+		return "Vendedor";
 	}
 	
 }

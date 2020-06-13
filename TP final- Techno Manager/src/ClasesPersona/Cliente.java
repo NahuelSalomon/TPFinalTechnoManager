@@ -2,6 +2,12 @@ package ClasesPersona;
 
 import java.util.Date;
 
+/**
+ * Clase que engloba todas las características de un cliente.
+ * No se puede instanciar esta clase ya que se tiene que definir de que tipo es el cliente. 
+ * @author Nahuel
+ *
+ */
 public abstract class Cliente extends Persona {
 
 	private String domicilio;
@@ -33,6 +39,11 @@ public abstract class Cliente extends Persona {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString()+"\nDomicilio: "+getDomicilio()+"\nEmail: "+getEmail();
+	} 
 	
 	/**
 	 * Metodo que devuelve el tipo de cliente 

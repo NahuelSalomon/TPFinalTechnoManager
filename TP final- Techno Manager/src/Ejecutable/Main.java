@@ -1,6 +1,6 @@
 package Ejecutable;
 
-
+import javax.swing.JOptionPane;
 
 public class Main {
 
@@ -8,6 +8,7 @@ public class Main {
 		
 		System.out.println("Hola Mundo");
 		
+		JOptionPane.showMessageDialog(null, "hola");	
 	}
 
 }

@@ -5,8 +5,7 @@ import java.util.ArrayList;
 /**
  * Contenedor generico que esta pensado para abstraer el comportamiento del ArrayList.
  * @author Nicolas
- * Tipo de dato, esperando un Objeto.  
- * @param <E> 
+ * @param <E>  Tipo de dato esperodo por el objeto. podria se un cliente o una venta.
  */
 public class ContenedorClientesYVentas <E>{
 	
@@ -84,9 +83,22 @@ public class ContenedorClientesYVentas <E>{
 		return builder.toString();
 	}
 
+	/**
+	 * Busca un elemento en el contenedor
+	 * @param index del elemento a buscar
+	 * @return el elemento buscado
+	 */
 	public E buscarElemento(int index) {
 		return contenedor.get(index);
 	}
 	
+	/**
+	 * Comprueba si un elemento existe en el contenedor
+	 * @param elemento buscado
+	 * @return true si existe, false en caso contrario
+	 */
+	public boolean existeElemento(E elemento) {
+		return contenedor.contains(elemento);
+	}
 	
 }

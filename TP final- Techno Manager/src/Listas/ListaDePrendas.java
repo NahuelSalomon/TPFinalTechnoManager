@@ -37,13 +37,27 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas{
 		}
 
 		@Override
-		public String listarPrenda(String nom_clave, String nom_valor) {
-			return prendas.listarElementos(nom_clave, nom_valor);
+		public String listarPrendas() {
+			return prendas.listarElementos("Codigo", "Prenda");
 		}
 
 		@Override
 		public PrendaDeVestir buscarPrenda(String clave) {
 			return prendas.buscarElemento(clave);
+		}
+
+	
+		public boolean existePrendaDeVestir(PrendaDeVestir prendaDeVestir) {
+			return prendas.existeClave(prendaDeVestir.getCodigo());
+		}   
+		
+		/**
+		 * Verifica si existe una prenda
+		 * @param codigo de la prenda a verificar
+		 * @return true si la prenda existe, false en caso contrario.
+		 */
+		public boolean existePrendaDeVesitr(String codigo) {
+			return prendas.existeClave(codigo);
 		}
 
 }
