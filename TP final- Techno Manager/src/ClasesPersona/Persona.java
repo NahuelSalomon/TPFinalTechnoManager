@@ -27,7 +27,7 @@ public class Persona implements Serializable {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = null;
-		this.genero = (Integer)null;
+		this.genero = 0;
 		this.fechaNac = null;
 	}
 

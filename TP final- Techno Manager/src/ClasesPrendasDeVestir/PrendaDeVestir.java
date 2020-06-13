@@ -24,10 +24,10 @@ public abstract class PrendaDeVestir {
 	public PrendaDeVestir() {
 		super();
 		this.codigo = getRandomString(10);
-		this.marca = (Integer)null;
+		this.marca = 0;
 		this.modelo = null;
 		this.color = null;
-		this.tipoDeMaterial = (Integer)null;
+		this.tipoDeMaterial = 0;
 		stockPrenda = new TallesYStock();
 	}
 

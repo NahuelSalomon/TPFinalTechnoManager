@@ -15,7 +15,7 @@ public abstract class Cliente extends Persona {
 	private String email;
 
 	public Cliente() {
-		super(null, null, null, (Integer)null, null);
+		super(null, null, null, 0, null);
 		this.email = null;
 		this.domicilio = null;
 	}

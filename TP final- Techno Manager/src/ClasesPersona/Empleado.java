@@ -16,14 +16,14 @@ public abstract class Empleado extends Persona {
 	
 	public Empleado() {
 		super();
-		this.estadoCivil = (Integer)null;
+		this.estadoCivil = 0;
 		this.legajo = null;
 		this.contraseña = null;
 	}
 	
 	public Empleado(String nombre, String apellido, String legajo, String contraseña) {
 		super(nombre, apellido);
-		this.estadoCivil = (Integer)null;
+		this.estadoCivil = 0;
 		this.legajo = legajo;
 		this.contraseña = contraseña;
 	}

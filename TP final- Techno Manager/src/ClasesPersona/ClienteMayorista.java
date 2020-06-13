@@ -17,7 +17,7 @@ public class ClienteMayorista extends Cliente implements Serializable {
 	public ClienteMayorista() {
 		super();
 		this.cuil = null;
-		this.condicionFrenteIVA = (Integer)null; 
+		this.condicionFrenteIVA = 0; 
 	}
 	
 	public ClienteMayorista(String nombre, String apellido, String cuil, int condicionFrenteIVA) {

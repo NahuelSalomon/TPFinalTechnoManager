@@ -13,7 +13,7 @@ public class Calzado extends PrendaDeVestir {
 
 	public Calzado() {
 		super();
-		this.tipoDeSuela = (Integer)null;
+		this.tipoDeSuela = 0;
 	}
 
 	public Calzado(int marca, String modelo, String color, int tipoDeMaterial, int tipoDeSuela) {
