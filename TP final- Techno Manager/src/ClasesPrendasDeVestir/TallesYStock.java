@@ -1,5 +1,6 @@
 package ClasesPrendasDeVestir;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -13,7 +14,7 @@ import java.util.Set;
  * @author Techno Manager
  *
  */
-public class TallesYStock {
+public class TallesYStock implements Serializable{
 
 	private HashMap<String, Integer> tallesYStock;
 

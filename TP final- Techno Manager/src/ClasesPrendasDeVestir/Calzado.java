@@ -1,5 +1,7 @@
 package ClasesPrendasDeVestir;
 
+import java.io.Serializable;
+
 /**
  * Clase para definir objetos del tipo remera Hija de clase abstracta
  * PrendaDeVestir
@@ -7,7 +9,7 @@ package ClasesPrendasDeVestir;
  * @author Techno Manager
  *
  */
-public class Calzado extends PrendaDeVestir {
+public class Calzado extends PrendaDeVestir implements Serializable{
 
 	private int tipoDeSuela;
 

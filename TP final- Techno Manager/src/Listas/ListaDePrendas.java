@@ -1,5 +1,13 @@
 package Listas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import ClasesPrendasDeVestir.PrendaDeVestir;
 
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
@@ -12,7 +20,7 @@ import Interfaces.IFuncionesBasicasListaPrendas;
  * @author Lucas Zelaya_
  *
  */
-public class ListaDePrendas implements IFuncionesBasicasListaPrendas {
+public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializable {
 
 	ContenedorPrendasYEmpleados<String, PrendaDeVestir> prendas;
 
@@ -47,6 +55,19 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas {
 
 	public boolean existePrendaDeVestir(PrendaDeVestir prendaDeVestir) {
 		return prendas.existeClave(prendaDeVestir.getCodigo());
+	}
+	
+	public void guardar() throws FileNotFoundException, IOException {
+		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("filePrendas"));
+		output.writeObject(this);
+		output.close();
+	}
+
+	public ListaDePrendas abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("filePrendas"));
+		ListaDePrendas lista = (ListaDePrendas) input.readObject();
+		input.close();
+		return lista;
 	}
 
 	/**

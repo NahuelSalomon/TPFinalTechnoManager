@@ -52,44 +52,43 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		return clientes.buscarElemento(index);
 	}
 
-	/**
-	 * Modifica un cliente de la lista
-	 * 
-	 * @param index             del cliente a modificar
-	 * @param clienteModificado cliente ya modificado
-	 * @return true si se modifica correctamente, false en caso contrario.
-	 */
-	public boolean modificarElemento(int index, Cliente clienteModificado) {
-		return clientes.modificarElemento(index, clienteModificado);
-	}
-
-	public void guardarListaClientes() {
-		String file = "listaCliente.bin";
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-			oos.writeObject(this);
-			oos.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	/**
+//	 * Modifica un cliente de la lista
+//	 * 
+//	 * @param index             del cliente a modificar
+//	 * @param clienteModificado cliente ya modificado
+//	 * @return true si se modifica correctamente, false en caso contrario.
+//	 */
+//	public boolean modificarElemento(int index, Cliente clienteModificado) {
+//		return clientes.modificarElemento(index, clienteModificado);
+//	}
+//
+//	public void guardarListaClientes() {
+//		String file = "listaCliente.bin";
+//		try {
+//			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+//			oos.writeObject(this);
+//			oos.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	public void guardar() throws FileNotFoundException, IOException {
-		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("file"));
+		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("fileClientes"));
 		output.writeObject(this);
 		output.close();
 	}
 
-	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream("file"));
+	public ListaDeClientes abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("fileClientes"));
 		ListaDeClientes lista = (ListaDeClientes) input.readObject();
 		input.close();
-
-		lista.listarClientes();
+		return lista;
 	}
 
 	/**
@@ -100,5 +99,9 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 	 */
 	public boolean existeCliente(Cliente cliente) {
 		return clientes.existeElemento(cliente);
+	}
+	
+	public boolean comparaNomApe(Cliente cliente) {
+		return clientes.comparaNomApe(cliente);
 	}
 }

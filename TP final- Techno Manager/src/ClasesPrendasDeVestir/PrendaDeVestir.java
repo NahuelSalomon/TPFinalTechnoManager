@@ -1,5 +1,6 @@
 package ClasesPrendasDeVestir;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import javax.rmi.CORBA.Util;
@@ -11,7 +12,7 @@ import javax.rmi.CORBA.Util;
  * @author Techno Manager
  *
  */
-public abstract class PrendaDeVestir {
+public abstract class PrendaDeVestir implements Serializable{
 
 	private String codigo;
 

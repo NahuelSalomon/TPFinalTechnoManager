@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Nahuel
  *
  */
-public abstract class Cliente extends Persona {
+public class Cliente extends Persona {
 
 	private String domicilio;
 	private String email;
