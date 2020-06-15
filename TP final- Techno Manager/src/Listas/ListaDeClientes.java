@@ -84,11 +84,10 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		output.close();
 	}
 
-	public ListaDeClientes abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
+	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream input = new ObjectInputStream(new FileInputStream("fileClientes"));
-		ListaDeClientes lista = (ListaDeClientes) input.readObject();
+		clientes = (ContenedorClientesYVentas<Cliente>) input.readObject();
 		input.close();
-		return lista;
 	}
 
 	/**

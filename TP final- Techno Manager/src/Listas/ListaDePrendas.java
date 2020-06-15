@@ -63,11 +63,10 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializab
 		output.close();
 	}
 
-	public ListaDePrendas abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
+	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
 		ObjectInputStream input = new ObjectInputStream(new FileInputStream("filePrendas"));
-		ListaDePrendas lista = (ListaDePrendas) input.readObject();
+		prendas = (ContenedorPrendasYEmpleados<String, PrendaDeVestir>) input.readObject();
 		input.close();
-		return lista;
 	}
 
 	/**
