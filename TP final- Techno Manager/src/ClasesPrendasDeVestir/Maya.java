@@ -1,43 +1,68 @@
 package ClasesPrendasDeVestir;
 
-
 /**
- * Clase para definir objetos del tipo remera
- * Hija de clase abstracta PrendaDeVestir y de PrendaInferior
+ * Clase para definir objetos del tipo remera Hija de clase abstracta
+ * PrendaDeVestir y de PrendaInferior
+ * 
  * @author Techno Manager
  *
  */
-public class Maya extends PrendaInferior{
+public class Maya extends PrendaInferior {
 
 	private boolean esSecadoRapido;
 	private boolean esPorArribaRodillas;
 
 	public Maya() {
 		super();
-		
+		this.esSecadoRapido = (Boolean) null;
+		this.esPorArribaRodillas = (Boolean) null;
 	}
 
-	public Maya(String marca, String modelo, String color, String tipoDeMaterial, boolean esSecadoRapido, boolean esPorArribaRodillas) {
+	public Maya(int marca, String modelo, String color, int tipoDeMaterial, 
+			boolean esSecadoRapido,	boolean esPorArribaRodillas) {
 		super(marca, modelo, color, tipoDeMaterial);
 		this.esSecadoRapido = esSecadoRapido;
 		this.esPorArribaRodillas = esPorArribaRodillas;
 	}
 
-
 	public boolean isEsSecadoRapido() {
 		return esSecadoRapido;
 	}
 
+	public void setEsSecadoRapido(boolean esSecadoRapido) {
+		this.esSecadoRapido = esSecadoRapido;
+	}
+	
+	public String getEsSecadoRapido() {
+		String rta = "";
+		if(esSecadoRapido) rta = "Es secado rapido";
+		if(!esSecadoRapido) rta = "No es secado rapido";
+		else rta = "No definido";
+		return rta;
+	}
+	
 	public boolean isEsPorArribaRodillas() {
 		return esPorArribaRodillas;
+	}
+
+	public void setEsPorArribaRodillas(boolean esPorArribaRodillas) {
+		this.esPorArribaRodillas = esPorArribaRodillas;
+	}
+	
+	public String getEsPorArribaRodillas() {
+		String rta = "";
+		if(esPorArribaRodillas) rta = "No cubre las rodilla";
+		if(!esPorArribaRodillas) rta = "Cubre las rodilla";
+		else rta = "No definido";
+		return rta;
 	}
 
 	@Override
 	public String tipoDePrenda() {
 		return "Maya";
 	}
-	
+
 	public String toString() {
-		return super.toString()+"\nEs de secado rapido: "+isEsSecadoRapido()+"\nEs por ensima de rodillas: "+isEsPorArribaRodillas();
+		return super.toString() + "\n" + getEsSecadoRapido() + "\n" + getEsPorArribaRodillas();
 	}
 }

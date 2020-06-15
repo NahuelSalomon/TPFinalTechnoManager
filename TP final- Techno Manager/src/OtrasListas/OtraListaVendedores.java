@@ -1,29 +1,30 @@
-package ContenedorGenericas;
+package OtrasListas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
 
-/**
- * Contenedor generico que esta pensado para abstraer el comportamiento del
- * HashMap.
- * 
- * @author Nicolas
- * @param <K> clave esperando por el Objeto
- * @param <V> valor esperado por el objeto, podria se una prenda o un empleado
- */
-public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
+import ClasesPersona.Empleado;
+import ClasesPrendasDeVestir.PrendaDeVestir;
 
-	private HashMap<K, V> contenedor;
+public class OtraListaVendedores extends Empleado implements Serializable{
+	
+	private HashMap<String, Empleado> contenedor;
 
 	/**
 	 * Constructor del contenedor de Personas y Empleados
 	 */
-	public ContenedorPrendasYEmpleados() {
+	public OtraListaVendedores() {
 		super();
-		contenedor = new HashMap<K, V>();
+		contenedor = new HashMap<String, Empleado>();
 	}
 
 	/**
@@ -34,7 +35,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	 * @return boolean Retorna True si se agrego el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean agregarElemento(K clave, V valor) {
+	public boolean agregarElemento(String clave, Empleado valor) {
 		boolean agregado = false;
 		if (!existeClave(clave)) {
 			contenedor.put(clave, valor);
@@ -50,7 +51,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	 * @return boolean Retorna True si se eleimina el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean bajaElemento(K clave) {
+	public boolean bajaElemento(String clave) {
 		boolean eliminado = false;
 		if (existeClave(clave)) {
 			contenedor.remove(clave);
@@ -67,7 +68,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	 * @return boolean Retorna True si se modifico el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean modificarElemento(K clave, V valor) {
+	public boolean modificarElemento(String clave, Empleado valor) {
 		boolean modificado = false;
 		if (existeClave(clave)) {
 			contenedor.put(clave, valor);
@@ -86,11 +87,11 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	public String listarElementos(String nom_claves, String nom_valores) {
 		StringBuilder builder = new StringBuilder();
 
-		Set<Entry<K, V>> set = contenedor.entrySet();
-		Iterator<Entry<K, V>> iterator = set.iterator();
+		Set<Entry<String, Empleado>> set = contenedor.entrySet();
+		Iterator<Entry<String, Empleado>> iterator = set.iterator();
 
 		while (iterator.hasNext()) {
-			Entry<K, V> entry = iterator.next();
+			Entry<String, Empleado> entry = iterator.next();
 			builder.append(nom_claves + ": " + entry.getKey() + " " + nom_valores + ": " + entry.getValue());
 		}
 
@@ -103,7 +104,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	 * @param clave valor a verificar
 	 * @return boolean Retorna True si existe el elemento, False en caso contrario
 	 */
-	public boolean existeClave(K clave) {
+	public boolean existeClave(String clave) {
 		return contenedor.containsKey(clave);
 	}
 
@@ -113,7 +114,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	 * @param clave
 	 * @return el elemento si existe y sino retorna null.
 	 */
-	public V buscarElemento(K clave) {
+	public Empleado buscarElemento(String clave) {
 
 		if (existeClave(clave)) {
 			return contenedor.get(clave);
@@ -121,6 +122,24 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 			return null;
 		}
 
+	}
+
+	@Override
+	public String tipoEmpleado() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public void guardar() throws FileNotFoundException, IOException {
+		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("fileVendedores"));
+		output.writeObject(this.contenedor);
+		output.close();
+	}
+
+	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("fileVendedores"));
+		contenedor = (HashMap<String, Empleado>) input.readObject();
+		input.close();
 	}
 
 }

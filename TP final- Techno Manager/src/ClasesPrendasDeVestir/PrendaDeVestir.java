@@ -1,26 +1,40 @@
 package ClasesPrendasDeVestir;
 
+import java.io.Serializable;
+import java.util.Random;
+
+import javax.rmi.CORBA.Util;
+
 /**
- * Clase padre de cualquier prenda de vestir, es abstracta con la finalidad de que se tiene que definir bien de que tipo es la prenda
+ * Clase padre de cualquier prenda de vestir, es abstracta con la finalidad de
+ * que se tiene que definir bien de que tipo es la prenda
+ * 
  * @author Techno Manager
  *
  */
-public abstract class PrendaDeVestir {
+public abstract class PrendaDeVestir implements Serializable{
 
 	private String codigo;
 
-	private String marca;
+	private int marca;
 	private String modelo;
 	private String color;
-	private String tipoDeMaterial;
+	private int tipoDeMaterial;
 	private TallesYStock stockPrenda;
-	
+
 	public PrendaDeVestir() {
+		super();
+		this.codigo = getRandomString(10);
+		this.marca = 0;
+		this.modelo = null;
+		this.color = null;
+		this.tipoDeMaterial = 0;
 		stockPrenda = new TallesYStock();
 	}
 
-	public PrendaDeVestir(String marca, String modelo, String color, String tipoDeMaterial) {
+	public PrendaDeVestir(int marca, String modelo, String color, int tipoDeMaterial) {
 		super();
+		this.codigo = getRandomString(10);
 		this.marca = marca;
 		this.modelo = modelo;
 		this.color = color;
@@ -28,23 +42,80 @@ public abstract class PrendaDeVestir {
 		this.stockPrenda = new TallesYStock();
 	}
 	
-	
-	public String getTipoDeMaterial() {
-		return tipoDeMaterial;
+	public String getCodigo() {
+		return this.codigo;
 	}
 
-	public void setTipoDeMaterial(String tipoDeMaterial) {
-		this.tipoDeMaterial = tipoDeMaterial;
+	public void setCodigo(String codigo) {
+		if(codigo.length() == 0 && codigo.length()>10) {
+			this.codigo = getRandomString(10);
+		}
+		else this.codigo = codigo;
 	}
 	
+	private int getRandomCode() {
+		int x = (int) (Math.random() * ((99999999 - 0) + 0)) + 1;
+	    return x;
+	}
+	
+	private String getRandomString(int targetStringLength) {
+		int leftLimit = 97; // letter 'a'
+	    int rightLimit = 122; // letter 'z'
+	    if(targetStringLength<=0 && targetStringLength>10) targetStringLength = 10;
+	    Random random = new Random();
+	    StringBuilder buffer = new StringBuilder(targetStringLength);
+	    for (int i = 0; i < targetStringLength; i++) {
+	        int randomLimitedInt = leftLimit + (int) 
+	          (random.nextFloat() * (rightLimit - leftLimit + 1));
+	        buffer.append((char) randomLimitedInt);
+	    }
+	    String generatedString = buffer.toString();
+	    return generatedString;
+	}
+	
+//	- 1. Zara
+//	- 2. Nike
+//	- 3. Gucci
+//	- 4. Adidas
+//	- 5. Lacoste
+//	- 6. Chanel
+//	- 7. Levi’s
+
 	public String getMarca() {
-		return marca;
+		String rta = "";
+		switch(this.marca) {
+		case(1):
+			rta = "Zara";
+			break;
+		case(2):
+			rta = "Nike";
+			break;
+		case(3):
+			rta = "Gucci";
+			break;
+		case(4):
+			rta = "Adidas";
+			break;
+		case(5):
+			rta = "Lacoste";
+			break;
+		case(6):
+			rta = "Chanel";
+			break;
+		case(7):
+			rta = "Levi’s";
+			break;
+		default:
+			rta = "No definido";
+			break;
+		}
+		return rta;
 	}
 
-	public void setMarca(String marca) {
+	public void setMarca(int marca) {
 		this.marca = marca;
 	}
-
+	
 	public String getModelo() {
 		return modelo;
 	}
@@ -52,76 +123,104 @@ public abstract class PrendaDeVestir {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-
+	
 	public String getColor() {
 		return color;
 	}
-
+	
 	public void setColor(String color) {
 		this.color = color;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public String getTipoDeMaterial() {
+		String rta = "";
+		switch(this.tipoDeMaterial) {
+		case(1):
+			rta = "Algodon";
+			break;
+		case(2):
+			rta = "Terciopelo";
+			break;
+		case(3):
+			rta = "Calico";
+			break;
+		case(4):
+			rta = "Fieltro";
+			break;
+		case(5):
+			rta = "Seda";
+			break;
+		default:
+			rta = "No definido";
+			break;
+		}
+		return rta;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setTipoDeMaterial(int tipoDeMaterial) {
+		this.tipoDeMaterial = tipoDeMaterial;
 	}
-	
+
 	/**
 	 * Lista el stock disponible
+	 * 
 	 * @return el stock en forma de String
 	 */
 	public String listarStock() {
 		return stockPrenda.listarTallesYStock();
 	}
-	
+
 	/**
 	 * Agrega un talle al stock con una cantidad
-	 * @param talle a agregar 
+	 * 
+	 * @param talle    a agregar
 	 * @param cantidad agregada
 	 * @return true si se agrega, false en caso contrario
 	 */
-	public boolean agregarCantidadATalle (String talle, Integer cantidad) { 
+	public boolean agregarCantidadATalle(String talle, Integer cantidad) {
 		return stockPrenda.agregarCantidadATalle(talle, cantidad);
 	}
-	
+
 	/**
 	 * Agrega un nuevo talle al stock con su respectiva cantidad
-	 * @param talle a agregar
+	 * 
+	 * @param talle    a agregar
 	 * @param cantidad del talle agregado
 	 * @return true si se agrega, false en caso contrario.
 	 */
 	public boolean agregarNuevoTalleConCantidad(String talle, Integer cantidad) {
 		return stockPrenda.agregarNuevoTalleConCantidad(talle, cantidad);
 	}
-	
+
 	/**
 	 * Quita un talle del stock
+	 * 
 	 * @param talle a quitar
 	 * @return true si se quita, false en caso contrario
 	 */
-	public boolean quitarUnTalle(String talle) { 
+	public boolean quitarUnTalle(String talle) {
 		return stockPrenda.quitarUnTalle(talle);
 	}
 
 	/**
 	 * Quita una determinada cantidad a un talle del stock
-	 * @param talle a quitar cantidad 
+	 * 
+	 * @param talle    a quitar cantidad
 	 * @param cantidad quitada
 	 * @return true si se quita, false en caso contrario
 	 */
-	public boolean quitarCantidadATalle(String talle, Integer cantidad) { 
+	public boolean quitarCantidadATalle(String talle, Integer cantidad) {
 		return stockPrenda.quitarCantidadATalle(talle, cantidad);
 	}
-	
+
 	public String toString() {
-		return "Marca: "+getMarca()+"\nModelos: "+getModelo()+"\nColor: "+getColor()+"\nTipo de material: "+getTipoDeMaterial();
+		return "Marca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() + ""
+				+ "\nTipo de material: "+ getTipoDeMaterial();
 	}
-	
+
 	/**
 	 * Retorna el tipo de prenda
+	 * 
 	 * @return tipo prenda en forma de string
 	 */
 	public abstract String tipoDePrenda();

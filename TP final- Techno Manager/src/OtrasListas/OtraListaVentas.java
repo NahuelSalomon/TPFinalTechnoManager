@@ -1,29 +1,29 @@
-package ContenedorGenericas;
+package OtrasListas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import ClaseVenta.Venta;
 import ClasesPersona.Cliente;
-import ClasesPersona.Persona;
+import ClasesPersona.Empleado;
 
-/**
- * Contenedor generico que esta pensado para abstraer el comportamiento del
- * ArrayList.
- * 
- * @author Nicolas
- * @param <E> Tipo de dato esperodo por el objeto. podria se un cliente o una
- *            venta.
- */
-public class ContenedorClientesYVentas<E> implements Serializable {
-
-	private ArrayList<E> contenedor;
+public class OtraListaVentas extends Venta implements Serializable{
+	
+	private ArrayList<Venta> contenedor;
 
 	/**
 	 * Constructor de Contenedor de clientes y ventas
 	 */
-	public ContenedorClientesYVentas() {
+	public OtraListaVentas() {
 		super();
-		contenedor = new ArrayList<E>();
+		contenedor = new ArrayList<Venta>();
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * @return boolean Retorna True si se agrego el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean agregarElemento(E elemento) {
+	public boolean agregarElemento(Venta elemento) {
 		return contenedor.add(elemento);
 	}
 
@@ -44,7 +44,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * @return boolean Retorna True si se elimino el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean bajaElemento(E elemento) {
+	public boolean bajaElemento(Venta elemento) {
 		return contenedor.remove(elemento);
 	}
 
@@ -55,7 +55,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * @return boolean Retorna True si se elimino el elemento, False en caso
 	 *         contrario
 	 */
-	public E bajaElemento(int index) {
+	public Venta bajaElemento(int index) {
 		return contenedor.remove(index);
 	}
 
@@ -68,7 +68,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * @return boolean Retorna True si se modifica el elemento, False en caso
 	 *         contrario
 	 */
-	public boolean modificarElemento(int index, E modificacion) {
+	public boolean modificarElemento(int index, Venta modificacion) {
 		boolean modificado = false;
 		if ((index < 0) && (index < cantidadElementos())) {
 			contenedor.add(index, modificacion);
@@ -95,7 +95,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	public String listarElementos() {
 		StringBuilder builder = new StringBuilder();
 
-		for (E elemento : contenedor) {
+		for (Venta elemento : contenedor) {
 			builder.append(elemento.toString());
 		}
 
@@ -108,7 +108,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * @param index del elemento a buscar
 	 * @return el elemento buscado
 	 */
-	public E buscarElemento(int index) {
+	public Venta buscarElemento(int index) {
 		return contenedor.get(index);
 	}
 
@@ -118,21 +118,20 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * @param elemento buscado
 	 * @return true si existe, false en caso contrario
 	 */
-	public boolean existeElemento(E elemento) {
+	public boolean existeElemento(Venta elemento) {
 		return contenedor.contains(elemento);
 	}
 	
-	public boolean comparaNomApe(E cliente) {
-		boolean rta = false;
-		
-		for(E elem : contenedor) {
-			if(((Persona) elem).getNombre().contentEquals(((Persona) cliente).getNombre()) &&
-					((Persona) elem).getApellido().contentEquals(((Persona) cliente).getApellido())) {
-				rta = true;
-			}
-		}
-		
-		return rta;
+	public void guardar() throws FileNotFoundException, IOException {
+		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("fileVentas"));
+		output.writeObject(this.contenedor);
+		output.close();
+	}
+
+	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream input = new ObjectInputStream(new FileInputStream("fileVentas"));
+		contenedor = (ArrayList<Venta>) input.readObject();
+		input.close();
 	}
 
 }
