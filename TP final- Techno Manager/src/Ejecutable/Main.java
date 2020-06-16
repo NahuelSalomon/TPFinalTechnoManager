@@ -10,9 +10,12 @@ import java.util.Date;
 import ClasesPersona.Cliente;
 import ClasesPersona.ClienteMayorista;
 import ClasesPersona.ClienteMinorista;
+import ClasesPersona.Empleado;
+import ClasesPersona.Vendedor;
 import ClasesPrendasDeVestir.Calzado;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 import Listas.ListaDeClientes;
+import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
 import OtrasListas.*;
 
@@ -25,6 +28,12 @@ public class Main {
 		Date fecha1 = new Date(2001,10,7);
 		Cliente cliente1 = new Cliente("Pepe", "Lopes");
 		Cliente cliente2 = new ClienteMinorista("Lara", "Taylor");
+	    Vendedor empleado = new Vendedor("lucas","zelaya","123","soy gay") ;
+	    ListaDeEmpleados lista = new ListaDeEmpleados();
+	    lista.agregarEmpleado(empleado.getLegajo(), empleado);
+			
+			
+		
 		
 		OtraListaClientes listaClientes = new OtraListaClientes();
 		listaClientes.agregarElemento(cliente1);

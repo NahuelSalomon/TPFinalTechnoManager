@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+
+import ClasesPersona.Empleado;
+
 import java.util.Map.Entry;
 
 /**
@@ -113,6 +116,8 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	 * @param clave
 	 * @return el elemento si existe y sino retorna null.
 	 */
+	
+	
 	public V buscarElemento(K clave) {
 
 		if (existeClave(clave)) {
@@ -122,5 +127,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 		}
 
 	}
+
+	
 
 }

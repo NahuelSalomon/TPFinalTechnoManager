@@ -42,7 +42,7 @@ public class Vendedor extends Empleado {
 
 	@Override
 	public String tipoEmpleado() {
-		return "Vendedor";
+		return "vendedor";
 	}
 
 }
