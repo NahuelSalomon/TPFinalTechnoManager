@@ -29,10 +29,10 @@ public class TiendaDeRopa {
 
 	public TiendaDeRopa() {
 
-		clientes = new ListaDeClientes(archivoClientes.leerClientes());
-		empleados = new ListaDeEmpleados(archivoEmpleados.leerEmpleados());
-		prendasDeVestir = new ListaDePrendas(archivoPrendas.leerPrendas());
-		ventas = new ListaDeVentas(archivoVentas.leerVentas());
+		clientes = new ListaDeClientes(/*archivoClientes.leerClientes()*/);
+		empleados = new ListaDeEmpleados(/*archivoEmpleados.leerEmpleados()*/);
+		prendasDeVestir = new ListaDePrendas(/*archivoPrendas.leerPrendas()*/);
+		ventas = new ListaDeVentas(/*archivoVentas.leerVentas()*/);
 	}
 
 	/**
@@ -275,4 +275,18 @@ public class TiendaDeRopa {
 	public boolean existePrenda(String codigo) {
 		return prendasDeVestir.existePrendaDeVesitr(codigo);
 	}
+
+	/**
+	 * se encargar de validar los datos del usuario que ingreso con los cargados de el inicialmente
+	 * 
+	 * @param legajo recibe el legajo que el usuario ingreso
+	 * @param contraseña recibe la contraseña ingresada por el usuario
+	 * @param tipoDeEmpleado recibe el tipo de emleado que ingreso el usuario
+	 * @return true si los datos fueron ingresados bien, false en caso contrario
+	 */
+	public boolean verificarEmpleado(String legajo, String contraseña, String tipoDeEmpleado)
+	{
+		return empleados.verificarEmpleado(legajo, contraseña, tipoDeEmpleado);
+	}
+
 }

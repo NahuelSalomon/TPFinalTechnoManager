@@ -38,28 +38,11 @@ public class VentanaDeEntrada extends JFrame {
 	 * Launch the application.
 	 */
 	public static String tipoDeEmpleado = " ";
-	public static void main(String[] args) {
-		
-		    Vendedor empleado = new Vendedor("lucas","zelaya","123","hola") ;
-		    ListaDeEmpleados lista = new ListaDeEmpleados();
-		    lista.agregarEmpleado(empleado.getLegajo(), empleado);
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaDeEntrada frame = new VentanaDeEntrada(lista);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public VentanaDeEntrada(ListaDeEmpleados lista) {
+	public VentanaDeEntrada(TiendaDeRopa tiendaDeRopa) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 420, 500);
 		contentPane = new JPanel();
@@ -128,9 +111,9 @@ public class VentanaDeEntrada extends JFrame {
 			 * Este metodo se va encargar de una vez que se cliquea en iniciar sesion, verificar si los datos fueron indicados correctamete
 			 */
 			public void mouseClicked(MouseEvent arg0) {
-			if(lista.verificarEmpleado(campoTextoUsuario.getText(), camposTextoContra.getText(),tipoDeEmpleado))
+			if(tiendaDeRopa.verificarEmpleado(campoTextoUsuario.getText(), camposTextoContra.getText(),tipoDeEmpleado))
 			{
-				Empleado emp = lista.buscarEmpleado(campoTextoUsuario.getText());
+				Empleado emp = tiendaDeRopa.buscarEmpleado(campoTextoUsuario.getText());
 				contentPane.setVisible(false);
 				
 			}
@@ -172,7 +155,7 @@ public class VentanaDeEntrada extends JFrame {
 		contentPane.add(jLabelContraseña);
 		
 		JLabel jLabelIcono = new JLabel("");
-		jLabelIcono.setIcon(new ImageIcon(VentanaDeEntrada.class.getResource("/Ejecutable/Fondito.png")));
+		jLabelIcono.setIcon(new ImageIcon(VentanaDeEntrada.class.getResource("/Imagenes/Fondito.png")));
 		jLabelIcono.setBounds(69, 45, 256, 294);
 		contentPane.add(jLabelIcono);
 		
@@ -187,7 +170,7 @@ public class VentanaDeEntrada extends JFrame {
 		jLabelFondo.setBackground(new Color(0, 0, 128));
 		jLabelFondo.setForeground(new Color(255, 255, 255));
 		jLabelFondo.setBounds(0, 0, 420, 500);
-		jLabelFondo.setIcon(new ImageIcon(VentanaDeEntrada.class.getResource("/Ejecutable/wallPaper blue.jpg")));
+		jLabelFondo.setIcon(new ImageIcon(VentanaDeEntrada.class.getResource("/Imagenes/wallPaper blue.jpg")));
 		contentPane.add(jLabelFondo);
 	}
 }
