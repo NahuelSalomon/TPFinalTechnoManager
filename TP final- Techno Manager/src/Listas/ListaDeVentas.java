@@ -1,5 +1,6 @@
 package Listas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -16,7 +17,7 @@ import Interfaces.IFuncionesBasicasListaVentas;
  * @author Nahuel
  *
  */
-public class ListaDeVentas implements IFuncionesBasicasListaVentas {
+public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable {
 
 	private ContenedorClientesYVentas<Venta> ventas;
 

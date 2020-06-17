@@ -1,5 +1,7 @@
 package Ejecutable;
 
+import java.util.ArrayList;
+
 import Archivos.archivoClientes;
 import Archivos.archivoEmpleados;
 import Archivos.archivoPrendas;
@@ -29,10 +31,10 @@ public class TiendaDeRopa {
 
 	public TiendaDeRopa() {
 
-		clientes = new ListaDeClientes(/*archivoClientes.leerClientes()*/);
-		empleados = new ListaDeEmpleados(/*archivoEmpleados.leerEmpleados()*/);
-		prendasDeVestir = new ListaDePrendas(/*archivoPrendas.leerPrendas()*/);
-		ventas = new ListaDeVentas(/*archivoVentas.leerVentas()*/);
+		clientes = new ListaDeClientes(archivoClientes.leerClientes());
+		empleados = new ListaDeEmpleados(archivoEmpleados.leerEmpleados());
+		prendasDeVestir = new ListaDePrendas(archivoPrendas.leerPrendas());
+		ventas = new ListaDeVentas(archivoVentas.leerVentas());
 	}
 
 	/**
@@ -287,6 +289,20 @@ public class TiendaDeRopa {
 	public boolean verificarEmpleado(String legajo, String contraseña, String tipoDeEmpleado)
 	{
 		return empleados.verificarEmpleado(legajo, contraseña, tipoDeEmpleado);
+	}
+	
+	/**
+	 * Utiliza las clases de Archivos para guardar las Listas
+	 */
+	public void guardarTiendaDeRopa() {
+		archivoEmpleados.grabarEmpleados(empleados);
+		archivoClientes.grabarClientes(clientes);;
+		archivoPrendas.grabarPrendas(prendasDeVestir);
+		archivoVentas.grabarVentas(ventas);
+	}
+	
+	public ArrayList<Cliente> devolverClientes(){
+		return clientes.devolverClientes();
 	}
 
 }

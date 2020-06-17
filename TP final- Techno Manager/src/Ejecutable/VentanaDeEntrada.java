@@ -12,6 +12,8 @@ import ClasesPersona.Vendedor;
 import Listas.ListaDeEmpleados;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.print.attribute.standard.JobMessageFromOperator;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
@@ -22,6 +24,9 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.swing.JRadioButton;
 
 public class VentanaDeEntrada extends JFrame {
@@ -29,7 +34,6 @@ public class VentanaDeEntrada extends JFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField campoTextoUsuario;
 	private JPasswordField camposTextoContra;
@@ -43,6 +47,7 @@ public class VentanaDeEntrada extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaDeEntrada(TiendaDeRopa tiendaDeRopa) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 420, 500);
 		contentPane = new JPanel();
@@ -59,9 +64,7 @@ public class VentanaDeEntrada extends JFrame {
 			System.exit(0);
 			}
 		});
-		
-	
-		
+				
 		JRadioButton radioButtonGerente = new JRadioButton("gerente");
 		radioButtonGerente.setForeground(Color.WHITE);
 		radioButtonGerente.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -108,18 +111,29 @@ public class VentanaDeEntrada extends JFrame {
 		JButton botonIncioSesion = new JButton("Iniciar sesi\u00F3n");
 		botonIncioSesion.addMouseListener(new MouseAdapter() {
 			/**
-			 * Este metodo se va encargar de una vez que se cliquea en iniciar sesion, verificar si los datos fueron indicados correctamete
+			 * Este metodo que al cliquear en iniciar sesion, verifica si los datos fueron correctos
 			 */
 			public void mouseClicked(MouseEvent arg0) {
-			if(tiendaDeRopa.verificarEmpleado(campoTextoUsuario.getText(), camposTextoContra.getText(),tipoDeEmpleado))
-			{
-				Empleado emp = tiendaDeRopa.buscarEmpleado(campoTextoUsuario.getText());
-				contentPane.setVisible(false);
-				
-			}
-			}
-			
-			
+				if(tiendaDeRopa.verificarEmpleado(campoTextoUsuario.getText(), camposTextoContra.getText(),tipoDeEmpleado))
+					{
+						dispose();
+						try {
+							VentanaOpcionesEmpleado ventanaOpEmpleado = new VentanaOpcionesEmpleado(campoTextoUsuario.getText(), tiendaDeRopa);
+							ventanaOpEmpleado.setVisible(true);
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				else JOptionPane.showMessageDialog(null, "Datos ingresados no validos");
+			}			
 		});
 		botonIncioSesion.setBackground(new Color(0, 0, 128));
 		botonIncioSesion.setForeground(Color.WHITE);
