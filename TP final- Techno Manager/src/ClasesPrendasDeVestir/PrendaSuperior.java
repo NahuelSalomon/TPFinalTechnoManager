@@ -18,7 +18,7 @@ public abstract class PrendaSuperior extends PrendaDeVestir implements Serializa
 
 	public PrendaSuperior() {
 		super();
-		this.esMangaCorta = (Boolean) null;
+		this.esMangaCorta = false;
 	}
 
 	public PrendaSuperior(int marca, String modelo, String color, int tipoDeMaterial, boolean esMangaCorta) {

@@ -48,6 +48,10 @@ public abstract class Empleado extends Persona implements Serializable{
 		this.contraseña = contraseña;
 	}
 
+	public int getEstadoCivilInt() {
+		return this.estadoCivil;
+	}
+	
 	public String getEstadoCivil() {
 		String rta = "";
 		switch(this.estadoCivil) {

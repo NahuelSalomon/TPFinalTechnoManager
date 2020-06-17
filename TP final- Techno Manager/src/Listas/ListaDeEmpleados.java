@@ -6,8 +6,7 @@ package Listas;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
-
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -25,7 +24,7 @@ import Interfaces.IFuncionesBasicasListaEmpleados;
  * @author Nahuel
  *
  */
-public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados {
+public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados,Serializable {
 
 	private ContenedorPrendasYEmpleados<String, Empleado> empleados;
 
