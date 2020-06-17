@@ -3,6 +3,9 @@ package ClasesPersona;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Clase que extiende de cliente, este es un cliente minorista.
  * 
@@ -26,7 +29,7 @@ public class ClienteMayorista extends Cliente implements Serializable {
 		this.condicionFrenteIVA = condicionFrenteIVA;
 	}
 
-	public ClienteMayorista(String nombre, String apellido, String dni, int genero, Date fechaNac,
+	public ClienteMayorista(String nombre, String apellido, String dni, int genero, String fechaNac,
 			String domicilio, String email, String cuil, int condicionFrenteIVA) {
 		super(nombre, apellido, dni, genero, fechaNac, domicilio, email);
 		this.cuil = cuil;
@@ -41,6 +44,10 @@ public class ClienteMayorista extends Cliente implements Serializable {
 		this.cuil = cuil;
 	}
 
+	public int getCondicionFrenteIVAInt() {
+		return this.condicionFrenteIVA;
+	}
+	
 	public String getCondicionFrenteIVA() {
 		String rta = "";
 		switch(this.condicionFrenteIVA) {
@@ -70,25 +77,6 @@ public class ClienteMayorista extends Cliente implements Serializable {
 		this.condicionFrenteIVA = condicionFrenteIVA;
 	}
 
-//	/**
-//	 * Este metodo comprueba si se inserta una condicion frente al IVA correcta
-//	 * 
-//	 * @param condicion a comprobar
-//	 * @return condicion comprobadaa
-//	 */
-//	public String comprobarCondicionIVA(String condicion) {
-//		String condicionComprobada = "Consumidor final";
-//
-//		if (condicion.equalsIgnoreCase("Responsable inscripto") || condicion.equalsIgnoreCase("Exento de IVA")
-//				|| condicion.equalsIgnoreCase("Consumidor final") || condicion.equalsIgnoreCase("IVA al 10 1/2")
-//				|| condicion.equalsIgnoreCase("Monotributista") || condicion.equalsIgnoreCase("No respónsable")
-//				|| condicion.equalsIgnoreCase("Responsable Monotributo")) {
-//			condicionComprobada = condicion;
-//		}
-//
-//		return condicionComprobada;
-//	}
-
 	@Override
 	public String toString() {
 		return super.toString() + "\nCUIL: " + getCuil() + "\nCondicion frente al IVA: " + getCondicionFrenteIVA();
@@ -96,7 +84,35 @@ public class ClienteMayorista extends Cliente implements Serializable {
 
 	@Override
 	public String tipoDeCliente() {
-		return "Minorista";
+		return "Mayorista";
 	}
 
+	@Override
+	public JSONObject toJSONObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject = super.toJSONObject();
+		jsonObject.put("CUIL", getCuil());
+		jsonObject.put("Condicion frente al IVA", getCondicionFrenteIVAInt());
+		
+	return jsonObject;
+	}
+
+	public ClienteMayorista JSONObjectToClienteMayorista (JSONObject jsonObject) throws JSONException { 
+		
+		String nombre = jsonObject.getString("Nombre");
+		String apellido = jsonObject.getString("Apellido");
+		String dni = jsonObject.getString("DNI");
+		int genero = jsonObject.getInt("Genero");
+		String fechaNac = jsonObject.getString("Fecha de nac");
+		String domicilio = jsonObject.getString("Domicilio");
+		String email = jsonObject.getString("Email");
+		String cuil = jsonObject.getString("CUIL");
+		int condicionFrenteIVA = jsonObject.getInt("Condicion frente al IVA");
+		
+	ClienteMayorista clienteMayorista = new ClienteMayorista(nombre, apellido, dni, genero, fechaNac, domicilio, email, cuil, condicionFrenteIVA);
+	
+	return clienteMayorista; 
+			
+	}
 }

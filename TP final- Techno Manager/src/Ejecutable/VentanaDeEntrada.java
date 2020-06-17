@@ -159,11 +159,6 @@ public class VentanaDeEntrada extends JFrame {
 		contentPane.add(campoTextoUsuario);
 		campoTextoUsuario.setColumns(10);
 		
-
-		
-		
-		
-		
 		JLabel jLabelLegajo = new JLabel("Legajo");
 		jLabelLegajo.setForeground(new Color(255, 255, 255));
 		jLabelLegajo.setFont(new Font("Tahoma", Font.BOLD, 14));

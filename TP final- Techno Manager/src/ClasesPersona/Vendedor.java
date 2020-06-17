@@ -1,6 +1,10 @@
 package ClasesPersona;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Subclase vendedor que extiende de empleado.
@@ -8,7 +12,7 @@ import java.util.Date;
  * @author Nahuel
  *
  */
-public class Vendedor extends Empleado {
+public class Vendedor extends Empleado implements Serializable{
 
 	private String telefono;
 
@@ -22,7 +26,7 @@ public class Vendedor extends Empleado {
 		this.telefono = null;
 	}
 	
-	public Vendedor(String nombre, String apellido, String dni, int genero, Date fechaNac, int estadoCivil,
+	public Vendedor(String nombre, String apellido, String dni, int genero, String fechaNac, int estadoCivil,
 			String telefono, String legajo, String contraseña) {
 		super(nombre, apellido, dni, genero, fechaNac, estadoCivil, legajo, contraseña);
 		this.telefono = telefono;
@@ -45,4 +49,35 @@ public class Vendedor extends Empleado {
 		return "vendedor";
 	}
 
+	@Override
+	public JSONObject toJSONObject() throws JSONException { 
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject = super.toJSONObject();
+		jsonObject.put("Telefono: ", getTelefono());
+		
+		return jsonObject;
+	}
+
+	public Vendedor JSONObjectToVendedor(JSONObject jsonObject) throws JSONException { 
+			
+		String nombre = jsonObject.getString("Nombre");
+		String apellido = jsonObject.getString("Apellido");
+		String dni = jsonObject.getString("DNI");
+		Integer genero = jsonObject.getInt("Genero");
+		String fechaNac = jsonObject.getString("Fehca de naciemiento");
+		Integer estadoCivil = jsonObject.getInt("Estado civil");
+		String telefono = jsonObject.getString("Telefono");
+		String legajo = jsonObject.getString("Legajo");
+		String contraseña = jsonObject.getString("Contraseña");
+		
+		Vendedor vendedor = new Vendedor(nombre, apellido, dni, genero, fechaNac, estadoCivil, telefono, legajo, contraseña);
+			
+		return vendedor;
+		}
+	
+
+	
+	
 }

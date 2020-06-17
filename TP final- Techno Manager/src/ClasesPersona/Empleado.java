@@ -1,6 +1,10 @@
 package ClasesPersona;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Clase que engloba todas las características de un empleado. No puede ser
@@ -9,7 +13,7 @@ import java.util.Date;
  * @author Nahuel
  *
  */
-public abstract class Empleado extends Persona {
+public abstract class Empleado extends Persona implements Serializable{
 	private int estadoCivil;
 	private String legajo;
 	private String contraseña;
@@ -28,7 +32,7 @@ public abstract class Empleado extends Persona {
 		this.contraseña = contraseña;
 	}
 
-	public Empleado(String nombre, String apellido, String dni, int genero, Date fechaNac, int estadoCivil,
+	public Empleado(String nombre, String apellido, String dni, int genero, String fechaNac, int estadoCivil,
 			String legajo, String contraseña) {
 		super(nombre, apellido, dni, genero, fechaNac);
 		this.estadoCivil = estadoCivil;
@@ -100,8 +104,24 @@ public abstract class Empleado extends Persona {
 
 	/**
 	 * Metodo abstracto que retorna el tipo de empleado.
-	 * 
 	 * @return el tipo de empleado en forma de String.
 	 */
 	public abstract String tipoEmpleado();
+	
+	@Override
+	public JSONObject toJSONObject() throws JSONException { 
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject = super.toJSONObject();
+		jsonObject.put("Empleado: ", tipoEmpleado());
+		jsonObject.put("Legajo: ", getLegajo());
+		jsonObject.put("Estado civil: ", getEstadoCivil());
+		jsonObject.put("Contraseña: ", getContraseña());
+		
+	return jsonObject;
+	}
+	
+	
+
 }

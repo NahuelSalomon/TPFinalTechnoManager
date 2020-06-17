@@ -3,6 +3,9 @@ package ClasesPersona;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Super clase Persona, reune todas las caracteristicas de todas las clases que
  * sean "personas".
@@ -16,7 +19,7 @@ public class Persona implements Serializable {
 	private String apellido;
 	private String dni;
 	private int genero;
-	private Date fechaNac;
+	private String fechaNac;
 
 	public Persona() {
 		super();
@@ -31,7 +34,7 @@ public class Persona implements Serializable {
 		this.fechaNac = null;
 	}
 
-	public Persona(String nombre, String apellido, String dni, int genero, Date fechaNac) {
+	public Persona(String nombre, String apellido, String dni, int genero, String fechaNac) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -52,6 +55,10 @@ public class Persona implements Serializable {
 		return dni;
 	}
 
+	public int getGeneroInt() {
+		return this.genero;
+	}
+	
 	public String getGenero() {
 		String rta = "";
 		switch(this.genero) {
@@ -71,8 +78,8 @@ public class Persona implements Serializable {
 		return rta;
 	}
 
-	public Date getFechaNac() {
-		return fechaNac;
+	public String getFechaNac() {
+		return fechaNac.toString();
 	}
 
 	public void setNombre(String nombre) {
@@ -84,29 +91,38 @@ public class Persona implements Serializable {
 	}
 
 	public void setGenero(int genero) {
-		//if(genero>=1 && genero<=3) this.genero =genero;
-		//else this.genero = 3;
 		this.genero = genero;
 	}
 
-//	/**
-//	 * Método para comprobar que el genero ingresado sea correcto, solo hay tres
-//	 * opciones.
-//	 * 
-//	 * @param genero es el genero a comprobar
-//	 * @return el genero comprobado, si es incorrecto asigna "Personalizado" por
-//	 *         default
-//	 */
-//	public String comprobarGenero(String genero) {
-//		String generoComprobado = "Personalizado";
-//
-//		if (genero.equalsIgnoreCase("Masculino") || genero.equalsIgnoreCase("Femenino")
-//				|| genero.equalsIgnoreCase("Personalizado")) {
-//			generoComprobado = genero;
-//		}
-//		return generoComprobado;
-//	}
-
+	/**
+	 * Metodo que conviete una persona a un objeto de json
+	 * @return la persona en forma de JSONObject
+	 * @throws JSONException
+	 */
+	public JSONObject toJSONObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("Nombre", getNombre());
+		jsonObject.put("Apellido", getApellido());
+		jsonObject.put("DNI", getDni());
+		jsonObject.put("Genero", getGenero());
+		jsonObject.put("Fecha de nac", getFechaNac());
+		
+		return jsonObject;
+	}
+	
+	public static Persona JSONObjectToPersona(JSONObject jsonObject) throws JSONException {
+		
+		String nombre = jsonObject.getString("Nombre"); 
+		String apellido = jsonObject.getString("Apellido");
+		String DNI = jsonObject.getString("DNI");
+		Integer genero = jsonObject.getInt("Genero");
+		String fechaNac = jsonObject.getString("Fecha de nac");
+		Persona persona = new Persona(nombre, apellido, DNI, genero, fechaNac);
+		
+		return persona; 
+	}
+	
 	@Override
 	public String toString() {
 		return "Nombre: " + getNombre() + "\nApellido: " + getApellido() + "\nDNI: " + getDni() + "\nGenero: "

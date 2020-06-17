@@ -1,5 +1,10 @@
 package ClasesPrendasDeVestir;
 
+import java.io.Serializable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Clase para prendas superiores de ropa Es abstracta con la finalidad de que
  * una prenda superior tiene que ser bien definida que tipo de prenda es
@@ -7,7 +12,7 @@ package ClasesPrendasDeVestir;
  * @author Techno Manager
  *
  */
-public abstract class PrendaSuperior extends PrendaDeVestir {
+public abstract class PrendaSuperior extends PrendaDeVestir implements Serializable{
 
 	private boolean esMangaCorta;
 
@@ -36,4 +41,15 @@ public abstract class PrendaSuperior extends PrendaDeVestir {
 	public String toString() {
 		return super.toString() + "\n" + getEsMangaCorta();
 	}
+	
+	@Override
+	public JSONObject toJSONObject() throws JSONException { 
+		JSONObject jsonObject = new JSONObject();
+	
+		jsonObject = super.toJSONObject();
+		jsonObject.put("Es manga corta: ", getEsMangaCorta());
+	
+	return jsonObject;
+	}
+
 }

@@ -2,9 +2,18 @@ package Listas;
 
 
 
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
+
+
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import ClasesPersona.Cliente;
 
 import ClasesPersona.Empleado;
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
@@ -18,12 +27,18 @@ import Interfaces.IFuncionesBasicasListaEmpleados;
  */
 public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados {
 
-	ContenedorPrendasYEmpleados<String, Empleado> empleados;
+	private ContenedorPrendasYEmpleados<String, Empleado> empleados;
 
 	public ListaDeEmpleados() {
 		empleados = new ContenedorPrendasYEmpleados<String, Empleado>();
 	}
 
+	public ListaDeEmpleados(ListaDeEmpleados listaDeEmpleados) { 
+		empleados = new ContenedorPrendasYEmpleados<String, Empleado>();
+		this.agragarListaDeClientes(listaDeEmpleados.devolverListaDeEmpleados());
+	}
+	
+	
 	@Override
 	public boolean agregarEmpleado(String clave, Empleado valor) {
 		return empleados.agregarElemento(clave, valor);
@@ -98,11 +113,45 @@ public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados {
 	 * @param legajo del empleado a verificar
 	 * @return true si existe, false si no existe
 	 */
-	
-	
-	
 	public boolean existeEmpleado(String legajo) {
 		return empleados.existeClave(legajo);
 	}
 
+	
+	/**
+	 * Agrega varios clientes a la lista de clientes 
+	 * @param listaDeClientes en forma de ArrayList
+	 */
+	public void agragarListaDeClientes(ArrayList<Empleado> listaDeEmpleados) {
+		
+		for(Empleado empleado : listaDeEmpleados) {
+			this.empleados.agregarElemento(empleado.getLegajo(),empleado);
+		}
+	}
+	
+	/**
+	 * Metodo para devolver toods los clientes
+	 * @return los clientes en un ArrayList
+	 */
+	public ArrayList<Empleado> devolverListaDeEmpleados() {
+		return empleados.devolverElementos();
+	}
+	
+	/**
+	 * Covierte la lista de empleados a un arreglo de JSON
+	 * @return el JSONArray con los empleados 
+	 * @throws JSONException
+	 */
+	public JSONArray toJsonArray() throws JSONException {
+		ArrayList<Empleado> todosLosEmpleados = empleados.devolverElementos();
+		JSONArray jsonArray = new JSONArray();
+		
+		for(int i = 0 ; i < todosLosEmpleados.size() ; i++ ) {
+			jsonArray.put(todosLosEmpleados.get(i).toJSONObject());
+		}
+		
+		return jsonArray;
+	}
+	
+	
 }

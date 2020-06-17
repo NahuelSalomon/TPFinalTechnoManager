@@ -1,5 +1,10 @@
 package ClasesPrendasDeVestir;
 
+import java.io.Serializable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Clase para definir objetos del tipo remera Hija de clase abstracta
  * PrendaDeVestir y de PrendaSuperior
@@ -7,7 +12,7 @@ package ClasesPrendasDeVestir;
  * @author Techno Manager
  *
  */
-public class Remera extends PrendaSuperior {
+public class Remera extends PrendaSuperior implements Serializable{
 
 	private String tipoEstampado;
 
@@ -35,6 +40,16 @@ public class Remera extends PrendaSuperior {
 		return "Remera";
 	}
 
+	@Override
+	public JSONObject toJSONObject() throws JSONException { 
+		JSONObject jsonObject = new JSONObject();
+	
+		jsonObject = super.toJSONObject();
+		jsonObject.put("Tipo de estampado: ", getTipoEstampado());
+	
+	return jsonObject;
+	}
+	
 	public String toString() {
 		return super.toString() + "\nTipo de estampado: " + getTipoEstampado();
 	}

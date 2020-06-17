@@ -1,6 +1,10 @@
 package ClasesPersona;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Clase que engloba todas las características de un cliente. No se puede
@@ -9,7 +13,7 @@ import java.util.Date;
  * @author Nahuel
  *
  */
-public class Cliente extends Persona {
+public abstract class Cliente extends Persona implements Serializable {
 
 	private String domicilio;
 	private String email;
@@ -26,7 +30,7 @@ public class Cliente extends Persona {
 		this.domicilio = null;
 	}
 
-	public Cliente(String nombre, String apellido, String dni, int genero, Date fechaNac, String domicilio,
+	public Cliente(String nombre, String apellido, String dni, int genero, String fechaNac, String domicilio,
 			String email) {
 		super(nombre, apellido, dni, genero, fechaNac);
 		this.email = email;
@@ -49,11 +53,18 @@ public class Cliente extends Persona {
 		this.email = email;
 	}
 
-	public String tipoDeCliente() {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public JSONObject toJSONObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject = super.toJSONObject();
+		jsonObject.put("Tipo de cliente: ", tipoDeCliente());
+		jsonObject.put("Domicilio: ", getDomicilio());
+		jsonObject.put("Email: ", getEmail());
+		
+	return jsonObject;
 	}
-
+	
 	@Override
 	public String toString() {
 		return super.toString() + "\nDomicilio: " + getDomicilio() + "\nEmail: " + getEmail();
@@ -61,8 +72,11 @@ public class Cliente extends Persona {
 
 	/**
 	 * Metodo que devuelve el tipo de cliente
-	 * 
 	 * @return el tipo de cliente en forma de String
 	 */
-	// public abstract String tipoDeCliente();
+	public abstract String tipoDeCliente();
+
+	
+	
+	
 }
