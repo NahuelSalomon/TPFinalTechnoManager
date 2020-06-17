@@ -24,18 +24,17 @@ import Listas.ListaDePrendas;
 public class Main {
 
 	public static <OtraListaPrenda> void main(String[] args) {
-		@SuppressWarnings("deprecation")
-		Date fecha = new Date(1990,05,20);
-		@SuppressWarnings("deprecation")
-		Date fecha1 = new Date(2001,10,7);
-
-		Cliente cliente2 = new ClienteMinorista("Lara", "Taylor");
-
-	    Vendedor empleado = new Vendedor("lucas","zelaya","123","soy gay") ;
-	    ListaDeEmpleados lista = new ListaDeEmpleados();
-	    lista.agregarEmpleado(empleado.getLegajo(), empleado);
-			
-			
+	
+		       
+	    
+	    TiendaDeRopa tiendaDeRopa = new TiendaDeRopa();
+	    
+	    VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
+		
+	    ventanaDeEntrada.setVisible(true);
+	    
+	    
+	    //MenuCliente menuCliente = new MenuCliente(); 
 		
 
 		
