@@ -2,6 +2,9 @@ package ClasesPrendasDeVestir;
 
 import java.io.Serializable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Clase para definir objetos del tipo remera Hija de clase abstracta
  * PrendaDeVestir
@@ -55,4 +58,13 @@ public class Calzado extends PrendaDeVestir implements Serializable{
 		return super.toString() + "\nTipo de suela: " + getTipoDeSuela();
 	}
 
+	@Override
+	public JSONObject toJSONObject() throws JSONException { 
+		JSONObject jsonObject = new JSONObject();
+	
+		jsonObject = super.toJSONObject();
+		jsonObject.put("Tipo de suela: ", getTipoDeSuela());
+	
+	return jsonObject;
+	}
 }

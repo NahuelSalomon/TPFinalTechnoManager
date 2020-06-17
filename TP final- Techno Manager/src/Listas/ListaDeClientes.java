@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import ClasesPersona.Cliente;
 import ContenedorGenericas.ContenedorClientesYVentas;
@@ -21,12 +25,18 @@ import Interfaces.IFuncionesBasicasListaClientes;
 
 public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializable {
 
-	ContenedorClientesYVentas<Cliente> clientes;
+	private ContenedorClientesYVentas<Cliente> clientes;
 
 	public ListaDeClientes() {
 		clientes = new ContenedorClientesYVentas<Cliente>();
 	}
 
+	public ListaDeClientes(ListaDeClientes listaDeClientes) {
+		clientes = new ContenedorClientesYVentas<Cliente>();
+		this.agragarListaDeClientes(listaDeClientes.devolverClientes()); 
+	}
+	
+	
 	@Override
 	public boolean agregarCliente(Cliente elemento) {
 		return clientes.agregarElemento(elemento);
@@ -52,55 +62,53 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		return clientes.buscarElemento(index);
 	}
 
-//	/**
-//	 * Modifica un cliente de la lista
-//	 * 
-//	 * @param index             del cliente a modificar
-//	 * @param clienteModificado cliente ya modificado
-//	 * @return true si se modifica correctamente, false en caso contrario.
-//	 */
-//	public boolean modificarElemento(int index, Cliente clienteModificado) {
-//		return clientes.modificarElemento(index, clienteModificado);
-//	}
-//
-//	public void guardarListaClientes() {
-//		String file = "listaCliente.bin";
-//		try {
-//			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-//			oos.writeObject(this);
-//			oos.close();
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-
-	public void guardar() throws FileNotFoundException, IOException {
-		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("fileClientes"));
-		output.writeObject(this);
-		output.close();
-	}
-
-	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream("fileClientes"));
-		clientes = (ContenedorClientesYVentas<Cliente>) input.readObject();
-		input.close();
-	}
-
-	/**
-	 * Metodo para comprobar si existe un cliente
-	 * 
-	 * @param cliente a verificar
-	 * @return true si existe, false en caso contrario
-	 */
 	public boolean existeCliente(Cliente cliente) {
 		return clientes.existeElemento(cliente);
 	}
 	
-	public boolean comparaNomApe(Cliente cliente) {
-		return clientes.comparaNomApe(cliente);
+	/**
+	 * Metodo para devolver toods los clientes
+	 * @return los clientes en un ArrayList
+	 */
+	public ArrayList<Cliente> devolverClientes() {
+		ArrayList<Cliente> listaDeclientes = new ArrayList<Cliente>();
+		
+		for(int i = 0 ; i < clientes.cantidadElementos() ; i++) {
+			listaDeclientes.add(clientes.buscarElemento(i));
+		}
+		
+		return listaDeclientes;
+	} 
+	
+	/**
+	 * Agrega varios clientes a la lista de clientes 
+	 * @param listaDeClientes en forma de ArrayList
+	 */
+	public void agragarListaDeClientes(ArrayList<Cliente> listaDeClientes) {
+		
+		for(Cliente cliente : listaDeClientes) {
+			this.clientes.agregarElemento(cliente);
+		}
 	}
+	
+	/**
+	 * Convierte la lista de clientes en un arreglo de JSON 
+	 * @return un JSONArray con los clientes
+	 * @throws JSONException 
+	 */
+	public JSONArray toJsonArray() throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		
+		for(int i = 0 ; i < clientes.cantidadElementos() ; i++ ) {
+			jsonArray.put(clientes.buscarElemento(i).toJSONObject());
+		}
+		
+		return jsonArray;
+	}
+
+	public boolean comparaNomApe(Cliente nuevoCliente) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 }

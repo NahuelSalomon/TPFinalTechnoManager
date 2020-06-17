@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import ClasesPersona.Empleado;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
@@ -22,12 +27,18 @@ import Interfaces.IFuncionesBasicasListaPrendas;
  */
 public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializable {
 
-	ContenedorPrendasYEmpleados<String, PrendaDeVestir> prendas;
+	private ContenedorPrendasYEmpleados<String, PrendaDeVestir> prendas;
 
 	public ListaDePrendas() {
 		prendas = new ContenedorPrendasYEmpleados<String, PrendaDeVestir>();
 	}
 
+	public ListaDePrendas(ListaDePrendas listaDePrendas) {
+		prendas = new ContenedorPrendasYEmpleados<String, PrendaDeVestir>();
+		this.agragarListaDePrendas(listaDePrendas.devolverListaDePrendas());
+	}
+	
+	
 	@Override
 	public boolean agregarPrenda(String clave, PrendaDeVestir valor) {
 		return prendas.agregarElemento(clave, valor);
@@ -53,30 +64,56 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializab
 		return prendas.buscarElemento(clave);
 	}
 
+	/**
+	 * Metodo para comprobar si existe un prenda de vestir
+	 * @param prendaDeVestir a verificar
+	 * @return true si existe, false en caso contrario
+	 */
 	public boolean existePrendaDeVestir(PrendaDeVestir prendaDeVestir) {
 		return prendas.existeClave(prendaDeVestir.getCodigo());
 	}
 	
-	public void guardar() throws FileNotFoundException, IOException {
-		ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("filePrendas"));
-		output.writeObject(this);
-		output.close();
-	}
-
-	public void abrir() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream("filePrendas"));
-		prendas = (ContenedorPrendasYEmpleados<String, PrendaDeVestir>) input.readObject();
-		input.close();
-	}
-
+	
 	/**
-	 * Verifica si existe una prenda
-	 * 
+	 * Devulve todas las prendas en forma de ArrayList
+	 * @return las prendas en forma de ArrayList
+	 */
+	public ArrayList<PrendaDeVestir> devolverListaDePrendas() {
+		return prendas.devolverElementos();
+	
+	}
+	
+	
+	/**
+	 * Agrega un arreglo de prendas a la lista de prendas
+	 * @param listaDePrendas a agregar
+	 */
+	public void agragarListaDePrendas(ArrayList<PrendaDeVestir> listaDePrendas) {
+		
+		for(PrendaDeVestir prendaDeVestir : listaDePrendas) {
+			this.prendas.agregarElemento(prendaDeVestir.getCodigo(),prendaDeVestir);
+		}
+	} 
+	
+	
+	/**
+	 * Verifica si existe una prenda de vestir
 	 * @param codigo de la prenda a verificar
 	 * @return true si la prenda existe, false en caso contrario.
 	 */
 	public boolean existePrendaDeVesitr(String codigo) {
 		return prendas.existeClave(codigo);
+	}
+
+	/**
+	 * Devuelve la lista de prendas en un arreglo de json
+	 * @return las prendas en un JSONArray
+	 * @throws JSONException 
+	 */
+	public JSONArray toJsonArray() throws JSONException {
+		JSONArray jsonArray = new JSONArray();
+		
+		return jsonArray;
 	}
 
 }

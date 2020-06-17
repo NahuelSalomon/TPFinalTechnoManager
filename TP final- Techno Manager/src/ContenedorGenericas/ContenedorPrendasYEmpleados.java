@@ -1,11 +1,16 @@
 package ContenedorGenericas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+
 import ClasesPersona.Empleado;
+
+import org.json.JSONArray;
+
 
 import java.util.Map.Entry;
 
@@ -127,7 +132,24 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 		}
 
 	}
+	
+	/**
+	 * Devuelve todos los elementos del contenedor en forma de Arraylist
+	 * @return el ArrayList con los elementos
+	 */
+	public ArrayList<V> devolverElementos() {
+		ArrayList <V> elementos = new ArrayList<V>();
+		
+		Set<Entry<K, V>> set = contenedor.entrySet();
+		Iterator<Entry<K, V>> iterator = set.iterator();
 
+		while (iterator.hasNext()) {
+			Entry<K, V> entry = iterator.next();
+			elementos.add(entry.getValue());
+		}
+		return elementos;
+	}
+	
 	
 
 }

@@ -1,10 +1,14 @@
 package ClasesPrendasDeVestir;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Esta clase tiene la finalidad de darle una abstraccion a como esta
@@ -131,6 +135,19 @@ public class TallesYStock implements Serializable{
 		}
 
 		return builder.toString();
+	}
+
+	public JSONObject toJSONObject() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		
+		Set<Entry<String, Integer>> set = tallesYStock.entrySet();
+		Iterator<Entry<String, Integer>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Entry<String, Integer> entry = iterator.next();
+			jsonObject.put(entry.getKey(), entry.getValue());
+		}
+		return jsonObject;
 	}
 
 }

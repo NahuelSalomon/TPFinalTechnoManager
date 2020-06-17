@@ -1,6 +1,9 @@
 package Ejecutable;
 
 import javax.swing.JOptionPane;
+
+import Archivos.archivoClientes;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,7 +20,6 @@ import ClasesPrendasDeVestir.PrendaDeVestir;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
-import OtrasListas.*;
 
 public class Main {
 
@@ -26,30 +28,34 @@ public class Main {
 		Date fecha = new Date(1990,05,20);
 		@SuppressWarnings("deprecation")
 		Date fecha1 = new Date(2001,10,7);
-		Cliente cliente1 = new Cliente("Pepe", "Lopes");
+
 		Cliente cliente2 = new ClienteMinorista("Lara", "Taylor");
+
 	    Vendedor empleado = new Vendedor("lucas","zelaya","123","soy gay") ;
 	    ListaDeEmpleados lista = new ListaDeEmpleados();
 	    lista.agregarEmpleado(empleado.getLegajo(), empleado);
 			
 			
 		
+
 		
-		OtraListaClientes listaClientes = new OtraListaClientes();
-		listaClientes.agregarElemento(cliente1);
+		/*
+		
+		
+		ListaDeClientes listaClientes = new ListaDeClientes();
+	
 		listaClientes.agregarElemento(cliente2);
 		//listaClientes.listarClientes();
 		
 		PrendaDeVestir prenda1 = new Calzado(2,"NuevoModelo","rojo",4,2);
 		PrendaDeVestir prenda2 = new Calzado(3,"OtroModelo","azul",1,5);
-		OtraListaPrendas listaPrendas = new OtraListaPrendas();
+		OtraListaPrendas listaPrendas = new ListaDeClientes();
 		listaPrendas.agregarElemento("1", prenda1);
 		listaPrendas.agregarElemento("2", prenda2);
 		
 		
 		try {
-			listaClientes.guardar();
-			listaPrendas.guardar();
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,12 +64,11 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		OtraListaClientes lista2 = new OtraListaClientes();
-		OtraListaPrendas listaP2 = new OtraListaPrendas();
+		ListaDeClientes lista2 = new ListaDeClientes();
+		ListaDeClientes listaP2 = new ListaDeClientes();
 		
 		try {
-			lista2.abrir();
-			listaP2.abrir();
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,7 +83,10 @@ public class Main {
 //		System.out.println(lista2.listarElementos());
 //		System.out.println("");
 		System.out.println(listaP2.listarElementos("Claves:", "Valores:"));
-			
+		
+		
+	
+	*/	
 	}
 
 }

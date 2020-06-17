@@ -1,5 +1,9 @@
 package Ejecutable;
 
+import Archivos.archivoClientes;
+import Archivos.archivoEmpleados;
+import Archivos.archivoPrendas;
+import Archivos.archivoVentas;
 import ClaseVenta.Venta;
 import ClasesPersona.Cliente;
 import ClasesPersona.Empleado;
@@ -25,10 +29,10 @@ public class TiendaDeRopa {
 
 	public TiendaDeRopa() {
 
-		clientes = new ListaDeClientes();
-		empleados = new ListaDeEmpleados();
-		prendasDeVestir = new ListaDePrendas();
-		ventas = new ListaDeVentas();
+		clientes = new ListaDeClientes(archivoClientes.leerClientes());
+		empleados = new ListaDeEmpleados(archivoEmpleados.leerEmpleados());
+		prendasDeVestir = new ListaDePrendas(archivoPrendas.leerPrendas());
+		ventas = new ListaDeVentas(archivoVentas.leerVentas());
 	}
 
 	/**

@@ -5,6 +5,11 @@ import java.util.Random;
 
 import javax.rmi.CORBA.Util;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ClasesPersona.Gerente;
+
 /**
  * Clase padre de cualquier prenda de vestir, es abstracta con la finalidad de
  * que se tiene que definir bien de que tipo es la prenda
@@ -224,4 +229,24 @@ public abstract class PrendaDeVestir implements Serializable{
 	 * @return tipo prenda en forma de string
 	 */
 	public abstract String tipoDePrenda();
+
+	
+	/**
+	 * Devuelve la prenda de vestir en forma de un objeto de json 
+	 * @return la prenda de forma de JSONObject
+	 * @throws JSONException
+	 */
+	public JSONObject toJSONObject() throws JSONException { 
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("Codigo: ", getCodigo());
+		jsonObject.put("Marca: ", getMarca());
+		jsonObject.put("Modelo: : ", getModelo());
+		jsonObject.put("Color: ", getColor());
+		jsonObject.put("Tipo de material: ", getTipoDeMaterial());
+		jsonObject.put("Talles y stock: ", stockPrenda.toJSONObject());
+		
+	return jsonObject;
+	}
 }

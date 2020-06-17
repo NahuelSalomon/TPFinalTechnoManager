@@ -1,5 +1,10 @@
 package ClasesPrendasDeVestir;
 
+import java.io.Serializable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Clase para definir objetos del tipo remera Hija de clase abstracta
  * PrendaDeVestir y de PrendaSuperior
@@ -7,7 +12,7 @@ package ClasesPrendasDeVestir;
  * @author Techno Manager
  *
  */
-public class Buzo extends PrendaSuperior {
+public class Buzo extends PrendaSuperior implements Serializable{
 
 	private boolean esTipoCanguro;
 
@@ -42,6 +47,16 @@ public class Buzo extends PrendaSuperior {
 		return "Buzo";
 	}
 
+	@Override
+	public JSONObject toJSONObject() throws JSONException { 
+		JSONObject jsonObject = new JSONObject();
+	
+		jsonObject = super.toJSONObject();
+		jsonObject.put("Es tipo canguro: ", getEsTipoCanguro());
+	
+	return jsonObject;
+	}
+	
 	public String toString() {
 		return super.toString() + "\nEs tipo canguro: " + esTipoCanguro();
 	}

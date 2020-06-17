@@ -83,7 +83,7 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 	 * 
 	 * @return int cantidad de elementos
 	 */
-	private int cantidadElementos() {
+	public int cantidadElementos() {
 		return contenedor.size();
 	}
 

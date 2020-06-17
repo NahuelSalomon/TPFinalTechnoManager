@@ -1,7 +1,14 @@
 package ClaseVenta;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ClasesPersona.Cliente;
 import ClasesPersona.Vendedor;
@@ -13,7 +20,7 @@ import ClasesPrendasDeVestir.PrendaDeVestir;
  * @author Nahuel
  *
  */
-public class Venta {
+public class Venta implements Serializable{
 
 	private Cliente cliente;
 	private Vendedor vendedor;
@@ -59,4 +66,39 @@ public class Venta {
 				+ getVendedor().getNombre() + " " + getVendedor().getApellido() + "Fecha: " + getFecha();
 	}
 
+	/**
+	 * Metodo para devolver la venta en un objeto de json
+	 * @return la venta en forma de JSONObject
+	 * @throws JSONException
+	 */
+	public JSONObject toJSONObject() throws JSONException { 
+		JSONObject jsonObject = new JSONObject();
+	
+		jsonObject.put("Cliente: ", getCliente().getNombre()+" "+getCliente().getApellido());
+		jsonObject.put("Vendedor: ", getVendedor().getNombre()+" "+getVendedor().getApellido());
+		jsonObject.put("Fecha: ", getFecha());
+		jsonObject.put("Monto: ", getMonto());
+		jsonObject.put("Prendas compradas: ", toJSONObjectPrendasCompradas());
+		
+	return jsonObject;
+	}
+	
+	/**
+	 * Metodo para devolver las prendas compradas en un objeto de json
+	 * @return las prendas en forma JSONObject
+	 * @throws JSONException
+	 */
+	private JSONObject toJSONObjectPrendasCompradas() throws JSONException { 
+		JSONObject jsonObject = new JSONObject();
+		
+		Set<Entry<PrendaDeVestir, Integer>> set = prendasCompradas.entrySet();
+		Iterator<Entry<PrendaDeVestir, Integer>> iterator = set.iterator();
+		
+		while(iterator.hasNext()) {
+			Entry <PrendaDeVestir, Integer> entry =  iterator.next();
+			jsonObject.put(entry.getKey().tipoDePrenda(), entry.getValue());
+		}
+		
+		return jsonObject;
+	}
 }
