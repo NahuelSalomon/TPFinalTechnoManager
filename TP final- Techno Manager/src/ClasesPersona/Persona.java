@@ -77,7 +77,7 @@ public class Persona implements Serializable {
 		}
 		return rta;
 	}
-
+	
 	public String getFechaNac() {
 		return fechaNac.toString();
 	}

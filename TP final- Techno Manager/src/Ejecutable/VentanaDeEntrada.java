@@ -61,6 +61,7 @@ public class VentanaDeEntrada extends JFrame {
 		
 		botonSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+			tiendaDeRopa.guardarTiendaDeRopa();
 			System.exit(0);
 			}
 		});
@@ -102,6 +103,10 @@ public class VentanaDeEntrada extends JFrame {
 		contentPane.add(jLabelTipoDeEmpleado);
 		
 		JButton botonAltaEmpleado = new JButton("Dar de alta empleado");
+		
+		
+		
+		
 		botonAltaEmpleado.setBackground(new Color(0, 0, 128));
 		botonAltaEmpleado.setForeground(new Color(255, 255, 255));
 		botonAltaEmpleado.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -109,10 +114,8 @@ public class VentanaDeEntrada extends JFrame {
 		contentPane.add(botonAltaEmpleado);
 		
 		JButton botonIncioSesion = new JButton("Iniciar sesi\u00F3n");
+		
 		botonIncioSesion.addMouseListener(new MouseAdapter() {
-			/**
-			 * Este metodo que al cliquear en iniciar sesion, verifica si los datos fueron correctos
-			 */
 			public void mouseClicked(MouseEvent arg0) {
 				if(tiendaDeRopa.verificarEmpleado(campoTextoUsuario.getText(), camposTextoContra.getText(),tipoDeEmpleado))
 					{
@@ -121,13 +124,10 @@ public class VentanaDeEntrada extends JFrame {
 							VentanaOpcionesEmpleado ventanaOpEmpleado = new VentanaOpcionesEmpleado(campoTextoUsuario.getText(), tiendaDeRopa);
 							ventanaOpEmpleado.setVisible(true);
 						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						
@@ -135,6 +135,17 @@ public class VentanaDeEntrada extends JFrame {
 				else JOptionPane.showMessageDialog(null, "Datos ingresados no validos");
 			}			
 		});
+		
+		
+		botonAltaEmpleado.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+				VentanaAltaEmpleado ventanaAltaEmpleado = new VentanaAltaEmpleado(tiendaDeRopa);
+				ventanaAltaEmpleado.setVisible(true);		
+			}
+		});
+		
+		
 		botonIncioSesion.setBackground(new Color(0, 0, 128));
 		botonIncioSesion.setForeground(Color.WHITE);
 		botonIncioSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
