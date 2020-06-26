@@ -68,10 +68,10 @@ public class Main {
 	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
 	ventanaDeEntrada.setVisible(true);
 	
+	 
 	
-	    
-	    //MenuCliente menuCliente = new MenuCliente(); 
-		/*
+	    /*MenuCliente menuCliente = new MenuCliente(); 
+		
 		ListaDeClientes listaClientes = new ListaDeClientes();
 	
 		listaClientes.agregarElemento(cliente2);
