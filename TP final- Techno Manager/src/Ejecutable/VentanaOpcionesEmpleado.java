@@ -92,12 +92,12 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		botonAtras.setBounds(10, 11, 123, 23);
 		botonAtras.setVisible(true);
 		
-		JLabel labelNombreEmpleado = new JLabel(empleado.getNombre()+" "+empleado.getApellido());
-		labelNombreEmpleado.setForeground(new Color(255, 255, 255));
-		labelNombreEmpleado.setBackground(new Color(255, 255, 255));
-		labelNombreEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		labelNombreEmpleado.setBounds(33, 433, 209, 17);
-		contentPane.add(labelNombreEmpleado);
+		JButton botonNombreEmpleado = new JButton(empleado.getNombre()+" "+empleado.getApellido());
+		botonNombreEmpleado.setForeground(new Color(255, 255, 255));
+		botonNombreEmpleado.setBackground(new Color(0, 0, 255));
+		botonNombreEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		botonNombreEmpleado.setBounds(33, 433, 209, 17);
+		contentPane.add(botonNombreEmpleado);
 		
 		JButton botonAgregarPrendaDeVestir = new JButton("Agregar prenda de vestir\r\n");
 		botonAgregarPrendaDeVestir.setFont(new Font("Segoe UI Historic", Font.BOLD, 14));
@@ -445,64 +445,28 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					empleado.setLegajo(modificacion.getLegajo());
 					empleado.setContraseña(modificacion.getContraseña());
 					
-					labelNombreEmpleado.setText(empleado.getNombre()+" "+empleado.getApellido());
+					botonNombreEmpleado.setText(empleado.getNombre()+" "+empleado.getApellido());
 				}
 			}
 		});
 		//--------/		
 		
-		botonRegistrarVenta.addMouseListener(new MouseAdapter() {
+		accionBotonPaneles(botonRegistrarVenta, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas);
+		accionBotonPaneles(botonVerVentas, panVerMisVentas, panAgregarPrendas, panVendedor, panRegistrarVenta, panModificarDatosPer);
+		accionBotonPaneles(botonModificarDatosPersonales, panModificarDatosPer, panAgregarPrendas, panVendedor, panRegistrarVenta, panRegistrarVenta);
+		accionBotonPaneles(botonAgregarPrendaDeVestir, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer);
+		accionBotonPaneles(botonNombreEmpleado, panVendedor, panAgregarPrendas, panVerMisVentas, panRegistrarVenta, panModificarDatosPer);
+	}
+	
+	public void accionBotonPaneles(JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5) {
+		boton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				panRegistrarVenta.setVisible(true);
-				panVerMisVentas.setVisible(false);
-				panVendedor.setVisible(false);
-				panAgregarPrendas.setVisible(false);
-				panModificarDatosPer.setVisible(false);
-			}
-		});
-		
-		botonVerVentas.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panVerMisVentas.setVisible(true);
-				panRegistrarVenta.setVisible(false);
-				panVendedor.setVisible(false);
-				panAgregarPrendas.setVisible(false);
-				panModificarDatosPer.setVisible(false);
-			}
-		});
-		
-		botonModificarDatosPersonales.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panModificarDatosPer.setVisible(true);
-				panVendedor.setVisible(false);
-				panVerMisVentas.setVisible(false);
-				panRegistrarVenta.setVisible(false);
-				panAgregarPrendas.setVisible(false);
-			}
-		});
-		
-		botonAgregarPrendaDeVestir.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panAgregarPrendas.setVisible(true);
-				panVendedor.setVisible(false);
-				panVerMisVentas.setVisible(false);
-				panRegistrarVenta.setVisible(false);
-				panModificarDatosPer.setVisible(false);
-			}
-		});
-		
-		labelNombreEmpleado.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				panVendedor.setVisible(true);
-				panModificarDatosPer.setVisible(false);
-				panAgregarPrendas.setVisible(false);
-				panVerMisVentas.setVisible(false);
-				panRegistrarVenta.setVisible(false);
+				p1.setVisible(true);
+				p2.setVisible(false);
+				p3.setVisible(false);
+				p4.setVisible(false);
+				p5.setVisible(false);
 			}
 		});
 	}
