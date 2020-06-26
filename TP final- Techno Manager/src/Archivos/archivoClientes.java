@@ -45,9 +45,8 @@ public class archivoClientes implements Serializable{
 				fileInputStream = new FileInputStream(archivoDeClientes);
 				objectInputStream = new ObjectInputStream(fileInputStream);
 				
-				if(objectInputStream.readObject() != null) {
-					aux = (ListaDeClientes) objectInputStream.readObject();
-				}	
+				aux = (ListaDeClientes) objectInputStream.readObject();
+				
 			}
 			catch (ClassNotFoundException e) {
 				e.printStackTrace();
