@@ -43,7 +43,7 @@ public class Main {
 //    Empleado vendedor = new Vendedor();
 //    Empleado gerente = new Gerente();
 //    Venta venta1 = new Venta();
-//	Empleado vendedorOp = new Vendedor("Nicolas","Gonzalez", "43312532", 3, "17/03/2001", 1,"2233013445", "007","contra");
+//	  Empleado vendedorOp = new Vendedor("Nicolas","Gonzalez", "43312532", 3, "17/03/2001", 1,"2233013445", "007","contra");
 //    
 //    ListaDeClientes lc = new ListaDeClientes();
 //    ListaDePrendas lp = new ListaDePrendas();
@@ -65,10 +65,22 @@ public class Main {
 	
     TiendaDeRopa tiendaDeRopa = new TiendaDeRopa();	
 	    
-	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
-	ventanaDeEntrada.setVisible(true);
+//	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
+//	ventanaDeEntrada.setVisible(true);
 	
-	 
+	try {
+		VentanaOpcionesEmpleado ventanaEmpeados = new VentanaOpcionesEmpleado("007", tiendaDeRopa);
+		ventanaEmpeados.setVisible(true);
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} 
 	
 	    /*MenuCliente menuCliente = new MenuCliente(); 
 		
