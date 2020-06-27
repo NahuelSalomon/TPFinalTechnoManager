@@ -1,7 +1,7 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
+
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,8 +13,11 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public abstract class Cliente extends Persona implements Serializable {
+public abstract class Cliente extends Persona  {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String domicilio;
 	private String email;
 
@@ -65,6 +68,9 @@ public abstract class Cliente extends Persona implements Serializable {
 	return jsonObject;
 	}
 	
+	
+
+
 	@Override
 	public String toString() {
 		return super.toString() + "\nDomicilio: " + getDomicilio() + "\nEmail: " + getEmail();

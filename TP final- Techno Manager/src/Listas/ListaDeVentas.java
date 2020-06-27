@@ -55,6 +55,10 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 		return ventas.buscarElemento(index);
 	}
 
+	public int cantidadDeVentas() {
+		return ventas.cantidadElementos();
+	}
+	
 	/**
 	 * @param venta a verificar si existe
 	 * @return true si existe la venta, false en caso contrario

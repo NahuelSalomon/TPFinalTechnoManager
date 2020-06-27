@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import ClasesPersona.Cliente;
 import ClasesPersona.Vendedor;
 import ClasesPrendasDeVestir.PrendaDeVestir;
+import Listas.ListaDePrendas;
 
 /**
  * Clase venta para registrar cada una de las ventas que realizan los clientes.
@@ -22,6 +23,9 @@ import ClasesPrendasDeVestir.PrendaDeVestir;
  */
 public class Venta implements Serializable{
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Cliente cliente;
 	private Vendedor vendedor;
 	private Date fecha;
@@ -75,12 +79,23 @@ public class Venta implements Serializable{
 		JSONObject jsonObject = new JSONObject();
 	
 		jsonObject.put("Cliente: ", getCliente().getNombre()+" "+getCliente().getApellido());
-		jsonObject.put("Vendedor: ", getVendedor().getNombre()+" "+getVendedor().getApellido());
+		jsonObject.put("Vendedor: ", getVendedor().getLegajo());
 		jsonObject.put("Fecha: ", getFecha());
 		jsonObject.put("Monto: ", getMonto());
 		jsonObject.put("Prendas compradas: ", toJSONObjectPrendasCompradas());
 		
 	return jsonObject;
+	}
+	
+	/*public static Venta fromJSONObject(JSONObject jsonObject) throws JSONException {
+		
+		String fecha = jsonObject.getString("Fecha");
+		String monto = jsonObject.getString("Monto");
+		
+		
+		Venta venta = new Venta(cliente, vendedor, fecha, monto, prendasCompradas);
+	
+	return venta;
 	}
 	
 	/**
@@ -96,9 +111,30 @@ public class Venta implements Serializable{
 		
 		while(iterator.hasNext()) {
 			Entry <PrendaDeVestir, Integer> entry =  iterator.next();
-			jsonObject.put(entry.getKey().tipoDePrenda(), entry.getValue());
+			jsonObject.put(entry.getKey().getCodigo(), entry.getValue());
 		}
 		
 		return jsonObject;
 	}
+	/*
+	private HashMap<PrendaDeVestir, Integer> fromJSONObjectPrendasCompradas(ListaDePrendas listaDePrendas,JSONObject jsonObject) throws JSONException{
+	
+		HashMap <PrendaDeVestir, Integer> prendasCompradas = null;
+		
+		Iterator<String> keysItr= jsonObject.keys();
+		
+		while(keysItr.hasNext()) {
+			String talle = keysItr.next();
+			String codigoPrendaDeVestir = jsonObject.getString(talle);
+			
+			PrendaDeVestir prendaDeVestir = listaDePrendas.buscarPrenda(codigoPrendaDeVestir);
+		prendasCompradas.put(prendaDeVestir, value)
+			
+		}
+		
+		
+		return prendasCompradas;
+	}*/
+	 
+	
 }

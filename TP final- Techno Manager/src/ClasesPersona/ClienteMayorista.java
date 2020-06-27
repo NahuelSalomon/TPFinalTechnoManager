@@ -1,7 +1,7 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
+
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,8 +12,10 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public class ClienteMayorista extends Cliente implements Serializable {
+public class ClienteMayorista extends Cliente {
 
+	
+	private static final long serialVersionUID = 1L;
 	private String cuil;
 	private int condicionFrenteIVA;
 

@@ -12,12 +12,16 @@ import Listas.ListaDeEmpleados;
 
 public class archivoEmpleados implements Serializable{
 	
-private static String archivoDeEmpleados = "empleados.dat";
+
+	private static final long serialVersionUID = 1L;
+	private static String archivoDeEmpleados = "empleados.dat";
 	
 	public static void grabarEmpleados(ListaDeEmpleados empleados) {	
 			
 			FileOutputStream fileOutputStream = null;
 			ObjectOutputStream objectOutputStream = null;
+			
+			
 			
 			try {
 				

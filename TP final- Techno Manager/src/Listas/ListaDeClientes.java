@@ -11,8 +11,11 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ClasesPersona.Cliente;
+import ClasesPersona.ClienteMayorista;
+import ClasesPersona.ClienteMinorista;
 import ContenedorGenericas.ContenedorClientesYVentas;
 import Interfaces.IFuncionesBasicasListaClientes;
 
@@ -62,6 +65,10 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		return clientes.buscarElemento(index);
 	}
 
+	public int cantidadDeClientes() {
+		return clientes.cantidadElementos();
+	}
+	
 	public boolean existeCliente(Cliente cliente) {
 		return clientes.existeElemento(cliente);
 	}
@@ -106,6 +113,29 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		return jsonArray;
 	}
 
+	public ListaDeClientes fromJSONArray(JSONArray jsonArray) throws JSONException {
+		
+		ListaDeClientes listaDeClientes = new ListaDeClientes();
+		
+		for(int i = 0 ; i < jsonArray.length() ; i ++) {
+			
+			JSONObject jsonObjectCliente = (JSONObject) jsonArray.get(i); 
+			
+			if(jsonObjectCliente.getString("Tipo de cliente").equals("Mayorista")) {
+				ClienteMayorista clienteMayorista = (ClienteMayorista) ClienteMayorista.fromJSONObject(jsonObjectCliente); 
+				listaDeClientes.agregarCliente(clienteMayorista);
+			}
+			else {
+				if(jsonObjectCliente.getString("Tipo de cliente").equals("Minorista")) {
+					ClienteMinorista clienteMinorista = (ClienteMinorista) ClienteMinorista.fromJSONObject(jsonObjectCliente);
+					listaDeClientes.agregarCliente(clienteMinorista);
+				}
+			}
+		}
+		
+		return listaDeClientes;
+	}
+	
 	public boolean comparaNomApe(Cliente nuevoCliente) {
 		// TODO Auto-generated method stub
 		return false;

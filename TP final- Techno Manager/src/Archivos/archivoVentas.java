@@ -8,11 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import Listas.ListaDePrendas;
+import ClaseVenta.Venta;
+
 import Listas.ListaDeVentas;
 
 public class archivoVentas implements Serializable{
 
+	
+	private static final long serialVersionUID = 1L;
 	private static String archivoDeVentas = "ventas.dat";
 	
 	public static void grabarVentas(ListaDeVentas ventas) {	
@@ -25,7 +28,9 @@ public class archivoVentas implements Serializable{
 			fileOutputStream = new FileOutputStream(archivoDeVentas);
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 		
-			objectOutputStream.writeObject(ventas);
+			for(int i = 0; i < ventas.cantidadDeVentas() ; i++) {
+				objectOutputStream.writeObject(ventas.buscarVenta(i));
+			}
 			
 			objectOutputStream.close();
 		}
@@ -46,7 +51,11 @@ public class archivoVentas implements Serializable{
 			fileInputStream = new FileInputStream(archivoDeVentas);
 			objectInputStream = new ObjectInputStream(fileInputStream);
 			
-			aux = (ListaDeVentas) objectInputStream.readObject();
+			
+		
+				aux.agregarVenta((Venta) objectInputStream.readObject());
+			
+			
 			
 		}
 		catch (ClassNotFoundException e) {

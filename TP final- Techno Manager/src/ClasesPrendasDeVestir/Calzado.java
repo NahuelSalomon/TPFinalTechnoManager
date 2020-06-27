@@ -1,6 +1,8 @@
 package ClasesPrendasDeVestir;
 
-import java.io.Serializable;
+
+
+import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +14,11 @@ import org.json.JSONObject;
  * @author Techno Manager
  *
  */
-public class Calzado extends PrendaDeVestir implements Serializable{
+public class Calzado extends PrendaDeVestir {
+
+
+
+	private static final long serialVersionUID = 1L;
 
 	private int tipoDeSuela;
 
@@ -63,8 +69,27 @@ public class Calzado extends PrendaDeVestir implements Serializable{
 		JSONObject jsonObject = new JSONObject();
 	
 		jsonObject = super.toJSONObject();
-		jsonObject.put("Tipo de suela: ", getTipoDeSuela());
+		jsonObject.put("Tipo de suela", getTipoDeSuela());
 	
 	return jsonObject;
 	}
+	
+	public static Calzado fromJSONObject(JSONObject jsonObject) throws JSONException {
+		
+		String codigo = jsonObject.getString("Codigo");
+		int marca = jsonObject.getInt("Marca");
+		String modelo = jsonObject.getString("Modelo");
+		String color = jsonObject.getString("Color");
+		int tipoDeMaterial = jsonObject.getInt("Tipo de material");
+		int tipoDeSuela = jsonObject.getInt("Tipo de suela");
+		HashMap<String, Integer> tallesYStock = TallesYStock.fromJSONObject(jsonObject.getJSONObject("Talles y stock"));		
+	
+		
+		Calzado calzado = new Calzado(marca, modelo, color, tipoDeMaterial, tipoDeSuela);
+		calzado.setCodigo(codigo);
+		calzado.agregarVariosTallesYCantidad(tallesYStock);
+		
+		return calzado;
+	}
+	
 }

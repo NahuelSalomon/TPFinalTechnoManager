@@ -1,6 +1,8 @@
 package ClasesPrendasDeVestir;
 
-import java.io.Serializable;
+
+
+import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,13 +14,16 @@ import org.json.JSONObject;
  * @author Techno Manager
  *
  */
-public class Pantalon extends PrendaDeVestir implements Serializable{
+public class Pantalon extends PrendaDeVestir {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private boolean esAlCuerpo;
 
 	public Pantalon() {
 		super();
-		this.esAlCuerpo = (Boolean) null;
+		this.esAlCuerpo = false;
 	}
 
 	public Pantalon(int marca, String modelo, String color, int tipoDeMaterial, boolean esAlCuerpo) {
@@ -52,10 +57,29 @@ public class Pantalon extends PrendaDeVestir implements Serializable{
 		JSONObject jsonObject = new JSONObject();
 	
 		jsonObject = super.toJSONObject();
-		jsonObject.put("Es al cuerpo: ", getEsAlCuerpo());
+		jsonObject.put("Es al cuerpo", getEsAlCuerpo());
 	
 	return jsonObject;
 	}
+	
+	public static Pantalon fromJSONObject(JSONObject jsonObject) throws JSONException {
+		
+		String codigo = jsonObject.getString("Codigo");
+		int marca = jsonObject.getInt("Marca");
+		String modelo = jsonObject.getString("Modelo");
+		String color = jsonObject.getString("Color");
+		int tipoDeMaterial = jsonObject.getInt("Tipo de material");
+		boolean esAlCuerpo = jsonObject.getBoolean("Es al cuerpo");
+		HashMap<String, Integer> tallesYStock = TallesYStock.fromJSONObject(jsonObject.getJSONObject("Talles y stock"));		
+	
+		
+		Pantalon pantalon = new Pantalon(marca, modelo, color, tipoDeMaterial, esAlCuerpo);
+		pantalon.setCodigo(codigo);
+		pantalon.agregarVariosTallesYCantidad(tallesYStock);
+		
+		return pantalon;
+	}
+	
 	
 	public String toString() {
 		return super.toString() + "\n" + getEsAlCuerpo();

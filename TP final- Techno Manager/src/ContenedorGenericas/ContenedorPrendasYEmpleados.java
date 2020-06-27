@@ -7,9 +7,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-import ClasesPersona.Empleado;
-
-import org.json.JSONArray;
 
 
 import java.util.Map.Entry;
@@ -24,6 +21,8 @@ import java.util.Map.Entry;
  */
 public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 
+
+	private static final long serialVersionUID = 1L;
 	private HashMap<K, V> contenedor;
 
 	/**

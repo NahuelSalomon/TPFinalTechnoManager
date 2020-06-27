@@ -1,7 +1,5 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +10,11 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public class Vendedor extends Empleado implements Serializable{
+public class Vendedor extends Empleado {
+
+	
+
+	private static final long serialVersionUID = 1L;
 
 	private String telefono;
 

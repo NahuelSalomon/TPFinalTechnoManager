@@ -1,6 +1,6 @@
 package ClasesPrendasDeVestir;
 
-import java.io.Serializable;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,8 +12,11 @@ import org.json.JSONObject;
  * @author Techno Manager
  *
  */
-public abstract class PrendaSuperior extends PrendaDeVestir implements Serializable{
+public abstract class PrendaSuperior extends PrendaDeVestir {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private boolean esMangaCorta;
 
 	public PrendaSuperior() {
@@ -47,7 +50,7 @@ public abstract class PrendaSuperior extends PrendaDeVestir implements Serializa
 		JSONObject jsonObject = new JSONObject();
 	
 		jsonObject = super.toJSONObject();
-		jsonObject.put("Es manga corta: ", getEsMangaCorta());
+		jsonObject.put("Es manga corta", getEsMangaCorta());
 	
 	return jsonObject;
 	}

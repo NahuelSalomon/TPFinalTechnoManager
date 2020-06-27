@@ -11,10 +11,13 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ClasesPersona.Cliente;
 
 import ClasesPersona.Empleado;
+import ClasesPersona.Gerente;
+import ClasesPersona.Vendedor;
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
 import Interfaces.IFuncionesBasicasListaEmpleados;
 
@@ -152,5 +155,24 @@ public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados,Seriali
 		return jsonArray;
 	}
 	
+	public static ListaDeEmpleados fromJSONArray(JSONArray jsonArray) throws JSONException {
+		
+		ListaDeEmpleados listaDeEmpleados = new ListaDeEmpleados();
+		
+		for(int i = 0 ; i < jsonArray.length() ; i ++) {
+			JSONObject jsonObjectEmpleado = jsonArray.getJSONObject(i);
+			
+			if(jsonObjectEmpleado.getString("Tipo de empleado").equals("Vendedor")) {
+				Vendedor vendedor = (Vendedor) Vendedor.fromJSONObject(jsonObjectEmpleado);
+				listaDeEmpleados.agregarEmpleado(vendedor.getLegajo(), vendedor);
+			}
+			if(jsonObjectEmpleado.getString("Tipo de empleado").equals("Gerente")) {
+				Gerente gerente = (Gerente) Gerente.fromJSONObject(jsonObjectEmpleado);
+				listaDeEmpleados.agregarEmpleado(gerente.getLegajo(), gerente);
+			}
+		}
+		
+		return listaDeEmpleados;
+	} 
 	
 }

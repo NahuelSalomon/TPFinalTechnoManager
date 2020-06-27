@@ -1,7 +1,7 @@
 package ClasesPersona;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +15,9 @@ import org.json.JSONObject;
  */
 public class Persona implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String nombre;
 	private String apellido;
 	private String dni;
@@ -111,7 +114,7 @@ public class Persona implements Serializable {
 		return jsonObject;
 	}
 	
-	public static Persona JSONObjectToPersona(JSONObject jsonObject) throws JSONException {
+	public static Persona fromJSONObject(JSONObject jsonObject) throws JSONException {
 		
 		String nombre = jsonObject.getString("Nombre"); 
 		String apellido = jsonObject.getString("Apellido");

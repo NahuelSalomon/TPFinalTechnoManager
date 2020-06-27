@@ -1,7 +1,6 @@
 package ClasesPrendasDeVestir;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -20,6 +19,9 @@ import org.json.JSONObject;
  */
 public class TallesYStock implements Serializable{
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private HashMap<String, Integer> tallesYStock;
 
 	/**
@@ -149,5 +151,22 @@ public class TallesYStock implements Serializable{
 		}
 		return jsonObject;
 	}
+	
+	public static HashMap<String, Integer> fromJSONObject(JSONObject jsonObject) throws JSONException {
+		
+		HashMap<String, Integer> tallesYStock = new HashMap<String, Integer>();
 
+	    Iterator<String> keysItr = jsonObject.keys();
+	   
+	    while(keysItr.hasNext()) {
+	        String talle = keysItr.next();
+	        Integer cantidad = (Integer) jsonObject.get(talle);
+	        
+	        tallesYStock.put(talle, cantidad);	        
+	    	}
+	    return tallesYStock;
+	}   
+	
+	
+	
 }
