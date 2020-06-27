@@ -11,7 +11,12 @@ import Archivos.archivoEmpleados;
 import ClasesPersona.Cliente;
 import ClasesPersona.Empleado;
 import ClasesPersona.Vendedor;
+import ClasesPrendasDeVestir.Buzo;
+import ClasesPrendasDeVestir.Calzado;
+import ClasesPrendasDeVestir.Maya;
+import ClasesPrendasDeVestir.Pantalon;
 import ClasesPrendasDeVestir.PrendaDeVestir;
+import ClasesPrendasDeVestir.Remera;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
@@ -36,6 +41,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Font;
 import java.awt.Color;
@@ -49,6 +55,10 @@ import javax.swing.JTextPane;
 import javax.swing.JLayeredPane;
 import java.awt.CardLayout;
 import javax.swing.JList;
+import java.awt.event.HierarchyListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class VentanaOpcionesEmpleado extends JFrame {
 
@@ -59,6 +69,12 @@ public class VentanaOpcionesEmpleado extends JFrame {
 	private JTextField textVendedorContrasenia;
 	private JTextField textVendedorNumTel;
 	private JTextField textCantidad;
+	private JTextField textPrendaModelo;
+	private JTextField textPrendaColor;
+	private JTextField textPrendaTalla;
+	private JFormattedTextField textPrendaStock;
+	private JFormattedTextField textPrendaPrecio;
+	private JTextField textPrendaCarac1;
 
 	/**
 	 * Create the frame.
@@ -103,14 +119,14 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		botonAgregarPrendaDeVestir.setFont(new Font("Segoe UI Historic", Font.BOLD, 14));
 		botonAgregarPrendaDeVestir.setForeground(new Color(255, 255, 255));
 		botonAgregarPrendaDeVestir.setBackground(new Color(0, 0, 128));
-		botonAgregarPrendaDeVestir.setBounds(33, 233, 241, 23);
+		botonAgregarPrendaDeVestir.setBounds(33, 199, 241, 23);
 		contentPane.add(botonAgregarPrendaDeVestir);
 		
 		JButton botonModificarDatosPersonales = new JButton("Modificar datos personales\r\n");
 		botonModificarDatosPersonales.setForeground(new Color(255, 255, 255));
 		botonModificarDatosPersonales.setBackground(new Color(0, 0, 128));
 		botonModificarDatosPersonales.setFont(new Font("Segoe UI Historic", Font.BOLD, 14));
-		botonModificarDatosPersonales.setBounds(33, 199, 241, 23);
+		botonModificarDatosPersonales.setBounds(33, 233, 241, 23);
 		contentPane.add(botonModificarDatosPersonales);
 		
 		JButton botonVerVentas = new JButton("Ver mis ventas\r\n");
@@ -143,116 +159,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		lpanGeneral.add(panVerMisVentas, "name_99930226415368");
 		panVerMisVentas.setVisible(false);
 		
-		JPanel panAgregarPrendas = new JPanel();
-		lpanGeneral.add(panAgregarPrendas, "name_99930253616870");
-		panAgregarPrendas.setVisible(false);
-		
-		//----PANEL VENDEDOR----/
-		JPanel panVendedor = new JPanel();
-		lpanGeneral.add(panVendedor, "name_99930277307032");
-		panVendedor.setVisible(true);
-		panVendedor.setLayout(null);
-		
-		JLabel lblTitulo = new JLabel("Mis Datos");
-		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblTitulo.setBounds(14, 5, 66, 17);
-		panVendedor.add(lblTitulo);
-		
-		JLabel lblSubTitulo1 = new JLabel("Datos Personales");
-		lblSubTitulo1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSubTitulo1.setBounds(14, 52, 105, 15);
-		panVendedor.add(lblSubTitulo1);
-		
-		JLabel lblSubTitulo2 = new JLabel("Datos Profecionales");
-		lblSubTitulo2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSubTitulo2.setBounds(237, 52, 121, 15);
-		panVendedor.add(lblSubTitulo2);
-		
-		JLabel lbMostrarNombre = new JLabel();
-		lbMostrarNombre.setBounds(90, 78, 75, 14);
-		lbMostrarNombre.setText(empleado.getNombre());
-		panVendedor.add(lbMostrarNombre);
-		
-		JLabel lbMostrarApellido = new JLabel();
-		lbMostrarApellido.setBounds(90, 120, 75, 14);
-		lbMostrarApellido.setText(empleado.getApellido());
-		panVendedor.add(lbMostrarApellido);
-		
-		JLabel lbMostrarGenero = new JLabel();
-		lbMostrarGenero.setBounds(90, 167, 75, 14);
-		lbMostrarGenero.setText(empleado.getGenero());
-		panVendedor.add(lbMostrarGenero);
-				
-		JLabel lbMostrarDni = new JLabel();
-		lbMostrarDni.setBounds(90, 216, 75, 14);
-		lbMostrarDni.setText(empleado.getDni());
-		panVendedor.add(lbMostrarDni);
-		
-		JLabel lbMostrarFechaNac = new JLabel();
-		lbMostrarFechaNac.setBounds(90, 262, 75, 14);
-		lbMostrarFechaNac.setText(empleado.getFechaNac());
-		panVendedor.add(lbMostrarFechaNac);
-		
-		JLabel lbMostrarEstadoCiv = new JLabel();
-		lbMostrarEstadoCiv.setText(empleado.getEstadoCivil());
-		lbMostrarEstadoCiv.setBounds(330, 78, 75, 14);
-		panVendedor.add(lbMostrarEstadoCiv);
-		
-		JLabel lbMostrarLegajo = new JLabel();
-		lbMostrarLegajo.setBounds(330, 120, 75, 14);
-		lbMostrarLegajo.setText(empleado.getLegajo());
-		panVendedor.add(lbMostrarLegajo);
-		
-		JLabel lbMostrarContrasenia = new JLabel();
-		lbMostrarContrasenia.setBounds(330, 167, 75, 14);
-		lbMostrarContrasenia.setText(empleado.getContraseña());
-		panVendedor.add(lbMostrarContrasenia);
-		
-		JLabel lbMostrarNumTel = new JLabel();
-		lbMostrarNumTel.setBounds(330, 216, 75, 14);
-		if(empleado instanceof Vendedor) {
-			lbMostrarNumTel.setText(((Vendedor) empleado).getTelefono());
-		}
-		panVendedor.add(lbMostrarNumTel);
-		
-		JLabel lbTNombre = new JLabel("Nombre:");
-		lbTNombre.setBounds(14, 78, 61, 14);
-		panVendedor.add(lbTNombre);
-		
-		JLabel lbTApellido = new JLabel("Apellido:");
-		lbTApellido.setBounds(14, 120, 66, 14);
-		panVendedor.add(lbTApellido);
-		
-		JLabel lbTGenero = new JLabel("Genero:");
-		lbTGenero.setBounds(14, 167, 66, 14);
-		panVendedor.add(lbTGenero);
-		
-		JLabel lbTEstadoCivil = new JLabel("Estado Civil:");
-		lbTEstadoCivil.setBounds(237, 78, 83, 14);
-		panVendedor.add(lbTEstadoCivil);
-		
-		JLabel lbTLegajo = new JLabel("Legajo:");
-		lbTLegajo.setBounds(237, 120, 83, 14);
-		panVendedor.add(lbTLegajo);
-		
-		JLabel lbTContrasenia = new JLabel("Contrasenia:");
-		lbTContrasenia.setBounds(237, 167, 83, 14);
-		panVendedor.add(lbTContrasenia);
-		
-		JLabel lbTTelefono = new JLabel("Telefono:");
-		lbTTelefono.setBounds(237, 216, 83, 14);
-		panVendedor.add(lbTTelefono);
-		
-		JLabel lbTDni = new JLabel("DNI:");
-		lbTDni.setBounds(14, 216, 66, 14);
-		panVendedor.add(lbTDni);
-		
-		JLabel lbTFechaNac = new JLabel("Fecha Nac:");
-		lbTFechaNac.setBounds(14, 262, 66, 14);
-		panVendedor.add(lbTFechaNac);
-		//--------/
-		
-		//----PANEL REGISTRAR VENTA----/
+		//----PANEL REGISTRAR VENTA----//
 		JPanel panRegistrarVenta = new JPanel();
 		lpanGeneral.add(panRegistrarVenta, "name_99930197253561");
 		panRegistrarVenta.setVisible(false);		
@@ -309,7 +216,255 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		JLabel lbPrecioFinal = new JLabel("New label");
 		lbPrecioFinal.setBounds(30, 267, 138, 23);
 		panRegistrarVenta.add(lbPrecioFinal);
-		//--------/
+		//--------//
+		
+		//----PANEL AGREGAR PRENDA----//
+		JPanel panAgregarPrendas = new JPanel();
+		lpanGeneral.add(panAgregarPrendas, "name_99930253616870");
+		panAgregarPrendas.setVisible(false);
+		
+		panAgregarPrendas.setLayout(null);
+		
+		JLabel lblPrendaCaracteristicasGenerales = new JLabel("Caracteristicas Generales");
+		lblPrendaCaracteristicasGenerales.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPrendaCaracteristicasGenerales.setBounds(10, 11, 185, 20);
+		panAgregarPrendas.add(lblPrendaCaracteristicasGenerales);
+		
+		JLabel lblPrendaMarca = new JLabel("Marca:");
+		lblPrendaMarca.setBounds(10, 42, 46, 14);
+		panAgregarPrendas.add(lblPrendaMarca);
+		
+//		- 1. Zara
+//		- 2. Nike
+//		- 3. Gucci
+//		- 4. Adidas
+//		- 5. Lacoste
+//		- 6. Chanel
+//		- 7. Levi’s
+		
+		JComboBox cbPrendaMarca = new JComboBox();
+		cbPrendaMarca.setModel(new DefaultComboBoxModel(new String [] {"No definido","Zara","Nike","Gucci","Adidas","Lacoste","Chanel","Levi's"}));
+		cbPrendaMarca.setBounds(109, 39, 86, 20);
+		panAgregarPrendas.add(cbPrendaMarca);
+		
+		JLabel lblPrendasModelo = new JLabel("Modelo:");
+		lblPrendasModelo.setBounds(10, 75, 46, 14);
+		panAgregarPrendas.add(lblPrendasModelo);
+		
+		textPrendaModelo = new JTextField();
+		textPrendaModelo.setBounds(109, 72, 86, 20);
+		panAgregarPrendas.add(textPrendaModelo);
+		textPrendaModelo.setColumns(10);
+		
+		JLabel lblPrendaTipoMaterial = new JLabel("Tipo de Material:");
+		lblPrendaTipoMaterial.setBounds(10, 109, 104, 14);
+		panAgregarPrendas.add(lblPrendaTipoMaterial);
+		
+		JComboBox cbPrendaTipoMaterial = new JComboBox();
+		cbPrendaTipoMaterial.setModel(new DefaultComboBoxModel(new String [] {"No definido","Algodon","Terciopelo","Calico","Fieltro","Seda"}));
+		cbPrendaTipoMaterial.setBounds(109, 106, 86, 20);
+		panAgregarPrendas.add(cbPrendaTipoMaterial);
+		
+		JLabel lblPrendaColor = new JLabel("Color:");
+		lblPrendaColor.setBounds(245, 42, 46, 14);
+		panAgregarPrendas.add(lblPrendaColor);
+		
+		textPrendaColor = new JTextField();
+		textPrendaColor.setBounds(338, 39, 86, 20);
+		panAgregarPrendas.add(textPrendaColor);
+		textPrendaColor.setColumns(10);
+		
+		JLabel lblPrendaTalla = new JLabel("Talla:");
+		lblPrendaTalla.setBounds(245, 75, 46, 14);
+		panAgregarPrendas.add(lblPrendaTalla);
+		
+		textPrendaTalla = new JTextField();
+		textPrendaTalla.setBounds(286, 72, 29, 20);
+		panAgregarPrendas.add(textPrendaTalla);
+		textPrendaTalla.setColumns(10);
+		
+		JLabel lblPrendaStock = new JLabel("Stock:");
+		lblPrendaStock.setBounds(338, 75, 46, 14);
+		panAgregarPrendas.add(lblPrendaStock);
+		
+		textPrendaStock = new JFormattedTextField();
+		textPrendaStock.setValue(new Integer(1));
+		textPrendaStock.setBounds(383, 72, 29, 20);
+		panAgregarPrendas.add(textPrendaStock);
+		textPrendaStock.setColumns(10);
+		
+		JLabel lblPrendaPrecio = new JLabel("Precio:");
+		lblPrendaPrecio.setBounds(245, 109, 46, 14);
+		panAgregarPrendas.add(lblPrendaPrecio);
+		
+		textPrendaPrecio = new JFormattedTextField();
+		textPrendaPrecio.setValue(new Integer(0));
+		textPrendaPrecio.setBounds(338, 106, 86, 20);
+		panAgregarPrendas.add(textPrendaPrecio);
+		textPrendaPrecio.setColumns(10);
+		
+		JLabel lblPrendaCaracteristicasEspeciales = new JLabel("Caracteristicas Especiales");
+		lblPrendaCaracteristicasEspeciales.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPrendaCaracteristicasEspeciales.setBounds(10, 146, 185, 20);
+		panAgregarPrendas.add(lblPrendaCaracteristicasEspeciales);
+		
+		JLabel lblPrendaTipoPrenda = new JLabel("Tipos de Prenda:");
+		lblPrendaTipoPrenda.setBounds(10, 177, 104, 14);
+		panAgregarPrendas.add(lblPrendaTipoPrenda);
+		
+		JComboBox cbPrendaTipoPrenda = new JComboBox();
+		cbPrendaTipoPrenda.setModel(new DefaultComboBoxModel(new String[] {"No definido","Calzado", "Buzo", "Remera", "Pantalon", "Maya"}));
+		cbPrendaTipoPrenda.setBounds(109, 174, 86, 20);
+		panAgregarPrendas.add(cbPrendaTipoPrenda);
+		
+		JLabel lblPrendaCarac1 = new JLabel("Caracteristica:");
+		lblPrendaCarac1.setBounds(245, 177, 97, 14);
+		panAgregarPrendas.add(lblPrendaCarac1);
+		
+			textPrendaCarac1 = new JTextField();
+			textPrendaCarac1.setBounds(338, 174, 86, 20);
+			panAgregarPrendas.add(textPrendaCarac1);
+			textPrendaCarac1.setColumns(10);
+			
+			JComboBox cbPrendaCarac1 = new JComboBox();
+			cbPrendaCarac1.setBounds(338, 174, 86, 20);
+			panAgregarPrendas.add(cbPrendaCarac1);
+			
+		JLabel lblPrendaCarac2 = new JLabel("Caracteristica:");
+		lblPrendaCarac2.setBounds(245, 208, 97, 14);
+		panAgregarPrendas.add(lblPrendaCarac2);
+		
+		JComboBox cbPrendaCarac2 = new JComboBox();
+		cbPrendaCarac2.setBounds(338, 205, 86, 20);
+		panAgregarPrendas.add(cbPrendaCarac2);
+
+		JButton btnPrendaGuardar = new JButton("Guardar");
+		btnPrendaGuardar.setForeground(new Color(255, 255, 255));
+		btnPrendaGuardar.setBackground(new Color(0, 0, 255));
+		btnPrendaGuardar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnPrendaGuardar.setBounds(338, 266, 102, 23);
+		panAgregarPrendas.add(btnPrendaGuardar);
+		
+		JButton btnPrendaAjustarStock = new JButton("Ajustar Stock");
+		btnPrendaAjustarStock.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnPrendaAjustarStock.setForeground(new Color(255, 255, 255));
+		btnPrendaAjustarStock.setBackground(new Color(0, 0, 255));
+		btnPrendaAjustarStock.setBounds(224, 266, 104, 23);
+		panAgregarPrendas.add(btnPrendaAjustarStock);
+		
+		JButton btnPrendaBorrar = new JButton("Borrar");
+		btnPrendaBorrar.setBounds(10, 266, 89, 23);
+		panAgregarPrendas.add(btnPrendaBorrar);
+		
+		lblPrendaCarac1.setVisible(false);
+		textPrendaCarac1.setVisible(false);
+		cbPrendaCarac1.setVisible(false);
+		lblPrendaCarac2.setVisible(false);
+		cbPrendaCarac2.setVisible(false);
+		
+		cbPrendaTipoPrenda.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				switch(cbPrendaTipoPrenda.getSelectedIndex()) {
+					case 1:
+						lblPrendaCarac1.setVisible(true);
+						lblPrendaCarac1.setText("Tipo de Suela:");
+						textPrendaCarac1.setVisible(false);
+						cbPrendaCarac1.setVisible(true);
+						cbPrendaCarac1.setModel(new DefaultComboBoxModel(new String [] {"No definido","Poliuretano","Crepe","Suela","Cuero"}));
+						lblPrendaCarac2.setVisible(false);
+						cbPrendaCarac2.setVisible(false);
+						break;
+					case 2:
+						lblPrendaCarac1.setVisible(true);
+						lblPrendaCarac1.setText("Tiene Canguro:");
+						textPrendaCarac1.setVisible(false);
+						cbPrendaCarac1.setVisible(true);
+						cbPrendaCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
+						lblPrendaCarac2.setVisible(true);
+						lblPrendaCarac2.setText("Tipo de Manga:");
+						cbPrendaCarac2.setVisible(true);
+						cbPrendaCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
+						break;
+					case 3:
+						lblPrendaCarac1.setVisible(true);
+						lblPrendaCarac1.setText("Estampado:");
+						textPrendaCarac1.setVisible(true);
+						cbPrendaCarac1.setVisible(false);
+						lblPrendaCarac2.setVisible(true);
+						lblPrendaCarac2.setText("Tipo de Manga:");
+						cbPrendaCarac2.setVisible(true);
+						cbPrendaCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
+						break;
+					case 4:
+						lblPrendaCarac1.setVisible(true);
+						lblPrendaCarac1.setText("Es al Cuerpo:");
+						textPrendaCarac1.setVisible(false);
+						cbPrendaCarac1.setVisible(true);
+						cbPrendaCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
+						lblPrendaCarac2.setVisible(false);
+						cbPrendaCarac2.setVisible(false);
+						break;
+					case 5:
+						lblPrendaCarac1.setVisible(true);
+						lblPrendaCarac1.setText("Secado Rapido:");
+						textPrendaCarac1.setVisible(false);
+						cbPrendaCarac1.setVisible(true);
+						cbPrendaCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
+						lblPrendaCarac2.setVisible(true);
+						lblPrendaCarac2.setText("Dimensiones:");
+						cbPrendaCarac2.setVisible(true);
+						cbPrendaCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
+						break;
+					default:
+						lblPrendaCarac1.setVisible(false);
+						textPrendaCarac1.setVisible(false);
+						cbPrendaCarac1.setVisible(false);
+						lblPrendaCarac2.setVisible(false);
+						cbPrendaCarac2.setVisible(false);
+						break;
+				}
+			}
+		});
+		
+		btnPrendaGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(cbPrendaTipoPrenda.getSelectedIndex() == 0) {
+					//throw new ExcepcionDatosInsuficientes();
+					JOptionPane.showMessageDialog(null, "Datos Insuficientes");
+				}
+				else {
+					PrendaDeVestir prenda = null;
+					switch(cbPrendaTipoPrenda.getSelectedIndex()) {
+						case 1:
+							prenda = new Calzado(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
+									cbPrendaTipoMaterial.getSelectedIndex(), cbPrendaCarac1.getSelectedIndex());
+							break;
+						case 2:
+							prenda = new Buzo(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
+									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()),
+									convertirABoolean(cbPrendaCarac2.getSelectedIndex()));	
+							break;
+						case 3:
+							prenda = new Remera(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
+									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac2.getSelectedIndex()), textPrendaCarac1.getText());
+							break;
+						case 4:
+							prenda = new Pantalon(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
+									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()));
+							break;
+						case 5:
+							prenda = new Maya(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
+									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()),
+									convertirABoolean(cbPrendaCarac2.getSelectedIndex()));
+							break;
+					}
+					prenda.agregarNuevoTalleConCantidad(textPrendaTalla.getText(), Integer.parseInt(textPrendaStock.getText()));
+					tiendaDeRopa.agregarPrenda(prenda.getCodigo(), prenda);
+				}
+			}
+		});
+		//--------//
 		
 		//----PANEL MODIFICAR DATOS PERSONALES----/
 		JPanel panModificarDatosPer = new JPanel();
@@ -449,13 +604,127 @@ public class VentanaOpcionesEmpleado extends JFrame {
 				}
 			}
 		});
-		//--------/		
+		//--------//
+		
+		//----PANEL VENDEDOR----/
+		JPanel panVendedor = new JPanel();
+		lpanGeneral.add(panVendedor, "name_99930277307032");
+		panVendedor.setVisible(true);
+		panVendedor.setLayout(null);
+		
+		JLabel lblTitulo = new JLabel("Mis Datos");
+		lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTitulo.setBounds(14, 5, 66, 17);
+		panVendedor.add(lblTitulo);
+		
+		JLabel lblSubTitulo1 = new JLabel("Datos Personales");
+		lblSubTitulo1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSubTitulo1.setBounds(14, 52, 105, 15);
+		panVendedor.add(lblSubTitulo1);
+		
+		JLabel lblSubTitulo2 = new JLabel("Datos Profecionales");
+		lblSubTitulo2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSubTitulo2.setBounds(237, 52, 121, 15);
+		panVendedor.add(lblSubTitulo2);
+		
+		JLabel lbMostrarNombre = new JLabel();
+		lbMostrarNombre.setBounds(90, 78, 75, 14);
+		lbMostrarNombre.setText(empleado.getNombre());
+		panVendedor.add(lbMostrarNombre);
+		
+		JLabel lbMostrarApellido = new JLabel();
+		lbMostrarApellido.setBounds(90, 120, 75, 14);
+		lbMostrarApellido.setText(empleado.getApellido());
+		panVendedor.add(lbMostrarApellido);
+		
+		JLabel lbMostrarGenero = new JLabel();
+		lbMostrarGenero.setBounds(90, 167, 75, 14);
+		lbMostrarGenero.setText(empleado.getGenero());
+		panVendedor.add(lbMostrarGenero);
+				
+		JLabel lbMostrarDni = new JLabel();
+		lbMostrarDni.setBounds(90, 216, 75, 14);
+		lbMostrarDni.setText(empleado.getDni());
+		panVendedor.add(lbMostrarDni);
+		
+		JLabel lbMostrarFechaNac = new JLabel();
+		lbMostrarFechaNac.setBounds(90, 262, 75, 14);
+		lbMostrarFechaNac.setText(empleado.getFechaNac());
+		panVendedor.add(lbMostrarFechaNac);
+		
+		JLabel lbMostrarEstadoCiv = new JLabel();
+		lbMostrarEstadoCiv.setText(empleado.getEstadoCivil());
+		lbMostrarEstadoCiv.setBounds(330, 78, 75, 14);
+		panVendedor.add(lbMostrarEstadoCiv);
+		
+		JLabel lbMostrarLegajo = new JLabel();
+		lbMostrarLegajo.setBounds(330, 120, 75, 14);
+		lbMostrarLegajo.setText(empleado.getLegajo());
+		panVendedor.add(lbMostrarLegajo);
+		
+		JLabel lbMostrarContrasenia = new JLabel();
+		lbMostrarContrasenia.setBounds(330, 167, 75, 14);
+		lbMostrarContrasenia.setText(empleado.getContraseña());
+		panVendedor.add(lbMostrarContrasenia);
+		
+		JLabel lbMostrarNumTel = new JLabel();
+		lbMostrarNumTel.setBounds(330, 216, 75, 14);
+		if(empleado instanceof Vendedor) {
+			lbMostrarNumTel.setText(((Vendedor) empleado).getTelefono());
+		}
+		panVendedor.add(lbMostrarNumTel);
+		
+		JLabel lbTNombre = new JLabel("Nombre:");
+		lbTNombre.setBounds(14, 78, 61, 14);
+		panVendedor.add(lbTNombre);
+		
+		JLabel lbTApellido = new JLabel("Apellido:");
+		lbTApellido.setBounds(14, 120, 66, 14);
+		panVendedor.add(lbTApellido);
+		
+		JLabel lbTGenero = new JLabel("Genero:");
+		lbTGenero.setBounds(14, 167, 66, 14);
+		panVendedor.add(lbTGenero);
+		
+		JLabel lbTEstadoCivil = new JLabel("Estado Civil:");
+		lbTEstadoCivil.setBounds(237, 78, 83, 14);
+		panVendedor.add(lbTEstadoCivil);
+		
+		JLabel lbTLegajo = new JLabel("Legajo:");
+		lbTLegajo.setBounds(237, 120, 83, 14);
+		panVendedor.add(lbTLegajo);
+		
+		JLabel lbTContrasenia = new JLabel("Contrasenia:");
+		lbTContrasenia.setBounds(237, 167, 83, 14);
+		panVendedor.add(lbTContrasenia);
+		
+		JLabel lbTTelefono = new JLabel("Telefono:");
+		lbTTelefono.setBounds(237, 216, 83, 14);
+		panVendedor.add(lbTTelefono);
+		
+		JLabel lbTDni = new JLabel("DNI:");
+		lbTDni.setBounds(14, 216, 66, 14);
+		panVendedor.add(lbTDni);
+		
+		JLabel lbTFechaNac = new JLabel("Fecha Nac:");
+		lbTFechaNac.setBounds(14, 262, 66, 14);
+		panVendedor.add(lbTFechaNac);
+		//--------/
 		
 		accionBotonPaneles(botonRegistrarVenta, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas);
 		accionBotonPaneles(botonVerVentas, panVerMisVentas, panAgregarPrendas, panVendedor, panRegistrarVenta, panModificarDatosPer);
 		accionBotonPaneles(botonModificarDatosPersonales, panModificarDatosPer, panAgregarPrendas, panVendedor, panRegistrarVenta, panRegistrarVenta);
 		accionBotonPaneles(botonAgregarPrendaDeVestir, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer);
 		accionBotonPaneles(botonNombreEmpleado, panVendedor, panAgregarPrendas, panVerMisVentas, panRegistrarVenta, panModificarDatosPer);
+		
+	}
+	
+	public boolean convertirABoolean(int dato) {
+		boolean rta = false;
+		if(dato != 0) {
+			rta = false;
+		}
+		return rta;
 	}
 	
 	public void accionBotonPaneles(JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5) {
