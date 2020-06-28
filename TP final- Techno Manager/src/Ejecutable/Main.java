@@ -38,8 +38,8 @@ public class Main {
 	    
 //    PrendaDeVestir prenda1 = new Calzado();
 //    PrendaDeVestir prenda2 = new Remera();
-//    Cliente cliente1 = new ClienteMayorista();
-//    Cliente cliente2 = new ClienteMinorista();
+//    Cliente cliente1 = new ClienteMayorista("Carlos","Perez","1236548",5);
+//    Cliente cliente2 = new ClienteMinorista("Miguel","Sanches");
 //    Empleado vendedor = new Vendedor();
 //    Empleado gerente = new Gerente();
 //    Venta venta1 = new Venta();

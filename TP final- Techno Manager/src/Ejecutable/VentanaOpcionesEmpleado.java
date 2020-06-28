@@ -6,8 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Archivos.archivoEmpleados;
+import ClaseVenta.Venta;
 import ClasesPersona.Cliente;
 import ClasesPersona.Empleado;
 import ClasesPersona.Vendedor;
@@ -16,6 +18,7 @@ import ClasesPrendasDeVestir.Calzado;
 import ClasesPrendasDeVestir.Maya;
 import ClasesPrendasDeVestir.Pantalon;
 import ClasesPrendasDeVestir.PrendaDeVestir;
+import ClasesPrendasDeVestir.PrendaSuperior;
 import ClasesPrendasDeVestir.Remera;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
@@ -43,6 +46,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JButton;
@@ -59,6 +64,7 @@ import java.awt.event.HierarchyListener;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.JScrollPane;
 
 public class VentanaOpcionesEmpleado extends JFrame {
 
@@ -167,16 +173,14 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		
 		JComboBox cbCliente = new JComboBox();
 		ArrayList<Cliente> clientes = tiendaDeRopa.devolverClientes();
-		StringBuilder clientesCadena = new StringBuilder("{");
 		for(Cliente elem : clientes) {
-			clientesCadena.append(elem.getNombre()+",");
+			cbCliente.addItem(elem.getNombre());
 		}
-		clientesCadena.deleteCharAt(clientesCadena.length()-1);
 		//JOptionPane.showMessageDialog(null, clientesCadena);
-		cbCliente.setModel(new DefaultComboBoxModel(new String[] {"clientes"}));
 		cbCliente.setBounds(20, 4, 98, 20);
 		panRegistrarVenta.add(cbCliente);
 		Date fechaActual = new Date();
+		
 		JLabel lblFecha = new JLabel(fechaActual.toString());
 		lblFecha.setBounds(149, 7, 154, 14);
 		panRegistrarVenta.add(lblFecha);
@@ -188,9 +192,14 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		btnFinalizarVenta.setBounds(342, 4, 87, 25);
 		panRegistrarVenta.add(btnFinalizarVenta);
 		
-		JList listPrendas = new JList();
-		listPrendas.setBounds(20, 38, 409, 97);
-		panRegistrarVenta.add(listPrendas);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(20, 38, 409, 97);
+		panRegistrarVenta.add(scrollPane);
+		
+		JTable tablePrendas = new JTable();
+		tablePrendas.setCellSelectionEnabled(true);
+		scrollPane.setViewportView(tablePrendas);
+		tablePrendas.setModel(cargarJListConArrayList(tiendaDeRopa.devolverPrendas()));
 		
 		textCantidad = new JTextField();
 		textCantidad.setBounds(124, 146, 44, 20);
@@ -205,9 +214,12 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		btnAgregarAlCarro.setBounds(228, 145, 154, 23);
 		panRegistrarVenta.add(btnAgregarAlCarro);
 		
-		JList listCarro = new JList();
-		listCarro.setBounds(20, 177, 409, 79);
-		panRegistrarVenta.add(listCarro);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(20, 177, 409, 79);
+		panRegistrarVenta.add(scrollPane_1);
+		
+		JTable tableCarro = new JTable();
+		scrollPane_1.setViewportView(tableCarro);
 		
 		JButton btnEliminarDelCarro = new JButton("Eliminar del Carro");
 		btnEliminarDelCarro.setBounds(228, 267, 154, 23);
@@ -461,6 +473,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					}
 					prenda.agregarNuevoTalleConCantidad(textPrendaTalla.getText(), Integer.parseInt(textPrendaStock.getText()));
 					tiendaDeRopa.agregarPrenda(prenda.getCodigo(), prenda);
+					tablePrendas.setModel(cargarJListConArrayList(tiendaDeRopa.devolverPrendas()));
 				}
 			}
 		});
@@ -725,6 +738,61 @@ public class VentanaOpcionesEmpleado extends JFrame {
 			rta = false;
 		}
 		return rta;
+	}
+	
+	public DefaultTableModel cargarJListConArrayList(ArrayList array) {
+		DefaultTableModel modelo = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
+		if(!array.isEmpty()) {
+			Object aux = array.get(0);
+			if(aux instanceof PrendaDeVestir) {
+				modelo.addColumn("Modelo");
+				modelo.addColumn("Marca");
+				modelo.addColumn("Tipo de Material");
+				modelo.addColumn("Color");
+			}
+			if(aux instanceof Cliente) {
+				modelo.addColumn("Nombre");
+				modelo.addColumn("Apellido");
+				modelo.addColumn("DNI");
+				modelo.addColumn("Genero");
+				modelo.addColumn("Fecha de Nacimiento");
+			}
+			if(aux instanceof Empleado) {
+				modelo.addColumn("Nombre");
+				modelo.addColumn("Apellido");
+				modelo.addColumn("Legajo");
+				modelo.addColumn("Estado Civil");
+			}
+			if(aux instanceof Venta) {
+				modelo.addColumn("Cliente");
+				modelo.addColumn("Vendedor");
+				modelo.addColumn("Fecha");
+				modelo.addColumn("Monto");
+			}
+			for(Object elem : array){
+				if(elem instanceof PrendaDeVestir) {
+					PrendaDeVestir e = (PrendaDeVestir) elem;
+			        modelo.addRow(new Object[] {e.getModelo(),e.getMarca(),e.getTipoDeMaterial(),e.getColor()});
+				} if(elem instanceof Cliente) {
+					Cliente e = (Cliente) elem;
+			        modelo.addRow(new Object[] {e.getNombre(),e.getApellido(),e.getDni(),e.getGenero(),e.getFechaNac()});
+				} if(elem instanceof Empleado) {
+					Empleado e = (Empleado) elem;
+			        modelo.addRow(new Object[] {e.getNombre(),e.getApellido(),e.getLegajo(),e.getEstadoCivil()});
+				} if(elem instanceof Venta) {
+					Venta e = (Venta) elem;
+			        modelo.addRow(new Object[] {e.getCliente().getNombre()+"-"+e.getCliente().getDni(),e.getVendedor().getNombre()+"-"+e.getVendedor().getLegajo(),
+			        		e.getFecha(),e.getMonto()});
+				}
+			}
+			return modelo;
+		}
+		else modelo.addColumn("No Existen Elementos en esta tabla"); return modelo;
 	}
 	
 	public void accionBotonPaneles(JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5) {

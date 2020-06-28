@@ -187,7 +187,11 @@ public class TiendaDeRopa {
 	public PrendaDeVestir buscarPrenda(String codigo) {
 		return prendasDeVestir.buscarPrenda(codigo);
 	}
-
+	
+	public ArrayList<PrendaDeVestir> devolverPrendas(){
+		return prendasDeVestir.devolverListaDePrendas();
+	}
+	
 	/**
 	 * Agrega un registro de venta a la tienda de ropa
 	 * 
