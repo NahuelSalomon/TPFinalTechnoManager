@@ -1,7 +1,5 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +10,10 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public class Vendedor extends Empleado implements Serializable{
+public class Vendedor extends Empleado {
+
+
+	private static final long serialVersionUID = 1L;
 
 	private String telefono;
 
@@ -41,12 +42,12 @@ public class Vendedor extends Empleado implements Serializable{
 	}
 
 	public String toString() {
-		return super.toString() + "\nTelefono:" + getTelefono() + "Tipo de empleado: " + tipoEmpleado();
+		return super.toString() + "\nTelefono:" + getTelefono() + "\nTipo de empleado: " + tipoEmpleado();
 	}
 
 	@Override
 	public String tipoEmpleado() {
-		return "vendedor";
+		return "Vendedor";
 	}
 
 	@Override
@@ -55,18 +56,24 @@ public class Vendedor extends Empleado implements Serializable{
 		JSONObject jsonObject = new JSONObject();
 		
 		jsonObject = super.toJSONObject();
-		jsonObject.put("Telefono: ", getTelefono());
+		jsonObject.put("Telefono", getTelefono());
 		
 		return jsonObject;
 	}
 
-	public Vendedor JSONObjectToVendedor(JSONObject jsonObject) throws JSONException { 
+	/**
+	 * Metodo para importar un vendedor desde un objeto JSON
+	 * @param jsonObject a importar
+	 * @return el vendedor
+	 * @throws JSONException
+	 */
+	public static  Vendedor JSONObjectToVendedor(JSONObject jsonObject) throws JSONException { 
 			
 		String nombre = jsonObject.getString("Nombre");
 		String apellido = jsonObject.getString("Apellido");
 		String dni = jsonObject.getString("DNI");
 		Integer genero = jsonObject.getInt("Genero");
-		String fechaNac = jsonObject.getString("Fehca de naciemiento");
+		String fechaNac = jsonObject.getString("Fecha de nac");
 		Integer estadoCivil = jsonObject.getInt("Estado civil");
 		String telefono = jsonObject.getString("Telefono");
 		String legajo = jsonObject.getString("Legajo");
@@ -76,8 +83,4 @@ public class Vendedor extends Empleado implements Serializable{
 			
 		return vendedor;
 		}
-	
-
-	
-	
 }

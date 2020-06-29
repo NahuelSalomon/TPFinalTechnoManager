@@ -1,7 +1,7 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
+
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,8 +13,11 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public abstract class Cliente extends Persona implements Serializable {
+public abstract class Cliente extends Persona  {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String domicilio;
 	private String email;
 
@@ -58,9 +61,9 @@ public abstract class Cliente extends Persona implements Serializable {
 		JSONObject jsonObject = new JSONObject();
 		
 		jsonObject = super.toJSONObject();
-		jsonObject.put("Tipo de cliente: ", tipoDeCliente());
-		jsonObject.put("Domicilio: ", getDomicilio());
-		jsonObject.put("Email: ", getEmail());
+		jsonObject.put("Tipo de cliente", tipoDeCliente());
+		jsonObject.put("Domicilio", getDomicilio());
+		jsonObject.put("Email", getEmail());
 		
 	return jsonObject;
 	}
@@ -75,8 +78,5 @@ public abstract class Cliente extends Persona implements Serializable {
 	 * @return el tipo de cliente en forma de String
 	 */
 	public abstract String tipoDeCliente();
-
-	
-	
 	
 }

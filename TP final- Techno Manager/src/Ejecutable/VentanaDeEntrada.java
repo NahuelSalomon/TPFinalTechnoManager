@@ -120,18 +120,28 @@ public class VentanaDeEntrada extends JFrame {
 				if(tiendaDeRopa.verificarEmpleado(campoTextoUsuario.getText(), camposTextoContra.getText(),tipoDeEmpleado))
 					{
 						dispose();
-						try {
-							VentanaOpcionesEmpleado ventanaOpEmpleado = new VentanaOpcionesEmpleado(campoTextoUsuario.getText(), tiendaDeRopa);
-							ventanaOpEmpleado.setVisible(true);
-						} catch (FileNotFoundException e) {
-							e.printStackTrace();
-						} catch (ClassNotFoundException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						if(tipoDeEmpleado.equals("vendedor")) {
+							try {
+								VentanaOpcionesEmpleado ventanaOpEmpleado = new VentanaOpcionesEmpleado(campoTextoUsuario.getText(), tiendaDeRopa);
+								ventanaOpEmpleado.setVisible(true);
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							} catch (ClassNotFoundException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						
-					}
+						}
+						else {
+							if(tipoDeEmpleado.equals("gerente")) {
+								VentanaOpcionesGerente ventanaOpcionesGerente = new VentanaOpcionesGerente(tiendaDeRopa);
+								ventanaOpcionesGerente.setVisible(true);
+							}
+						}
+					
+					}	
+						
 				else JOptionPane.showMessageDialog(null, "Datos ingresados no validos");
 			}			
 		});

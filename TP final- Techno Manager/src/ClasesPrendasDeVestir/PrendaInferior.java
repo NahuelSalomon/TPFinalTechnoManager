@@ -1,6 +1,6 @@
 package ClasesPrendasDeVestir;
 
-import java.io.Serializable;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,17 +12,21 @@ import org.json.JSONObject;
  * @author Techno Manager
  *
  */
-public abstract class PrendaInferior extends PrendaDeVestir implements Serializable{
+public abstract class PrendaInferior extends PrendaDeVestir {
 
+
+	
+	private static final long serialVersionUID = 1L;
 
 	public PrendaInferior() {
 		super();
 	}
 
-	public PrendaInferior(int marca, String modelo, String color, int tipoDeMaterial) {
-		super(marca, modelo, color, tipoDeMaterial);
+	public PrendaInferior(int marca, String modelo, String color, int tipoDeMaterial, double precio) {
+		super(marca, modelo, color, tipoDeMaterial, precio);
 	}
-
+	
+	@Override
 	public String toString() {
 		return super.toString();
 	}

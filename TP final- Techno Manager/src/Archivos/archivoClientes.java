@@ -12,6 +12,9 @@ import Listas.ListaDeClientes;
 
 public class archivoClientes implements Serializable{
 	
+	
+	private static final long serialVersionUID = 1L;
+	
 	private static String archivoDeClientes = "clientes.dat";
 	
 	public static void grabarClientes(ListaDeClientes clientes) {	

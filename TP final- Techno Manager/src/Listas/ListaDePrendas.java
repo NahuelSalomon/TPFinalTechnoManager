@@ -1,20 +1,20 @@
 package Listas;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import ClasesPersona.Empleado;
+
+import ClasesPrendasDeVestir.Buzo;
+import ClasesPrendasDeVestir.Calzado;
+import ClasesPrendasDeVestir.Maya;
+import ClasesPrendasDeVestir.Pantalon;
 import ClasesPrendasDeVestir.PrendaDeVestir;
-
+import ClasesPrendasDeVestir.Remera;
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
 import Interfaces.IFuncionesBasicasListaPrendas;
 
@@ -27,6 +27,9 @@ import Interfaces.IFuncionesBasicasListaPrendas;
  */
 public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private ContenedorPrendasYEmpleados<String, PrendaDeVestir> prendas;
 
 	public ListaDePrendas() {
@@ -56,7 +59,7 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializab
 
 	@Override
 	public String listarPrendas() {
-		return prendas.listarElementos("Codigo", "Prenda");
+		return prendas.listarElementos("CODIGO", "PRENDA");
 	}
 
 	@Override
@@ -113,7 +116,69 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializab
 	public JSONArray toJsonArray() throws JSONException {
 		JSONArray jsonArray = new JSONArray();
 		
+		ArrayList<PrendaDeVestir> arrayDeprendas = prendas.devolverElementos();
+		
+		for(PrendaDeVestir prenda : arrayDeprendas) {
+			jsonArray.put(prenda.toJSONObject());
+		}
+		
 		return jsonArray;
 	}
 
+	public String devolverPrendasConSuCodigo() {
+		StringBuilder builder = new StringBuilder();
+		
+		ArrayList<PrendaDeVestir> arrayDeprendas = prendas.devolverElementos();
+		
+		for(PrendaDeVestir p : arrayDeprendas) {
+			builder.append(p.getCodigo()+" - "+p.getMarca()+"-"+p.getModelo()+"\n");
+		}
+		
+		return builder.toString();
+	}
+	
+	/**
+	 * Metodo para importar una lista de prendas desde un array de json
+	 * @param jsonArray a importar
+	 * @return la lista de prendas
+	 * @throws JSONException
+	 */
+	public static ListaDePrendas fromJSONArray(JSONArray jsonArray) throws JSONException {
+		ListaDePrendas listaDePrendas = new ListaDePrendas();
+		
+		for(int i = 0 ; i < jsonArray.length() ; i++) {
+			
+			JSONObject jsonObjectPrenda = jsonArray.getJSONObject(i);
+			
+			if(jsonObjectPrenda.getString("Tipo de prenda").equals("Buzo")) {
+				Buzo buzo = Buzo.fromJSONObject(jsonObjectPrenda);
+				listaDePrendas.agregarPrenda(buzo.getCodigo(), buzo);
+				
+			}
+			if(jsonObjectPrenda.getString("Tipo de prenda").equals("Remera")) {
+				Remera remera = Remera.fromJSONObject(jsonObjectPrenda);
+				listaDePrendas.agregarPrenda(remera.getCodigo(), remera);
+				
+			}
+			if(jsonObjectPrenda.getString("Tipo de prenda").equals("Pantalon")) {
+				Pantalon pantalon = Pantalon.fromJSONObject(jsonObjectPrenda);
+				listaDePrendas.agregarPrenda(pantalon.getCodigo(), pantalon);
+				
+			}
+			if(jsonObjectPrenda.getString("Tipo de prenda").equals("Calzado")) {
+				Calzado calzado = Calzado.fromJSONObject(jsonObjectPrenda);
+				listaDePrendas.agregarPrenda(calzado.getCodigo(), calzado);
+				
+			}
+			if(jsonObjectPrenda.getString("Tipo de prenda").equals("Maya")) {
+				Maya maya = Maya.fromJSONObject(jsonObjectPrenda);
+				listaDePrendas.agregarPrenda(maya.getCodigo(), maya);
+	
+			}
+		}
+		
+		return listaDePrendas;
+	}
+	
+	
 }

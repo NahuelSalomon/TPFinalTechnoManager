@@ -1,7 +1,7 @@
 package ClasesPersona;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +15,9 @@ import org.json.JSONObject;
  */
 public class Persona implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String nombre;
 	private String apellido;
 	private String dni;
@@ -105,13 +108,19 @@ public class Persona implements Serializable {
 		jsonObject.put("Nombre", getNombre());
 		jsonObject.put("Apellido", getApellido());
 		jsonObject.put("DNI", getDni());
-		jsonObject.put("Genero", getGenero());
+		jsonObject.put("Genero", getGeneroInt());
 		jsonObject.put("Fecha de nac", getFechaNac());
 		
 		return jsonObject;
 	}
 	
-	public static Persona JSONObjectToPersona(JSONObject jsonObject) throws JSONException {
+	/**
+	 * Metodo para importar una persona desde un objeto JSON
+	 * @param jsonObject a importar
+	 * @return la persona 
+	 * @throws JSONException
+	 */
+	public static Persona fromJSONObject(JSONObject jsonObject) throws JSONException {
 		
 		String nombre = jsonObject.getString("Nombre"); 
 		String apellido = jsonObject.getString("Apellido");
@@ -125,7 +134,7 @@ public class Persona implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Nombre: " + getNombre() + "\nApellido: " + getApellido() + "\nDNI: " + getDni() + "\nGenero: "
+		return "\n\nNombre: " + getNombre() + "\nApellido: " + getApellido() + "\nDNI: " + getDni() + "\nGenero: "
 				+ getGenero() + "\nFecha de nacimiento:" + getFechaNac();
 	}
 

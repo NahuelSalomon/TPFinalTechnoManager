@@ -7,9 +7,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-import ClasesPersona.Empleado;
-
-import org.json.JSONArray;
 
 
 import java.util.Map.Entry;
@@ -24,6 +21,8 @@ import java.util.Map.Entry;
  */
 public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 
+
+	private static final long serialVersionUID = 1L;
 	private HashMap<K, V> contenedor;
 
 	/**
@@ -99,7 +98,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 
 		while (iterator.hasNext()) {
 			Entry<K, V> entry = iterator.next();
-			builder.append(nom_claves + ": " + entry.getKey() + " " + nom_valores + ": " + entry.getValue());
+			builder.append("\n\n"+nom_claves + ": " + entry.getKey() + " " + "\n\n"+nom_valores + ": " + entry.getValue());
 		}
 
 		return builder.toString();
@@ -122,7 +121,11 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 	 * @return el elemento si existe y sino retorna null.
 	 */
 	
-	
+	/**
+	 * Busca un elemento, si no existe retorna null.
+	 * @param clave para buscar el elemento
+	 * @return el elemento
+	 */
 	public V buscarElemento(K clave) {
 
 		if (existeClave(clave)) {
@@ -142,7 +145,7 @@ public class ContenedorPrendasYEmpleados<K, V> implements Serializable{
 		
 		Set<Entry<K, V>> set = contenedor.entrySet();
 		Iterator<Entry<K, V>> iterator = set.iterator();
-
+		
 		while (iterator.hasNext()) {
 			Entry<K, V> entry = iterator.next();
 			elementos.add(entry.getValue());

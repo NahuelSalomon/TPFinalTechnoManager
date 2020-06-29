@@ -437,7 +437,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					PrendaDeVestir prenda = null;
 					switch(cbPrendaTipoPrenda.getSelectedIndex()) {
 						case 1:
-							prenda = new Calzado(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
+						/*	prenda = new Calzado(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
 									cbPrendaTipoMaterial.getSelectedIndex(), cbPrendaCarac1.getSelectedIndex());
 							break;
 						case 2:
@@ -457,7 +457,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 							prenda = new Maya(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
 									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()),
 									convertirABoolean(cbPrendaCarac2.getSelectedIndex()));
-							break;
+							break;*/
 					}
 					prenda.agregarNuevoTalleConCantidad(textPrendaTalla.getText(), Integer.parseInt(textPrendaStock.getText()));
 					tiendaDeRopa.agregarPrenda(prenda.getCodigo(), prenda);

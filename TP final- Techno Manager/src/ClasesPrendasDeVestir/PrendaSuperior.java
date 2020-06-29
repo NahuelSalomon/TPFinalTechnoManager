@@ -1,6 +1,8 @@
 package ClasesPrendasDeVestir;
 
-import java.io.Serializable;
+
+
+import java.util.Collection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,8 +14,11 @@ import org.json.JSONObject;
  * @author Techno Manager
  *
  */
-public abstract class PrendaSuperior extends PrendaDeVestir implements Serializable{
+public abstract class PrendaSuperior extends PrendaDeVestir {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private boolean esMangaCorta;
 
 	public PrendaSuperior() {
@@ -21,8 +26,8 @@ public abstract class PrendaSuperior extends PrendaDeVestir implements Serializa
 		this.esMangaCorta = false;
 	}
 
-	public PrendaSuperior(int marca, String modelo, String color, int tipoDeMaterial, boolean esMangaCorta) {
-		super(marca, modelo, color, tipoDeMaterial);
+	public PrendaSuperior(int marca, String modelo, String color, int tipoDeMaterial, boolean esMangaCorta, double precio) {
+		super(marca, modelo, color, tipoDeMaterial, precio);
 		this.esMangaCorta = esMangaCorta;
 	}
 
@@ -37,9 +42,10 @@ public abstract class PrendaSuperior extends PrendaDeVestir implements Serializa
 	public void setEsMangaCorta(boolean esMangaCorta) {
 		this.esMangaCorta = esMangaCorta;
 	}
-
+	
+	@Override
 	public String toString() {
-		return super.toString() + "\n" + getEsMangaCorta();
+		return super.toString() +"\nEs manga corta: "+getEsMangaCorta();
 	}
 	
 	@Override
@@ -47,9 +53,13 @@ public abstract class PrendaSuperior extends PrendaDeVestir implements Serializa
 		JSONObject jsonObject = new JSONObject();
 	
 		jsonObject = super.toJSONObject();
-		jsonObject.put("Es manga corta: ", getEsMangaCorta());
+		jsonObject.put("Es manga corta", getEsMangaCortaBoolean());
 	
 	return jsonObject;
+	}
+
+	private boolean getEsMangaCortaBoolean() {
+		return esMangaCorta;
 	}
 
 }

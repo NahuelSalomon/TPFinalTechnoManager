@@ -2,6 +2,9 @@ package Ejecutable;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import Archivos.archivoClientes;
 import Archivos.archivoEmpleados;
 import Archivos.archivoPrendas;
@@ -37,6 +40,13 @@ public class TiendaDeRopa {
 		ventas = new ListaDeVentas(archivoVentas.leerVentas());
 	}
 
+	public TiendaDeRopa(ListaDeClientes listaDeClientes, ListaDeEmpleados listaDeEmpleados, ListaDePrendas listaDePrendas, ListaDeVentas listaDeVentas) {
+		this.clientes = listaDeClientes;
+		this.empleados = listaDeEmpleados;
+		this.prendasDeVestir = listaDePrendas;
+		this.ventas = listaDeVentas;
+	}
+	
 	/**
 	 * Agrega un cliente a la tienda de ropa
 	 * 
@@ -292,6 +302,31 @@ public class TiendaDeRopa {
 	}
 	
 	/**
+	 * Metodo para devolver los empleados con su legajo, nombre y apellido.
+	 * @return los empleados con su legajo nombre y apellido en forma de String
+	 */
+	public String devolverNombreYApellidoEmpleadosConLegajo() {
+		return empleados.devolverNombreYApellidoEmpleadosConLegajo();
+	}
+	
+	/**
+	 * Devulve todas la prendas con su respectivo codigo 
+	 * @return las prendas con su codigo en forma de String 
+	 */
+	public String devolverPrendasConSuCodigo() {
+		return prendasDeVestir.devolverPrendasConSuCodigo();
+	} 
+	
+	/**
+	 * Busca una venta por su id
+	 * @param id de la venta a buscar
+	 * @return la venta
+	 */
+	public Venta buscarVentaPorID(int id) {
+		return ventas.buscarVentaPorID(id);
+	}
+	
+	/**
 	 * Utiliza las clases de Archivos para guardar las Listas
 	 */
 	public void guardarTiendaDeRopa() {
@@ -301,8 +336,83 @@ public class TiendaDeRopa {
 		archivoVentas.grabarVentas(ventas);
 	}
 	
+	/**
+	 * Devuelve los cliente en forma de arrayList
+	 * @return el arrayList de los clientes
+	 */
 	public ArrayList<Cliente> devolverClientes(){
 		return clientes.devolverClientes();
 	}
-
+	
+	/**
+	 * Busca un cliente por dni
+	 * @param dni del cliente a buscar
+	 * @return el cliente
+	 */
+	public Cliente buscarClientePorDni(String dni) {
+		return clientes.buscarClientePorDNI(dni);
+	}
+	
+	
+	/**
+	 * Metodo para convertir la tienda de ropa a un objecto json
+	 * @return el jsonObject
+	 * @throws JSONException 
+	 */
+	public JSONObject toJsonObject () throws JSONException {
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("Clientes", clientes.toJsonArray());
+		jsonObject.put("Empleados", empleados.toJsonArray());
+		jsonObject.put("Prendas de vestir", prendasDeVestir.toJsonArray());
+		jsonObject.put("Ventas", ventas.toJsonArray());
+		
+		return jsonObject;
+	
+	}
+	
+	/**
+	 * Metodo para importar una tienda de ropa desde un objecto JSON
+	 * @param jsonObject a importar
+	 * @return la tienda de ropa
+	 * @throws JSONException
+	 */
+	public static TiendaDeRopa fromJSONObject(JSONObject jsonObject) throws JSONException {
+		
+		ListaDeClientes listaDeClientes = ListaDeClientes.fromJSONArray(jsonObject.getJSONArray("Clientes"));
+		ListaDeEmpleados listaDeEmpleados = ListaDeEmpleados.fromJSONArray(jsonObject.getJSONArray("Empleados"));
+		ListaDePrendas listaDePrendas = ListaDePrendas.fromJSONArray(jsonObject.getJSONArray("Prendas de vestir"));
+		ListaDeVentas listaDeVentas = ListaDeVentas.fromJSONArray(jsonObject.getJSONArray("Ventas"), listaDeClientes, listaDeEmpleados, listaDePrendas);
+	
+		TiendaDeRopa tiendaDeRopa = new TiendaDeRopa(listaDeClientes, listaDeEmpleados, listaDePrendas, listaDeVentas);
+		
+		return tiendaDeRopa;
+	}
+	
+	/**
+	 * Devulve todos los clientes con su nombre, apellido, dni y tipo de cliente
+	 * @return los datos de todos los clientes mencionados anteriormente en forma de String
+	 */
+	public String devolverClientesConSuNombreApellidoYDni() { 
+		return clientes.devolverClientesConSuNombreApellidoYDni();
+	}
+	
+	/**
+	 * Metodo para actualizar la tienda de ropa a travez del archivo
+	 */
+	public void actualizarTiendaDeRopa() {
+		clientes = archivoClientes.leerClientes();
+		empleados = archivoEmpleados.leerEmpleados();
+		prendasDeVestir = archivoPrendas.leerPrendas();
+		ventas = archivoVentas.leerVentas();
+	} 
+	
+	/**
+	 * 
+	 */
+	public String devolverVentasConIDClienteVendedorYFecha() {
+		return ventas.listarVentasConIdVendedorClineteYFecha();
+	}
+	
 }
