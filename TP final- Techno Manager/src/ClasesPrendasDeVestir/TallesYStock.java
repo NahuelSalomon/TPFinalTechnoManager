@@ -37,7 +37,7 @@ public class TallesYStock implements Serializable{
 	 * @return boolean Retorna True si se encontro el talle en el HashMap, False en
 	 *         caso contrario
 	 */
-	private boolean existeTalle(String talle) {
+	public boolean existeTalle(String talle) {
 		return tallesYStock.containsKey(talle);
 	}
 

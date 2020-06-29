@@ -36,8 +36,9 @@ public class Main {
 
 	public static void main(String[] args) {
 	    
-//    PrendaDeVestir prenda1 = new Calzado();
-//    PrendaDeVestir prenda2 = new Remera();
+//    PrendaDeVestir prenda1 = new Calzado(3,"Zapatillas","Rojo",4,1);
+//    prenda1.agregarNuevoTalleConCantidad("38", 20);
+//    PrendaDeVestir prenda2 = new Remera(4,"Remera","Azul",1,true,"Estampado");
 //    Cliente cliente1 = new ClienteMayorista("Carlos","Perez","1236548",5);
 //    Cliente cliente2 = new ClienteMinorista("Miguel","Sanches");
 //    Empleado vendedor = new Vendedor();

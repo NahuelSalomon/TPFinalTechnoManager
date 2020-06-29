@@ -74,13 +74,14 @@ public class VentanaOpcionesEmpleado extends JFrame {
 	private JTextField textVendedorLegajo;
 	private JTextField textVendedorContrasenia;
 	private JTextField textVendedorNumTel;
-	private JTextField textCantidad;
+	private JFormattedTextField textCantidad;
 	private JTextField textPrendaModelo;
 	private JTextField textPrendaColor;
 	private JTextField textPrendaTalla;
 	private JFormattedTextField textPrendaStock;
 	private JFormattedTextField textPrendaPrecio;
 	private JTextField textPrendaCarac1;
+	private JTextField textTalla;
 
 	/**
 	 * Create the frame.
@@ -177,57 +178,109 @@ public class VentanaOpcionesEmpleado extends JFrame {
 			cbCliente.addItem(elem.getNombre());
 		}
 		//JOptionPane.showMessageDialog(null, clientesCadena);
-		cbCliente.setBounds(20, 4, 98, 20);
+		cbCliente.setBounds(20, 4, 148, 20);
 		panRegistrarVenta.add(cbCliente);
 		Date fechaActual = new Date();
 		
 		JLabel lblFecha = new JLabel(fechaActual.toString());
-		lblFecha.setBounds(149, 7, 154, 14);
+		lblFecha.setBounds(275, 7, 154, 14);
 		panRegistrarVenta.add(lblFecha);
 		
 		JButton btnFinalizarVenta = new JButton("Finalizar");
 		btnFinalizarVenta.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnFinalizarVenta.setForeground(new Color(255, 255, 255));
 		btnFinalizarVenta.setBackground(new Color(0, 0, 128));
-		btnFinalizarVenta.setBounds(342, 4, 87, 25);
+		btnFinalizarVenta.setBounds(342, 263, 87, 25);
 		panRegistrarVenta.add(btnFinalizarVenta);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 38, 409, 97);
+		scrollPane.setBounds(20, 32, 409, 97);
 		panRegistrarVenta.add(scrollPane);
 		
 		JTable tablePrendas = new JTable();
-		tablePrendas.setCellSelectionEnabled(true);
 		scrollPane.setViewportView(tablePrendas);
 		tablePrendas.setModel(cargarJListConArrayList(tiendaDeRopa.devolverPrendas()));
 		
-		textCantidad = new JTextField();
-		textCantidad.setBounds(124, 146, 44, 20);
+		textCantidad = new JFormattedTextField();
+		textCantidad.setBounds(232, 137, 30, 20);
+		textCantidad.setValue(new Integer(1));
 		panRegistrarVenta.add(textCantidad);
 		textCantidad.setColumns(10);
 		
 		JLabel lbIndiqueCantidad = new JLabel("Indique Cantidad:");
-		lbIndiqueCantidad.setBounds(20, 146, 98, 20);
+		lbIndiqueCantidad.setBounds(139, 137, 98, 20);
 		panRegistrarVenta.add(lbIndiqueCantidad);
 		
 		JButton btnAgregarAlCarro = new JButton("Agregar al Carro");
-		btnAgregarAlCarro.setBounds(228, 145, 154, 23);
+		btnAgregarAlCarro.setBounds(275, 136, 154, 23);
 		panRegistrarVenta.add(btnAgregarAlCarro);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(20, 177, 409, 79);
+		scrollPane_1.setBounds(20, 173, 409, 79);
 		panRegistrarVenta.add(scrollPane_1);
 		
 		JTable tableCarro = new JTable();
 		scrollPane_1.setViewportView(tableCarro);
+		DefaultTableModel modeloTableCarro = new DefaultTableModel(new Object[] {"Modelo","Marca","Talla","Cantidad"}, 0);
+		tableCarro.setModel(modeloTableCarro);
 		
 		JButton btnEliminarDelCarro = new JButton("Eliminar del Carro");
-		btnEliminarDelCarro.setBounds(228, 267, 154, 23);
+		btnEliminarDelCarro.setBounds(178, 266, 154, 23);
 		panRegistrarVenta.add(btnEliminarDelCarro);
 		
-		JLabel lbPrecioFinal = new JLabel("New label");
-		lbPrecioFinal.setBounds(30, 267, 138, 23);
-		panRegistrarVenta.add(lbPrecioFinal);
+		JLabel lblSubTotal = new JLabel("Sub-Total:");
+		lblSubTotal.setBounds(30, 267, 70, 23);
+		panRegistrarVenta.add(lblSubTotal);
+		
+		JLabel lblValorSubTotal = new JLabel("0");
+		lblValorSubTotal.setBounds(103, 271, 46, 14);
+		panRegistrarVenta.add(lblValorSubTotal);
+		
+		JLabel lblIndiqueTalla = new JLabel("Indique Talla:");
+		lblIndiqueTalla.setBounds(20, 140, 80, 14);
+		panRegistrarVenta.add(lblIndiqueTalla);
+		
+		textTalla = new JTextField();
+		textTalla.setBounds(89, 137, 30, 20);
+		panRegistrarVenta.add(textTalla);
+		textTalla.setColumns(10);
+		
+		JLabel lblPistaTalles = new JLabel("");
+		lblPistaTalles.setBounds(54, 158, 46, 14);
+		panRegistrarVenta.add(lblPistaTalles);
+		
+		btnAgregarAlCarro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int filaSeleccionada = tablePrendas.getSelectedRow();
+				PrendaDeVestir prenda = null;
+				int cant = (Integer)textCantidad.getValue();
+				if(filaSeleccionada == -1) {
+					//throw new ExcepcionMensajeError("No selecciono una prenda");
+					JOptionPane.showMessageDialog(null, "No solecciono una prenda");
+				}
+				else {
+					prenda = tiendaDeRopa.buscarPrenda((String)tablePrendas.getValueAt(filaSeleccionada, 4));
+					if(cant < 1) {
+						//throw new ExcepcionMensajeError("Cantidad indicada no valida");
+						JOptionPane.showMessageDialog(null, "Cantidad indicada no valida");
+					}
+					else if(!prenda.existeTalle(textTalla.getText())) {
+						//throw new ExcepcionMensajeError("Talla indicada no valida");
+						JOptionPane.showMessageDialog(null, "Talla indicada no valida");
+					}
+//					else if(prenda.getCantidadSegTalla(talle) < cant){
+//						throw new ExcepcionMensajeError("Cantidad indicada no excede el stock disponible");
+//						JOptionPane.showMessageDialog(null, "Cantidad indicada no excede el stock disponible");
+//					}
+					else {
+						//JOptionPane.showMessageDialog(null, "Todo correcto");
+						modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant});
+						tableCarro.setModel(modeloTableCarro);
+					}
+				}
+			}
+		});
 		//--------//
 		
 		//----PANEL AGREGAR PRENDA----//
@@ -754,6 +807,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 				modelo.addColumn("Marca");
 				modelo.addColumn("Tipo de Material");
 				modelo.addColumn("Color");
+				modelo.addColumn("Codigo");
 			}
 			if(aux instanceof Cliente) {
 				modelo.addColumn("Nombre");
@@ -777,7 +831,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 			for(Object elem : array){
 				if(elem instanceof PrendaDeVestir) {
 					PrendaDeVestir e = (PrendaDeVestir) elem;
-			        modelo.addRow(new Object[] {e.getModelo(),e.getMarca(),e.getTipoDeMaterial(),e.getColor()});
+			        modelo.addRow(new Object[] {e.getModelo(),e.getMarca(),e.getTipoDeMaterial(),e.getColor(),e.getCodigo()});
 				} if(elem instanceof Cliente) {
 					Cliente e = (Cliente) elem;
 			        modelo.addRow(new Object[] {e.getNombre(),e.getApellido(),e.getDni(),e.getGenero(),e.getFechaNac()});
