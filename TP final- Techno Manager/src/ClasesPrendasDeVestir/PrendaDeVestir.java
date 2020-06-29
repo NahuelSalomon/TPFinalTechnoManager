@@ -1,14 +1,16 @@
 package ClasesPrendasDeVestir;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Random;
-
-import javax.rmi.CORBA.Util;
+import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ClasesPersona.Gerente;
+
 
 /**
  * Clase padre de cualquier prenda de vestir, es abstracta con la finalidad de
@@ -19,12 +21,15 @@ import ClasesPersona.Gerente;
  */
 public abstract class PrendaDeVestir implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
 	private String codigo;
 
 	private int marca;
 	private String modelo;
 	private String color;
 	private int tipoDeMaterial;
+	private double precio;
 	private TallesYStock stockPrenda;
 
 	public PrendaDeVestir() {
@@ -37,13 +42,14 @@ public abstract class PrendaDeVestir implements Serializable{
 		stockPrenda = new TallesYStock();
 	}
 
-	public PrendaDeVestir(int marca, String modelo, String color, int tipoDeMaterial) {
+	public PrendaDeVestir(int marca, String modelo, String color, int tipoDeMaterial, double precio) {
 		super();
 		this.codigo = getRandomString(10);
 		this.marca = marca;
 		this.modelo = modelo;
 		this.color = color;
 		this.tipoDeMaterial = tipoDeMaterial;
+		this.precio = precio;
 		this.stockPrenda = new TallesYStock();
 	}
 	
@@ -58,11 +64,16 @@ public abstract class PrendaDeVestir implements Serializable{
 		else this.codigo = codigo;
 	}
 	
-	private int getRandomCode() {
+	/*private int getRandomCode() {
 		int x = (int) (Math.random() * ((99999999 - 0) + 0)) + 1;
 	    return x;
-	}
+	}*/
 	
+	/**
+	 * Metodo para elegir aleatoriamente un codigo para la prenda de vestir
+	 * @param targetStringLength
+	 * @return el codigo
+	 */
 	private String getRandomString(int targetStringLength) {
 		int leftLimit = 97; // letter 'a'
 	    int rightLimit = 122; // letter 'z'
@@ -117,6 +128,10 @@ public abstract class PrendaDeVestir implements Serializable{
 		return rta;
 	}
 
+	public int getMarcaInt() {
+		return marca;
+	}
+	
 	public void setMarca(int marca) {
 		this.marca = marca;
 	}
@@ -162,10 +177,22 @@ public abstract class PrendaDeVestir implements Serializable{
 		return rta;
 	}
 
+	public int getTipoDeMaterialInt() {
+		return tipoDeMaterial;
+	}
+	
 	public void setTipoDeMaterial(int tipoDeMaterial) {
 		this.tipoDeMaterial = tipoDeMaterial;
 	}
 
+	public double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+	
 	/**
 	 * Lista el stock disponible
 	 * 
@@ -219,7 +246,7 @@ public abstract class PrendaDeVestir implements Serializable{
 	}
 
 	public String toString() {
-		return "Marca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() + ""
+		return "\n\nMarca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() 
 				+ "\nTipo de material: "+ getTipoDeMaterial();
 	}
 
@@ -229,7 +256,24 @@ public abstract class PrendaDeVestir implements Serializable{
 	 * @return tipo prenda en forma de string
 	 */
 	public abstract String tipoDePrenda();
-
+	
+	/**
+	 * Agrega varios talles con sus respectivas cantidades a la prenda de vestir. A travez de un HashMap
+	 * @param tallesYStock talles con sus cantidades
+	 */
+	public void agregarVariosTallesYCantidad(HashMap<String, Integer> tallesYStock) {
+		
+		Set<Entry<String, Integer>> set = tallesYStock.entrySet();
+		
+		Iterator<Entry<String, Integer>> iterator = set.iterator();
+		
+		while(iterator.hasNext()) {
+			Entry<String, Integer> entry = iterator.next();
+			stockPrenda.agregarNuevoTalleConCantidad(entry.getKey(), entry.getValue());
+		}
+ 		
+	}
+	
 	
 	/**
 	 * Devuelve la prenda de vestir en forma de un objeto de json 
@@ -240,12 +284,14 @@ public abstract class PrendaDeVestir implements Serializable{
 		
 		JSONObject jsonObject = new JSONObject();
 		
-		jsonObject.put("Codigo: ", getCodigo());
-		jsonObject.put("Marca: ", getMarca());
-		jsonObject.put("Modelo: : ", getModelo());
-		jsonObject.put("Color: ", getColor());
-		jsonObject.put("Tipo de material: ", getTipoDeMaterial());
-		jsonObject.put("Talles y stock: ", stockPrenda.toJSONObject());
+		jsonObject.put("Codigo", getCodigo());
+		jsonObject.put("Marca", getMarcaInt());
+		jsonObject.put("Modelo", getModelo());
+		jsonObject.put("Color", getColor());
+		jsonObject.put("Tipo de material", getTipoDeMaterialInt());
+		jsonObject.put("Precio", getPrecio());
+		jsonObject.put("Talles y stock", stockPrenda.toJSONObject());
+		jsonObject.put("Tipo de prenda", tipoDePrenda());
 		
 	return jsonObject;
 	}

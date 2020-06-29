@@ -3,18 +3,19 @@ package Listas;
 
 
 
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Map.Entry;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import ClasesPersona.Cliente;
+
 
 import ClasesPersona.Empleado;
+import ClasesPersona.Gerente;
+import ClasesPersona.Vendedor;
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
 import Interfaces.IFuncionesBasicasListaEmpleados;
 
@@ -26,6 +27,9 @@ import Interfaces.IFuncionesBasicasListaEmpleados;
  */
 public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados,Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private ContenedorPrendasYEmpleados<String, Empleado> empleados;
 
 	public ListaDeEmpleados() {
@@ -55,7 +59,7 @@ public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados,Seriali
 
 	@Override
 	public String listarEmpleados() {
-		return empleados.listarElementos("Legajo", "Empleado");
+		return empleados.listarElementos("LEGAJO", "EMPLEADO");
 	}
 
 	@Override
@@ -63,6 +67,18 @@ public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados,Seriali
 		return empleados.buscarElemento(legajo);
 	}
 
+	public String devolverNombreYApellidoEmpleadosConLegajo() {
+		StringBuilder builder = new StringBuilder();
+		
+		ArrayList<Empleado> arrayEmpleados = empleados.devolverElementos();
+		
+		for(Empleado e : arrayEmpleados) {
+			builder.append(e.getLegajo()+" - "+e.getNombre()+" "+e.getApellido()+"\n");
+		}
+	
+		return builder.toString();
+	}
+	
 	/**
 	 * se encargar de validar los datos del usuario que ingreso con los cargados de el inicialmente
 	 * 
@@ -152,5 +168,31 @@ public class ListaDeEmpleados implements IFuncionesBasicasListaEmpleados,Seriali
 		return jsonArray;
 	}
 	
+	
+	/**
+	 * Metodo para importar una lista de empleados desde un array de json
+	 * @param jsonArray a importar
+	 * @return la lista de empleados
+	 * @throws JSONException
+	 */
+	public static ListaDeEmpleados fromJSONArray(JSONArray jsonArray) throws JSONException {
+		
+		ListaDeEmpleados listaDeEmpleados = new ListaDeEmpleados();
+		
+		for(int i = 0 ; i < jsonArray.length() ; i ++) {
+			JSONObject jsonObjectEmpleado = jsonArray.getJSONObject(i);
+			
+			if(jsonObjectEmpleado.getString("Tipo de empleado").equals("Vendedor")) {
+				Vendedor vendedor = (Vendedor) Vendedor.JSONObjectToVendedor(jsonObjectEmpleado);
+				listaDeEmpleados.agregarEmpleado(vendedor.getLegajo(), vendedor);
+			}
+			if(jsonObjectEmpleado.getString("Tipo de empleado").equals("Gerente")) {
+				Gerente gerente = (Gerente) Gerente.JSONObjectToGerente(jsonObjectEmpleado);
+				listaDeEmpleados.agregarEmpleado(gerente.getLegajo(), gerente);
+			}
+		}
+		
+		return listaDeEmpleados;
+	} 
 	
 }

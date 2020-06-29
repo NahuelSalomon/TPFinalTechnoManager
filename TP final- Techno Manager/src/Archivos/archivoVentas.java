@@ -8,11 +8,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import Listas.ListaDePrendas;
+
+
 import Listas.ListaDeVentas;
 
 public class archivoVentas implements Serializable{
 
+	
+	private static final long serialVersionUID = 1L;
 	private static String archivoDeVentas = "ventas.dat";
 	
 	public static void grabarVentas(ListaDeVentas ventas) {	
@@ -25,7 +28,9 @@ public class archivoVentas implements Serializable{
 			fileOutputStream = new FileOutputStream(archivoDeVentas);
 			objectOutputStream = new ObjectOutputStream(fileOutputStream);
 		
+			
 			objectOutputStream.writeObject(ventas);
+			
 			
 			objectOutputStream.close();
 		}
@@ -44,10 +49,10 @@ public class archivoVentas implements Serializable{
 		
 		try {
 			fileInputStream = new FileInputStream(archivoDeVentas);
-			objectInputStream = new ObjectInputStream(fileInputStream);
-			
+			objectInputStream = new ObjectInputStream(fileInputStream);			
+		
 			aux = (ListaDeVentas) objectInputStream.readObject();
-			
+	
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();

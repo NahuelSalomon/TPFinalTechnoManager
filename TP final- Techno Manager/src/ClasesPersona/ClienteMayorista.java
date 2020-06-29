@@ -1,7 +1,7 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
+
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,8 +12,10 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public class ClienteMayorista extends Cliente implements Serializable {
+public class ClienteMayorista extends Cliente {
 
+	
+	private static final long serialVersionUID = 1L;
 	private String cuil;
 	private int condicionFrenteIVA;
 
@@ -98,7 +100,13 @@ public class ClienteMayorista extends Cliente implements Serializable {
 	return jsonObject;
 	}
 
-	public ClienteMayorista JSONObjectToClienteMayorista (JSONObject jsonObject) throws JSONException { 
+	/**
+	 * Metodo para importar un cliente minorista desde objeto json
+	 * @param jsonObject a importar
+	 * @return el cliente mayorista
+	 * @throws JSONException 
+	 */
+	public static ClienteMayorista JSONObjectToClienteMayorista (JSONObject jsonObject) throws JSONException { 
 		
 		String nombre = jsonObject.getString("Nombre");
 		String apellido = jsonObject.getString("Apellido");

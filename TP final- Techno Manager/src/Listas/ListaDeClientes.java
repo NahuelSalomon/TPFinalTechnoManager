@@ -1,18 +1,16 @@
 package Listas;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ClasesPersona.Cliente;
+import ClasesPersona.ClienteMayorista;
+import ClasesPersona.ClienteMinorista;
 import ContenedorGenericas.ContenedorClientesYVentas;
 import Interfaces.IFuncionesBasicasListaClientes;
 
@@ -25,6 +23,9 @@ import Interfaces.IFuncionesBasicasListaClientes;
 
 public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	private ContenedorClientesYVentas<Cliente> clientes;
 
 	public ListaDeClientes() {
@@ -62,6 +63,23 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		return clientes.buscarElemento(index);
 	}
 
+	public Cliente buscarClientePorDNI(String dni) {
+		
+		Cliente cliente = null;
+		
+		for(int i = 0; i < clientes.cantidadElementos() ; i++) {
+			if(clientes.buscarElemento(i).getDni().equals(dni)) {
+				cliente = clientes.buscarElemento(i);
+			}
+		}
+		
+		return cliente;
+	}
+	
+	public int cantidadDeClientes() {
+		return clientes.cantidadElementos();
+	}
+	
 	public boolean existeCliente(Cliente cliente) {
 		return clientes.existeElemento(cliente);
 	}
@@ -105,7 +123,52 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		
 		return jsonArray;
 	}
-
+	
+	/**
+	 * Devulve todos los clientes con su nombre, apellido, dni y tipo de cliente
+	 * @return los datos de todos los clientes mencionados anteriormente en forma de String
+	 */
+	public String devolverClientesConSuNombreApellidoYDni() {
+		StringBuilder builder = new StringBuilder();
+		
+		ArrayList<Cliente> clientes = devolverClientes();
+		
+		for (Cliente c : clientes) {
+			builder.append(c.getDni()+" - "+c.getNombre()+" "+c.getApellido()+" - "+c.tipoDeCliente()+"\n");
+		}
+		
+		return builder.toString();
+	}
+	
+	/**
+	 * Metodo para importar una lista de clientes desde un array de json
+	 * @param jsonArray a importar
+	 * @return la lista de clientes
+	 * @throws JSONException
+	 */
+	public static ListaDeClientes fromJSONArray(JSONArray jsonArray) throws JSONException {
+		
+		ListaDeClientes listaDeClientes = new ListaDeClientes();
+		
+		for(int i = 0 ; i < jsonArray.length() ; i ++) {
+			
+			JSONObject jsonObjectCliente = (JSONObject) jsonArray.get(i); 
+			
+			if(jsonObjectCliente.getString("Tipo de cliente").equals("Mayorista")) {
+				ClienteMayorista clienteMayorista = (ClienteMayorista) ClienteMayorista.JSONObjectToClienteMayorista(jsonObjectCliente); 
+				listaDeClientes.agregarCliente(clienteMayorista);
+			}
+			else {
+				if(jsonObjectCliente.getString("Tipo de cliente").equals("Minorista")) {
+					ClienteMinorista clienteMinorista = (ClienteMinorista) ClienteMinorista.fromJSONObject(jsonObjectCliente);
+					listaDeClientes.agregarCliente(clienteMinorista);
+				}
+			}
+		}
+		
+		return listaDeClientes;
+	}
+	
 	public boolean comparaNomApe(Cliente nuevoCliente) {
 		// TODO Auto-generated method stub
 		return false;

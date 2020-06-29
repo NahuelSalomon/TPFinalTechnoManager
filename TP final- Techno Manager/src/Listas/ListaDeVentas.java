@@ -5,9 +5,10 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ClaseVenta.Venta;
-import ClasesPersona.Cliente;
+
 import ContenedorGenericas.ContenedorClientesYVentas;
 import Interfaces.IFuncionesBasicasListaVentas;
 
@@ -19,6 +20,10 @@ import Interfaces.IFuncionesBasicasListaVentas;
  */
 public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable {
 
+
+	private static final long serialVersionUID = 1L;
+	public static int id = 0;
+	
 	private ContenedorClientesYVentas<Venta> ventas;
 
 	public ListaDeVentas() {
@@ -32,6 +37,7 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 	
 	@Override
 	public boolean agregarVenta(Venta venta) {
+		venta.setId(id++);
 		return ventas.agregarElemento(venta);
 	}
 
@@ -55,6 +61,47 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 		return ventas.buscarElemento(index);
 	}
 
+	public int cantidadDeVentas() {
+		return ventas.cantidadElementos();
+	}
+	
+	/**
+	 * Metodo para buscar una venta por id
+	 * @param id de la venta a buscar
+	 * @return la venta
+	 */
+	public Venta buscarVentaPorID(int id) {
+		Venta venta = null;
+	
+		ArrayList<Venta> arrayVentas = devolverVentas();
+		
+		for(Venta v : arrayVentas) {
+			if(v.getId() == id) {
+				venta = v;
+				break;
+			}
+		}
+		return venta;
+	}
+	
+	/**
+	 * Metodo para listar ventas con su id vendedor, cliente y fecha
+	 * @return la informacion detallada anteriormente en forma de String
+	 */
+	public String listarVentasConIdVendedorClineteYFecha() {
+		StringBuilder builder = new StringBuilder();
+		
+		ArrayList<Venta> arrayVentas = devolverVentas();
+		
+		for(Venta v : arrayVentas) {
+			builder.append("ID: "+v.getId()+" - Cliente: "+v.getCliente().getNombre()+" "+v.getCliente().getApellido()
+					+" - Vendedor: "+v.getVendedor().getNombre()+" "+v.getVendedor().getApellido()+" - Fecha: "+v.getFecha()+"\n");
+			
+		}
+		
+		return builder.toString();
+	}
+	
 	/**
 	 * @param venta a verificar si existe
 	 * @return true si existe la venta, false en caso contrario
@@ -102,5 +149,28 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 		
 		return jsonArray;
 	}
+	
+	/**
+	 * Metodo para importar una lista de ventas desde un array de json
+	 * @param jsonArray a importar
+	 * @param listaDeClientes para importar los clientes que realizan las compras
+	 * @param listaDeEmpleados para importar los clientes que realizan las ventas
+	 * @param listaDePrendas para importar los prendas que compran los clientes
+	 * @return la lista de ventas
+	 * @throws JSONException
+	 */
+	public static ListaDeVentas fromJSONArray(JSONArray jsonArray, ListaDeClientes listaDeClientes, ListaDeEmpleados listaDeEmpleados, ListaDePrendas listaDePrendas) throws JSONException {
+		ListaDeVentas listaDeVentas = new ListaDeVentas();
+		
+		for(int i = 0 ; i < jsonArray.length() ; i++) {
+			JSONObject jsonObjectVenta = jsonArray.getJSONObject(i);
+			Venta venta = (Venta) Venta.fromJSONObject(jsonObjectVenta, listaDeClientes, listaDeEmpleados, listaDePrendas);
+			listaDeVentas.agregarVenta(venta);
+		}
+		
+		return listaDeVentas;
+	} 
+	
+	
 
 }

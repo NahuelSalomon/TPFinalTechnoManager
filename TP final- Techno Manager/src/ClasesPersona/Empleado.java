@@ -1,7 +1,6 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +12,9 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public abstract class Empleado extends Persona implements Serializable{
+public abstract class Empleado extends Persona {
+	
+	private static final long serialVersionUID = 1L;
 	private int estadoCivil;
 	private String legajo;
 	private String contraseña;
@@ -118,10 +119,11 @@ public abstract class Empleado extends Persona implements Serializable{
 		JSONObject jsonObject = new JSONObject();
 		
 		jsonObject = super.toJSONObject();
-		jsonObject.put("Empleado: ", tipoEmpleado());
-		jsonObject.put("Legajo: ", getLegajo());
-		jsonObject.put("Estado civil: ", getEstadoCivil());
-		jsonObject.put("Contraseña: ", getContraseña());
+		jsonObject.put("Empleado", tipoEmpleado());
+		jsonObject.put("Legajo", getLegajo());
+		jsonObject.put("Estado civil", getEstadoCivilInt());
+		jsonObject.put("Contraseña", getContraseña());
+		jsonObject.put("Tipo de empleado", tipoEmpleado());
 		
 	return jsonObject;
 	}

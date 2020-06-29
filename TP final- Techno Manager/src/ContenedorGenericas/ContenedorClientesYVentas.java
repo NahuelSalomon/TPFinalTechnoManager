@@ -3,7 +3,7 @@ package ContenedorGenericas;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import ClasesPersona.Cliente;
+
 import ClasesPersona.Persona;
 
 /**
@@ -16,6 +16,10 @@ import ClasesPersona.Persona;
  */
 public class ContenedorClientesYVentas<E> implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<E> contenedor;
 
 	/**
@@ -122,6 +126,11 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 		return contenedor.contains(elemento);
 	}
 	
+	/**
+	 * 
+	 * @param cliente
+	 * @return
+	 */
 	public boolean comparaNomApe(E cliente) {
 		boolean rta = false;
 		

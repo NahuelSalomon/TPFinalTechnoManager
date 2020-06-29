@@ -1,7 +1,7 @@
 package ClasesPersona;
 
-import java.io.Serializable;
-import java.util.Date;
+
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +12,10 @@ import org.json.JSONObject;
  * @author Nahuel
  *
  */
-public class Gerente extends Empleado implements Serializable{
+public class Gerente extends Empleado {
+
+
+	private static final long serialVersionUID = 1L;
 
 	public Gerente() {
 		super();
@@ -29,7 +32,7 @@ public class Gerente extends Empleado implements Serializable{
 
 	@Override
 	public String toString() {
-		return super.toString() + "Tipo de empleado: " + tipoEmpleado();
+		return super.toString() + "\nTipo de empleado: " + tipoEmpleado();
 	}
 
 	@Override
@@ -42,13 +45,19 @@ public class Gerente extends Empleado implements Serializable{
 		return super.toJSONObject();
 	}
 
-	public Gerente JSONObjectToGerente(JSONObject jsonObject) throws JSONException { 
+	/**
+	 * Metodo para importar un gerente desde un objeto JSON
+	 * @param jsonObject a importar
+	 * @return el gerente
+	 * @throws JSONException
+	 */
+	public static Gerente JSONObjectToGerente(JSONObject jsonObject) throws JSONException { 
 		
 		String nombre = jsonObject.getString("Nombre");
 		String apellido = jsonObject.getString("Apellido");
 		String dni = jsonObject.getString("DNI");
 		Integer genero = jsonObject.getInt("Genero");
-		String fechaNac = jsonObject.getString("Fehca de naciemiento");
+		String fechaNac = jsonObject.getString("Fecha de nac");
 		Integer estadoCivil = jsonObject.getInt("Estado civil");
 		String legajo = jsonObject.getString("Legajo");
 		String contraseña = jsonObject.getString("Contraseña");
@@ -57,6 +66,5 @@ public class Gerente extends Empleado implements Serializable{
 			
 		return gerente;
 		}
-	
 
 }

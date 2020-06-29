@@ -13,12 +13,17 @@ import Listas.ListaDePrendas;
 
 public class archivoPrendas implements Serializable{
 	
+	
+	private static final long serialVersionUID = 1L;
 	private static String archivoDePrendas = "prendasDeVestir.dat";
 	
 	public static void grabarPrendas(ListaDePrendas prendas) {	
 			
 			FileOutputStream fileOutputStream = null;
 			ObjectOutputStream objectOutputStream = null;
+			
+			
+			
 			
 			try {
 				
