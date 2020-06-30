@@ -300,7 +300,7 @@ public class TiendaDeRopa {
 	 */
 	public void guardarTiendaDeRopa() {
 		archivoEmpleados.grabarEmpleados(empleados);
-		archivoClientes.grabarClientes(clientes);;
+		archivoClientes.grabarClientes(clientes);
 		archivoPrendas.grabarPrendas(prendasDeVestir);
 		archivoVentas.grabarVentas(ventas);
 	}

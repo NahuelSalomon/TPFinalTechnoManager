@@ -118,23 +118,48 @@ public class TallesYStock implements Serializable{
 		return seQuito;
 	}
 
+ 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Este metodo es para listar todos los talles con sus respectivas cantidades
 	 * 
 	 * @return los talles con sus respectivas cantidades en forma de String
 	 */
 	public String listarTallesYStock() {
-		StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder("<html>");
 
 		Set<Entry<String, Integer>> set = tallesYStock.entrySet();
 		Iterator<Entry<String, Integer>> iterator = set.iterator();
 
 		while (iterator.hasNext()) {
 			Entry<String, Integer> entry = iterator.next();
-			builder.append("Talle: " + entry.getKey() + "Cantidad: " + entry.getValue());
+			builder.append("<p>Talle: " + entry.getKey() + " / Cantidad: " + entry.getValue() + "</p>");
 		}
+		builder.append("</html>");
 
 		return builder.toString();
+	}
+	
+	public int cantidadDeTallas() {
+		return tallesYStock.size();
 	}
 
 	public JSONObject toJSONObject() throws JSONException {

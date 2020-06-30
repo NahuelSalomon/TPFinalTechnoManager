@@ -31,6 +31,7 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,6 +56,8 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+
 import java.util.Date;
 import javax.swing.JTextPane;
 import javax.swing.JLayeredPane;
@@ -65,6 +68,7 @@ import java.awt.event.HierarchyEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JScrollPane;
+import javax.swing.JRadioButton;
 
 public class VentanaOpcionesEmpleado extends JFrame {
 
@@ -82,6 +86,9 @@ public class VentanaOpcionesEmpleado extends JFrame {
 	private JFormattedTextField textPrendaPrecio;
 	private JTextField textPrendaCarac1;
 	private JTextField textTalla;
+	private JTable tablePrendaAjuste;
+	private JTextField textPrendaAjusteTalla;
+	private JTextField textPrendaAjusteStock;
 
 	/**
 	 * Create the frame.
@@ -199,7 +206,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		
 		JTable tablePrendas = new JTable();
 		scrollPane.setViewportView(tablePrendas);
-		tablePrendas.setModel(cargarJListConArrayList(tiendaDeRopa.devolverPrendas()));
+		tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
 		
 		textCantidad = new JFormattedTextField();
 		textCantidad.setBounds(232, 137, 30, 20);
@@ -417,16 +424,16 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		btnPrendaAjustarStock.setBounds(224, 266, 104, 23);
 		panAgregarPrendas.add(btnPrendaAjustarStock);
 		
-		JButton btnPrendaBorrar = new JButton("Borrar");
-		btnPrendaBorrar.setBounds(10, 266, 89, 23);
-		panAgregarPrendas.add(btnPrendaBorrar);
+		JButton btnPrendaLimpiar = new JButton("Limpiar");
+		btnPrendaLimpiar.setBounds(10, 266, 89, 23);
+		panAgregarPrendas.add(btnPrendaLimpiar);
 		
 		lblPrendaCarac1.setVisible(false);
 		textPrendaCarac1.setVisible(false);
 		cbPrendaCarac1.setVisible(false);
 		lblPrendaCarac2.setVisible(false);
 		cbPrendaCarac2.setVisible(false);
-		
+				
 		cbPrendaTipoPrenda.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				switch(cbPrendaTipoPrenda.getSelectedIndex()) {
@@ -491,6 +498,22 @@ public class VentanaOpcionesEmpleado extends JFrame {
 			}
 		});
 		
+		btnPrendaLimpiar.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				cbPrendaMarca.setSelectedIndex(0);
+				textPrendaModelo.setText("");
+				cbPrendaTipoMaterial.setSelectedIndex(0);
+				textPrendaColor.setText("");
+				textPrendaTalla.setText("");
+				textPrendaStock.setValue(1);
+				textPrendaPrecio.setValue(0);
+				cbPrendaTipoPrenda.setSelectedIndex(0);
+				textPrendaCarac1.setText("");
+				cbPrendaCarac1.setSelectedIndex(-1);
+				cbPrendaCarac2.setSelectedIndex(-1);
+			}
+		});
+		
 		btnPrendaGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -526,7 +549,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					}
 					prenda.agregarNuevoTalleConCantidad(textPrendaTalla.getText(), Integer.parseInt(textPrendaStock.getText()));
 					tiendaDeRopa.agregarPrenda(prenda.getCodigo(), prenda);
-					tablePrendas.setModel(cargarJListConArrayList(tiendaDeRopa.devolverPrendas()));
+					tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
 				}
 			}
 		});
@@ -777,11 +800,65 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		panVendedor.add(lbTFechaNac);
 		//--------/
 		
-		accionBotonPaneles(botonRegistrarVenta, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas);
-		accionBotonPaneles(botonVerVentas, panVerMisVentas, panAgregarPrendas, panVendedor, panRegistrarVenta, panModificarDatosPer);
-		accionBotonPaneles(botonModificarDatosPersonales, panModificarDatosPer, panAgregarPrendas, panVendedor, panRegistrarVenta, panRegistrarVenta);
-		accionBotonPaneles(botonAgregarPrendaDeVestir, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer);
-		accionBotonPaneles(botonNombreEmpleado, panVendedor, panAgregarPrendas, panVerMisVentas, panRegistrarVenta, panModificarDatosPer);
+		//----PANEL AJUSTE STOCK----//
+		JPanel panPrendaAjusteStock = new JPanel();
+		lpanGeneral.add(panPrendaAjusteStock, "name_1185469176420466");
+		panPrendaAjusteStock.setLayout(null);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 40, 430, 217);
+		panPrendaAjusteStock.add(scrollPane_2);
+		
+		tablePrendaAjuste = new JTable();
+		scrollPane_2.setViewportView(tablePrendaAjuste);
+		tablePrendaAjuste.setModel(cargarJTablePrendaAjuste(tiendaDeRopa.devolverPrendas()));
+		tablePrendaAjuste.getColumnModel().getColumn(3).setPreferredWidth(180);
+		tablePrendaAjuste.setRowHeight(50);
+		
+		JButton btnPrendaAjusteAtras = new JButton("Atras");
+		btnPrendaAjusteAtras.setBounds(10, 11, 68, 23);
+		panPrendaAjusteStock.add(btnPrendaAjusteAtras);
+		
+		JLabel lblPrendaAjusteTalla = new JLabel("Talla:");
+		lblPrendaAjusteTalla.setBounds(10, 275, 46, 14);
+		panPrendaAjusteStock.add(lblPrendaAjusteTalla);
+		
+		textPrendaAjusteTalla = new JTextField();
+		textPrendaAjusteTalla.setBounds(62, 272, 46, 20);
+		panPrendaAjusteStock.add(textPrendaAjusteTalla);
+		textPrendaAjusteTalla.setColumns(10);
+		
+		JLabel lblPrendaAjusteStock = new JLabel("Strock");
+		lblPrendaAjusteStock.setBounds(219, 275, 46, 14);
+		panPrendaAjusteStock.add(lblPrendaAjusteStock);
+		
+		textPrendaAjusteStock = new JTextField();
+		textPrendaAjusteStock.setBounds(275, 272, 46, 20);
+		panPrendaAjusteStock.add(textPrendaAjusteStock);
+		textPrendaAjusteStock.setColumns(10);
+		
+		JComboBox cbPrendaAjuste = new JComboBox();
+		cbPrendaAjuste.setBounds(141, 274, 68, 17);
+		cbPrendaAjuste.setModel(new DefaultComboBoxModel(new String [] {"Ingresar","Extraer"}));
+		cbPrendaAjuste.setSelectedIndex(0);
+		panPrendaAjusteStock.add(cbPrendaAjuste);
+		
+		JButton btnPrendaAjusteGuardar = new JButton("Guardar");
+		btnPrendaAjusteGuardar.setForeground(new Color(255, 255, 255));
+		btnPrendaAjusteGuardar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnPrendaAjusteGuardar.setBackground(new Color(0, 0, 128));
+		btnPrendaAjusteGuardar.setBounds(351, 271, 89, 23);
+		panPrendaAjusteStock.add(btnPrendaAjusteGuardar);
+				
+		//--------//
+				
+		accionBotonPaneles(botonRegistrarVenta, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas, panPrendaAjusteStock);
+		accionBotonPaneles(botonVerVentas, panVerMisVentas, panAgregarPrendas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
+		accionBotonPaneles(botonModificarDatosPersonales, panModificarDatosPer, panAgregarPrendas, panVendedor, panRegistrarVenta, panRegistrarVenta, panPrendaAjusteStock);
+		accionBotonPaneles(botonAgregarPrendaDeVestir, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
+		accionBotonPaneles(botonNombreEmpleado, panVendedor, panAgregarPrendas, panVerMisVentas, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
+		accionBotonPaneles(btnPrendaAjustarStock, panPrendaAjusteStock, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas);
+		accionBotonPaneles(btnPrendaAjusteAtras, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
 		
 	}
 	
@@ -793,7 +870,38 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		return rta;
 	}
 	
-	public DefaultTableModel cargarJListConArrayList(ArrayList array) {
+	public void accionCargarTablaConBoton(JButton btn, JTable table, ArrayList carga) {
+		btn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				table.setModel(cargarJTableConArrayList(carga));
+			}
+		});
+	}
+	
+	public DefaultTableModel cargarJTablePrendaAjuste(ArrayList<PrendaDeVestir> array) {
+		DefaultTableModel modelo = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+		       return false;
+		    }
+		};
+		if(!array.isEmpty()) {
+			modelo.addColumn("Modelo");
+			modelo.addColumn("Marca");
+			modelo.addColumn("Color");
+			modelo.addColumn("Talla/Stock");
+			modelo.addColumn("Codigo");
+			
+			for(PrendaDeVestir e : array){
+				modelo.addRow(new String[] {e.getModelo(),e.getMarca(),e.getColor(),e.listarStock(),e.getCodigo()});
+			}
+			return modelo;
+		}
+		else modelo.addColumn("No Existen Elementos en esta tabla"); return modelo;
+	}
+	
+	public DefaultTableModel cargarJTableConArrayList(ArrayList array) {
 		DefaultTableModel modelo = new DefaultTableModel() {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -849,7 +957,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		else modelo.addColumn("No Existen Elementos en esta tabla"); return modelo;
 	}
 	
-	public void accionBotonPaneles(JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5) {
+	public void accionBotonPaneles(JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5, JPanel p6) {
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -858,6 +966,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 				p3.setVisible(false);
 				p4.setVisible(false);
 				p5.setVisible(false);
+				p6.setVisible(false);
 			}
 		});
 	}

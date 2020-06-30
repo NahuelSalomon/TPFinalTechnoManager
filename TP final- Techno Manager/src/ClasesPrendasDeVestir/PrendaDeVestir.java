@@ -175,6 +175,10 @@ public abstract class PrendaDeVestir implements Serializable{
 		return stockPrenda.listarTallesYStock();
 	}
 	
+	public int cantidadDeTallas() {
+		return stockPrenda.cantidadDeTallas();
+	}
+	
 	/**
 	 * Verifica si existe un Talle ingresado
 	 * 
