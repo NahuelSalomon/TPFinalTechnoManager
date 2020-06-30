@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import ClasesPersona.Cliente;
 import ClasesPersona.Vendedor;
 import ClasesPrendasDeVestir.PrendaDeVestir;
+import Excepciones.ErrorDeBusquedaExcepcion;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
@@ -137,15 +138,22 @@ public class Venta implements Serializable{
 	 */
 	public static Venta fromJSONObject(JSONObject jsonObject, ListaDeClientes listaDeClientes, ListaDeEmpleados listaDeEmpleados, ListaDePrendas listaDePrendas) throws JSONException {
 		
+		Venta venta = null;
+		
+	try {
 		String fecha = jsonObject.getString("Fecha");
 		String legajoDeVendedor = jsonObject.getString("Vendedor");
 		String dniCliente = jsonObject.getString("Cliente");
-		
+
 		Cliente cliente = listaDeClientes.buscarClientePorDNI(dniCliente);
 		Vendedor vendedor = (Vendedor) listaDeEmpleados.buscarEmpleado(legajoDeVendedor);
 		HashMap<PrendaDeVestir, Integer> prendasCompradas = fromJSONObjectPrendasCompradas(listaDePrendas, jsonObject.getJSONObject("Prendas compradas"));	
 		
-		Venta venta = new Venta(cliente, vendedor, fecha, prendasCompradas);
+		venta = new Venta(cliente, vendedor, fecha, prendasCompradas);
+		}
+	catch (Exception e) {
+		e.printStackTrace();
+	}
 	
 	return venta;
 	}
@@ -180,14 +188,19 @@ public class Venta implements Serializable{
 	
 		HashMap <PrendaDeVestir, Integer> prendasCompradas = new HashMap<PrendaDeVestir, Integer>();
 		
-		Iterator<String> keysItr= jsonObject.keys();
-		
-		while(keysItr.hasNext()) {
-			String codigoPrendaDeVestir = keysItr.next();
-			Integer cantidad  = jsonObject.getInt(codigoPrendaDeVestir);
+		try {
+			Iterator<String> keysItr= jsonObject.keys();
 			
-			PrendaDeVestir prendaDeVestir = listaDePrendas.buscarPrenda(codigoPrendaDeVestir);
-			prendasCompradas.put(prendaDeVestir, cantidad);	
+			while(keysItr.hasNext()) {
+				String codigoPrendaDeVestir = keysItr.next();
+				Integer cantidad  = jsonObject.getInt(codigoPrendaDeVestir);
+				
+				PrendaDeVestir prendaDeVestir = listaDePrendas.buscarPrenda(codigoPrendaDeVestir);
+				prendasCompradas.put(prendaDeVestir, cantidad);	
+			}
+		}	
+		catch(ErrorDeBusquedaExcepcion e) {
+			e.printStackTrace();
 		}
 		return prendasCompradas;
 	}

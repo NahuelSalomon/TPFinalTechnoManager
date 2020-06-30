@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import ClasesPersona.Gerente;
 import ClasesPersona.Vendedor;
+import Excepciones.LimiteExedidoDeGerenteExcepcion;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
@@ -389,16 +391,29 @@ public class VentanaAltaEmpleado extends JFrame {
 					
 					if(radioButtonVendedor.isSelected()) {
 						Vendedor vendedor = new Vendedor(nombre, apellido, dni, genero, fechaNac, estadoCivil, telefono, legajo, contraseña);
+						
+						try {
 						tiendaDeRopa.agregarEmpleado(legajo, vendedor);
+						}
+						catch(LimiteExedidoDeGerenteExcepcion ex) {
+							ex.printStackTrace();
+						}
 						JOptionPane.showMessageDialog(null, "El empleado se ha dado de alta con exito");
 						altaEmpleado = true;
 					}
 					else {
 						if(radioButtonGerente.isSelected()) {
 						Gerente gerente = new Gerente(nombre, apellido, dni, genero, fechaNac, estadoCivil, legajo, contraseña);
-						tiendaDeRopa.agregarEmpleado(legajo, gerente);
-						JOptionPane.showMessageDialog(null, "El empleado se ha dado de alta con exito");
-						altaEmpleado = true;
+						
+						try {
+							tiendaDeRopa.agregarEmpleado(legajo, gerente);
+							JOptionPane.showMessageDialog(null, "El empleado se ha dado de alta con exito");
+							altaEmpleado = true;
+							}
+						catch(LimiteExedidoDeGerenteExcepcion ee) {
+							JOptionPane.showMessageDialog(null, "Ya existe un gerente");
+						}
+						
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "Debe seleccionar un tipo de empleado");

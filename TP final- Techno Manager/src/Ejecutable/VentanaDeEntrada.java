@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import ClasesPersona.Empleado;
 import ClasesPersona.Vendedor;
+import Excepciones.ErrorDeBusquedaExcepcion;
 import Listas.ListaDeEmpleados;
 
 import javax.swing.JLabel;
@@ -117,12 +118,13 @@ public class VentanaDeEntrada extends JFrame {
 		
 		botonIncioSesion.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
+			try {
 				if(tiendaDeRopa.verificarEmpleado(campoTextoUsuario.getText(), camposTextoContra.getText(),tipoDeEmpleado))
 					{
 						dispose();
 						if(tipoDeEmpleado.equals("vendedor")) {
 							try {
-								VentanaOpcionesEmpleado ventanaOpEmpleado = new VentanaOpcionesEmpleado(campoTextoUsuario.getText(), tiendaDeRopa);
+								VentanaOpcionesEmpleado ventanaOpEmpleado = new VentanaOpcionesEmpleado(tiendaDeRopa.buscarEmpleado(campoTextoUsuario.getText()), tiendaDeRopa);
 								ventanaOpEmpleado.setVisible(true);
 							} catch (FileNotFoundException e) {
 								e.printStackTrace();
@@ -141,8 +143,10 @@ public class VentanaDeEntrada extends JFrame {
 						}
 					
 					}	
-						
-				else JOptionPane.showMessageDialog(null, "Datos ingresados no validos");
+				}		
+				catch (ErrorDeBusquedaExcepcion e) {
+					JOptionPane.showMessageDialog(null, "Datos ingresados incorrectos");
+				}
 			}			
 		});
 		
