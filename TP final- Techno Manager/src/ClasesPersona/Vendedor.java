@@ -42,7 +42,7 @@ public class Vendedor extends Empleado {
 	}
 
 	public String toString() {
-		return super.toString() + "\nTelefono:" + getTelefono() + "\nTipo de empleado: " + tipoEmpleado();
+		return super.toString() + "\nTelefono:" + getTelefono() + "\nTipo de empleado: " + tipoEmpleado()+"\n";
 	}
 
 	@Override

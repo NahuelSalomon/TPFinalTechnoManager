@@ -20,6 +20,7 @@ import ClasesPrendasDeVestir.Pantalon;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 import ClasesPrendasDeVestir.PrendaSuperior;
 import ClasesPrendasDeVestir.Remera;
+import Excepciones.ErrorDeBusquedaExcepcion;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
@@ -97,8 +98,9 @@ public class VentanaOpcionesEmpleado extends JFrame {
 	 * @throws ClassNotFoundException 
 	 * @throws FileNotFoundException 
 	 */
-	public VentanaOpcionesEmpleado(String claveEmpleado, TiendaDeRopa tiendaDeRopa) throws FileNotFoundException, ClassNotFoundException, IOException {
-		Empleado empleado = tiendaDeRopa.buscarEmpleado(claveEmpleado);
+	public VentanaOpcionesEmpleado(Empleado empleado, TiendaDeRopa tiendaDeRopa) throws FileNotFoundException, ClassNotFoundException, IOException {
+			
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 475);
@@ -268,24 +270,39 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					JOptionPane.showMessageDialog(null, "No solecciono una prenda");
 				}
 				else {
-					prenda = tiendaDeRopa.buscarPrenda((String)tablePrendas.getValueAt(filaSeleccionada, 4));
-					if(cant < 1) {
-						//throw new ExcepcionMensajeError("Cantidad indicada no valida");
-						JOptionPane.showMessageDialog(null, "Cantidad indicada no valida");
+					try {
+						prenda = tiendaDeRopa.buscarPrenda((String)tablePrendas.getValueAt(filaSeleccionada, 4));
+						if(cant < 1) {
+							//throw new ExcepcionMensajeError("Cantidad indicada no valida");
+							JOptionPane.showMessageDialog(null, "Cantidad indicada no valida");
+						}
+						else if(!prenda.existeTalle(textTalla.getText())) {
+							//throw new ExcepcionMensajeError("Talla indicada no valida");
+							JOptionPane.showMessageDialog(null, "Talla indicada no valida");
+						}
+	//					else if(prenda.getCantidadSegTalla(talle) < cant){
+	//						throw new ExcepcionMensajeError("Cantidad indicada no excede el stock disponible");
+	//						JOptionPane.showMessageDialog(null, "Cantidad indicada no excede el stock disponible");
+	//					}
+						else {
+							//JOptionPane.showMessageDialog(null, "Todo correcto");
+							modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant});
+							tableCarro.setModel(modeloTableCarro);
+						}
 					}
-					else if(!prenda.existeTalle(textTalla.getText())) {
-						//throw new ExcepcionMensajeError("Talla indicada no valida");
-						JOptionPane.showMessageDialog(null, "Talla indicada no valida");
+					catch(ErrorDeBusquedaExcepcion e) {
+						e.printStackTrace();
 					}
-					else if(prenda.cantidadDeTallas() < cant){
-						//throw new ExcepcionMensajeError("Cantidad indicada no excede el stock disponible");
-						JOptionPane.showMessageDialog(null, "Cantidad indicada no excede el stock disponible");
-					}
-					else {
-						//JOptionPane.showMessageDialog(null, "Todo correcto");
-						modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant,prenda.getCodigo()});
-						tableCarro.setModel(modeloTableCarro);
-					}
+//					if(prenda.cantidadDeTallas() < cant){
+//						//throw new ExcepcionMensajeError("Cantidad indicada no excede el stock disponible");
+//						JOptionPane.showMessageDialog(null, "Cantidad indicada no excede el stock disponible");
+//					}
+//					else {
+//						//JOptionPane.showMessageDialog(null, "Todo correcto");
+//						modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant,prenda.getCodigo()});
+//						tableCarro.setModel(modeloTableCarro);
+//					}
+
 				}
 			}
 		});
@@ -681,7 +698,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 				}
 				else {
 					tiendaDeRopa.bajaEmpleado(empleado.getLegajo());
-					tiendaDeRopa.agregarEmpleado(modificacion.getLegajo(), modificacion);
+					//tiendaDeRopa.agregarEmpleado(modificacion.getLegajo(), modificacion);
 				}
 				if(modificacion instanceof Vendedor) {
 					empleado.setNombre(modificacion.getNombre());
@@ -869,8 +886,13 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		double monto = 0;
 		
 		for(int i = 0; tabla.getRowCount() >= i; i++) {
-			PrendaDeVestir prenda = tiendaDeRopa.buscarPrenda((String)tabla.getValueAt(i, 4));
-			monto = monto + (prenda.getPrecio() * prenda.cantidadDeTallas());
+			PrendaDeVestir prenda;
+			try {
+				prenda = tiendaDeRopa.buscarPrenda((String)tabla.getValueAt(i, 4));
+				monto = monto + (prenda.getPrecio() * prenda.cantidadDeTallas());
+			} catch (ErrorDeBusquedaExcepcion e) {
+				e.printStackTrace();
+			}	
 		}
 		
 //		while() { 

@@ -261,7 +261,7 @@ public abstract class PrendaDeVestir implements Serializable{
 
 	public String toString() {
 		return "\n\nMarca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() 
-				+ "\nTipo de material: "+ getTipoDeMaterial();
+				+ "\nTipo de material: "+ getTipoDeMaterial()+"\nTalles y stock: "+listarStock();
 	}
 
 	/**

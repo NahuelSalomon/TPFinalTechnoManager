@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import ClaseVenta.Venta;
 
 import ContenedorGenericas.ContenedorClientesYVentas;
+import Excepciones.ErrorDeBusquedaExcepcion;
 import Interfaces.IFuncionesBasicasListaVentas;
 
 /**
@@ -69,18 +70,26 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 	 * Metodo para buscar una venta por id
 	 * @param id de la venta a buscar
 	 * @return la venta
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	public Venta buscarVentaPorID(int id) {
+	public Venta buscarVentaPorID(int id) throws ErrorDeBusquedaExcepcion {
+		
 		Venta venta = null;
+		boolean existe = false;
 	
 		ArrayList<Venta> arrayVentas = devolverVentas();
 		
 		for(Venta v : arrayVentas) {
 			if(v.getId() == id) {
 				venta = v;
+				existe = true;
 				break;
-			}
+			}	
 		}
+		if(!existe) {
+			throw new ErrorDeBusquedaExcepcion("Venta no encontrada");
+		}
+		
 		return venta;
 	}
 	

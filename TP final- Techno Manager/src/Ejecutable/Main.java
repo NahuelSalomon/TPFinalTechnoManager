@@ -60,6 +60,8 @@ public class Main {
 	PrendaDeVestir prenda3 = new Remera(7, "Hunter", "Azul", 2, true, "Batman", 1600);
 	PrendaDeVestir prenda4 = new Maya(9, "2.0", "Amarillo", 1, true, true, 450);
 	
+	
+	
 	HashMap<PrendaDeVestir, Integer> prendasCompradas = new HashMap<PrendaDeVestir, Integer>();
 	HashMap<PrendaDeVestir, Integer> prendasCompradas2 = new HashMap<PrendaDeVestir, Integer>();
 	HashMap<PrendaDeVestir, Integer> prendasCompradas3 = new HashMap<PrendaDeVestir, Integer>();
@@ -136,16 +138,16 @@ public class Main {
 
 	
 	
-	try {
-		VentanaOpcionesEmpleado ventanaOpcionesEmpleado = new VentanaOpcionesEmpleado("69328", tiendaDeRopa);
-		ventanaOpcionesEmpleado.setVisible(true);
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
-	} 
+//	try {
+//		VentanaOpcionesEmpleado ventanaOpcionesEmpleado = new VentanaOpcionesEmpleado("69328", tiendaDeRopa);
+//		ventanaOpcionesEmpleado.setVisible(true);
+//	} catch (FileNotFoundException e) {
+//		e.printStackTrace();
+//	} catch (ClassNotFoundException e) {
+//		e.printStackTrace();
+//	} catch (IOException e) {
+//		e.printStackTrace();
+//	} 
 	
 	    /*MenuCliente menuCliente = new MenuCliente(); 
 		
