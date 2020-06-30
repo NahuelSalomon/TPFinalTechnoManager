@@ -125,19 +125,19 @@ public class Main {
     
 	tiendaDeRopa.guardarTiendaDeRopa();*/
 	
-	System.out.println(tiendaDeRopa.listarClientes());
-	System.out.println(tiendaDeRopa.listarEmpleados());
-	System.out.println(tiendaDeRopa.listarPrenda());
-	System.out.println(tiendaDeRopa.listarVentas());
+//	System.out.println(tiendaDeRopa.listarClientes());
+//	System.out.println(tiendaDeRopa.listarEmpleados());
+//	System.out.println(tiendaDeRopa.listarPrenda());
+//	System.out.println(tiendaDeRopa.listarVentas());
 	
 	
-	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
-	ventanaDeEntrada.setVisible(true);
+//	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
+//	ventanaDeEntrada.setVisible(true);
 
 	
 	
-	/*try {
-		VentanaOpcionesEmpleado ventanaOpcionesEmpleado = new VentanaOpcionesEmpleado(claveEmpleado, tiendaDeRopa);
+	try {
+		VentanaOpcionesEmpleado ventanaOpcionesEmpleado = new VentanaOpcionesEmpleado("69328", tiendaDeRopa);
 		ventanaOpcionesEmpleado.setVisible(true);
 	} catch (FileNotFoundException e) {
 		e.printStackTrace();
@@ -145,7 +145,7 @@ public class Main {
 		e.printStackTrace();
 	} catch (IOException e) {
 		e.printStackTrace();
-	} */
+	} 
 	
 	    /*MenuCliente menuCliente = new MenuCliente(); 
 		

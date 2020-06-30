@@ -36,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -276,13 +277,13 @@ public class VentanaOpcionesEmpleado extends JFrame {
 						//throw new ExcepcionMensajeError("Talla indicada no valida");
 						JOptionPane.showMessageDialog(null, "Talla indicada no valida");
 					}
-//					else if(prenda.getCantidadSegTalla(talle) < cant){
-//						throw new ExcepcionMensajeError("Cantidad indicada no excede el stock disponible");
-//						JOptionPane.showMessageDialog(null, "Cantidad indicada no excede el stock disponible");
-//					}
+					else if(prenda.cantidadDeTallas() < cant){
+						//throw new ExcepcionMensajeError("Cantidad indicada no excede el stock disponible");
+						JOptionPane.showMessageDialog(null, "Cantidad indicada no excede el stock disponible");
+					}
 					else {
 						//JOptionPane.showMessageDialog(null, "Todo correcto");
-						modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant});
+						modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant,prenda.getCodigo()});
 						tableCarro.setModel(modeloTableCarro);
 					}
 				}
@@ -525,27 +526,29 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					PrendaDeVestir prenda = null;
 					switch(cbPrendaTipoPrenda.getSelectedIndex()) {
 						case 1:
-						/*	prenda = new Calzado(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
-									cbPrendaTipoMaterial.getSelectedIndex(), cbPrendaCarac1.getSelectedIndex());
+							prenda = new Calzado(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
+									cbPrendaTipoMaterial.getSelectedIndex(), cbPrendaCarac1.getSelectedIndex(), Double.parseDouble(textPrendaPrecio.getText()));
 							break;
 						case 2:
 							prenda = new Buzo(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
 									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()),
-									convertirABoolean(cbPrendaCarac2.getSelectedIndex()));	
+									convertirABoolean(cbPrendaCarac2.getSelectedIndex()), Double.parseDouble(textPrendaPrecio.getText()));	
 							break;
 						case 3:
 							prenda = new Remera(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
-									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac2.getSelectedIndex()), textPrendaCarac1.getText());
+									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac2.getSelectedIndex()),
+									textPrendaCarac1.getText(), Double.parseDouble(textPrendaPrecio.getText()));
 							break;
 						case 4:
 							prenda = new Pantalon(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
-									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()));
+									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()),
+									Double.parseDouble(textPrendaPrecio.getText()));
 							break;
 						case 5:
 							prenda = new Maya(cbPrendaMarca.getSelectedIndex(), textPrendaModelo.getText(), textPrendaColor.getText(),
 									cbPrendaTipoMaterial.getSelectedIndex(), convertirABoolean(cbPrendaCarac1.getSelectedIndex()),
-									convertirABoolean(cbPrendaCarac2.getSelectedIndex()));
-							break;*/
+									convertirABoolean(cbPrendaCarac2.getSelectedIndex()), Double.parseDouble(textPrendaPrecio.getText()));
+							break;
 					}
 					prenda.agregarNuevoTalleConCantidad(textPrendaTalla.getText(), Integer.parseInt(textPrendaStock.getText()));
 					tiendaDeRopa.agregarPrenda(prenda.getCodigo(), prenda);
@@ -555,7 +558,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		});
 		//--------//
 		
-		//----PANEL MODIFICAR DATOS PERSONALES----/
+		//-----PANEL MODIFICAR DATOS PERSONALES-----//
 		JPanel panModificarDatosPer = new JPanel();
 		lpanGeneral.add(panModificarDatosPer, "name_130561065365849");
 		panModificarDatosPer.setLayout(null);
@@ -860,6 +863,20 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		accionBotonPaneles(btnPrendaAjustarStock, panPrendaAjusteStock, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas);
 		accionBotonPaneles(btnPrendaAjusteAtras, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
 		
+	}
+	
+	public double calcularSubTotal(JTable tabla, TiendaDeRopa tiendaDeRopa) {
+		double monto = 0;
+		
+		for(int i = 0; tabla.getRowCount() >= i; i++) {
+			PrendaDeVestir prenda = tiendaDeRopa.buscarPrenda((String)tabla.getValueAt(i, 4));
+			monto = monto + (prenda.getPrecio() * prenda.cantidadDeTallas());
+		}
+		
+//		while() { 
+//			
+//		}
+		return monto;
 	}
 	
 	public boolean convertirABoolean(int dato) {
