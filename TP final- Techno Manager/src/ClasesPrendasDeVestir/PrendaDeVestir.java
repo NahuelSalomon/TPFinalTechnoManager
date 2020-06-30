@@ -201,6 +201,20 @@ public abstract class PrendaDeVestir implements Serializable{
 	public String listarStock() {
 		return stockPrenda.listarTallesYStock();
 	}
+	
+	public int cantidadDeTallas() {
+		return stockPrenda.cantidadDeTallas();
+	}
+	
+	/**
+	 * Verifica si existe un Talle ingresado
+	 * 
+	 * @param talle
+	 * @return True o false segun corresponda
+	 */
+	public boolean existeTalle(String talle) {
+		return stockPrenda.existeTalle(talle);
+	}
 
 	/**
 	 * Agrega un talle al stock con una cantidad

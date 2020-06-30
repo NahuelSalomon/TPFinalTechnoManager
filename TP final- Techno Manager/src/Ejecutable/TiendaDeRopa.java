@@ -197,7 +197,11 @@ public class TiendaDeRopa {
 	public PrendaDeVestir buscarPrenda(String codigo) {
 		return prendasDeVestir.buscarPrenda(codigo);
 	}
-
+	
+	public ArrayList<PrendaDeVestir> devolverPrendas(){
+		return prendasDeVestir.devolverListaDePrendas();
+	}
+	
 	/**
 	 * Agrega un registro de venta a la tienda de ropa
 	 * 
@@ -331,7 +335,7 @@ public class TiendaDeRopa {
 	 */
 	public void guardarTiendaDeRopa() {
 		archivoEmpleados.grabarEmpleados(empleados);
-		archivoClientes.grabarClientes(clientes);;
+		archivoClientes.grabarClientes(clientes);
 		archivoPrendas.grabarPrendas(prendasDeVestir);
 		archivoVentas.grabarVentas(ventas);
 	}
