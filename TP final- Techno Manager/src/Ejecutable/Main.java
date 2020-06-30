@@ -39,7 +39,7 @@ import Listas.ListaDeVentas;
 public class Main {
 
 	public static void main(String[] args) {
-	
+
 	
 	TiendaDeRopa tiendaDeRopa = new TiendaDeRopa();
 	
