@@ -1,6 +1,7 @@
 package Interfaces;
 
 import ClasesPrendasDeVestir.PrendaDeVestir;
+import Excepciones.ErrorDeBusquedaExcepcion;
 
 /**
  * Esta intefaz se utiliza para que la lista de las prendas de vestir utilice
@@ -49,6 +50,7 @@ public interface IFuncionesBasicasListaPrendas {
 	 * 
 	 * @param codigo de la prenda a buscar
 	 * @return la PrendaDeVestir
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	PrendaDeVestir buscarPrenda(String codigo);
+	PrendaDeVestir buscarPrenda(String codigo) throws ErrorDeBusquedaExcepcion;
 }

@@ -16,6 +16,7 @@ import ClasesPrendasDeVestir.Pantalon;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 import ClasesPrendasDeVestir.Remera;
 import ContenedorGenericas.ContenedorPrendasYEmpleados;
+import Excepciones.ErrorDeBusquedaExcepcion;
 import Interfaces.IFuncionesBasicasListaPrendas;
 
 /**
@@ -63,8 +64,18 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializab
 	}
 
 	@Override
-	public PrendaDeVestir buscarPrenda(String clave) {
-		return prendas.buscarElemento(clave);
+	public PrendaDeVestir buscarPrenda(String clave) throws ErrorDeBusquedaExcepcion {
+		
+		PrendaDeVestir prendaDeVestir = null;
+		
+		if(existePrendaDeVesitr(clave)) {
+			prendaDeVestir = prendas.buscarElemento(clave);
+		}
+		else {
+			throw new ErrorDeBusquedaExcepcion("Prenda no encontrada");
+		}
+		
+		return prendaDeVestir;
 	}
 
 	/**

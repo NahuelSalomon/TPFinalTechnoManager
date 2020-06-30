@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 
 import ClaseVenta.Venta;
 import ClasesPersona.Cliente;
+import ClasesPersona.Empleado;
+import ClasesPrendasDeVestir.PrendaDeVestir;
+import Excepciones.ErrorDeBusquedaExcepcion;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -18,6 +21,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -38,6 +42,14 @@ public class VentanaOpcionesGerente extends JFrame {
 	JPanel panelBorrarUnaPrenda;
 	JPanel panelBorrarUnCliente;
 	JPanel panelBorrarUnaVenta;
+	JPanel panelBuscarEmpleado;
+	JPanel panelBuscarPrenda;
+	JPanel panelModificarUnCliente;
+	JPanel panelModificarUnaPrenda;
+	JPanel panelAgregarUnCliente;
+	JPanel panelBuscarUnaVenta;
+	JPanel panelAgregarUnaPrenda;
+	JPanel panelBuscarCliente;
 	JTextArea textAreaListarClientes;
 	JTextArea textAreaListarPrendas;
 	JTextArea textAreaListarEmpleados;
@@ -46,6 +58,10 @@ public class VentanaOpcionesGerente extends JFrame {
 	JTextArea textAreaBorrarEmpleado;
 	JTextArea textAreaClientesABorrar;
 	JTextArea textAreaVentasABorrar;
+	JTextArea textAreaEmpleadoBuscado;
+	JTextArea textAreaPrendaBuscada;
+	JTextArea textAreaClienteBuscado;
+	
 	private JTextField textFieldLegajoBorrarEmpleado;
 	private JTextField textFieldCodigoPrendaABorrar;
 	JButton btnCerrarSesion;
@@ -54,8 +70,15 @@ public class VentanaOpcionesGerente extends JFrame {
 	JButton botonBorrarPrenda_1;
 	JButton botonParaBorrarCliente;
 	JButton botonParaBorrarVenta;
+	JButton botonParaBuscarEmpleado;
+	JButton botonParaBuscarUnaPrenda;
+	JButton botonParaBuscarUnCliente;
 	private JTextField textFieldDniClienteABorrar;
 	private JTextField textFieldBorrarVenta;
+	private JTextField textField;
+	JTextField textFieldEmpleadoABuscar;
+	private JTextField textFieldPrendaABuscar;
+	private JTextField textFieldDniClienteABuscar;
 	
 	
 	/**
@@ -176,7 +199,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		botonBuscarPrenda.setBounds(255, 245, 197, 23);
 		contentPane.add(botonBuscarPrenda);
 		
-		JButton botonBuscarUnEmpleado = new JButton("Buscar empleado");
+		JButton botonBuscarUnEmpleado = new JButton("Buscar empleado"); 
 		botonBuscarUnEmpleado.setForeground(Color.WHITE);
 		botonBuscarUnEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		botonBuscarUnEmpleado.setBackground(new Color(0, 0, 128));
@@ -546,6 +569,221 @@ public class VentanaOpcionesGerente extends JFrame {
 		
 		
 		/*
+		 * Panel para buscar empleado 
+		 */
+		
+		panelBuscarEmpleado = new JPanel();
+		panelBuscarEmpleado.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelBuscarEmpleado, "name_133788842791400");
+		panelBuscarEmpleado.setLayout(null);
+		
+		textFieldEmpleadoABuscar = new JTextField();
+		textFieldEmpleadoABuscar.setForeground(Color.WHITE);
+		textFieldEmpleadoABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldEmpleadoABuscar.setColumns(10);
+		textFieldEmpleadoABuscar.setBackground(new Color(0, 0, 139));
+		textFieldEmpleadoABuscar.setBounds(10, 30, 75, 26);
+		panelBuscarEmpleado.add(textFieldEmpleadoABuscar);
+		
+		JLabel labelLegajoEmpleadoABuscar = new JLabel("Legajo del empleado a buscar");
+		labelLegajoEmpleadoABuscar.setForeground(Color.WHITE);
+		labelLegajoEmpleadoABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		labelLegajoEmpleadoABuscar.setBounds(10, 0, 212, 28);
+		panelBuscarEmpleado.add(labelLegajoEmpleadoABuscar);
+		
+		botonParaBuscarEmpleado = new JButton("Buscar empleado");
+		botonParaBuscarEmpleado.setForeground(Color.WHITE);
+		botonParaBuscarEmpleado.setFont(new Font("Tahoma", Font.BOLD, 14));
+		botonParaBuscarEmpleado.setBackground(new Color(0, 0, 128));
+		botonParaBuscarEmpleado.setBounds(95, 28, 166, 28);
+		panelBuscarEmpleado.add(botonParaBuscarEmpleado);
+		
+		JScrollPane scrollPaneEmpleadoBuscado = new JScrollPane();
+		scrollPaneEmpleadoBuscado.setBounds(10, 67, 251, 127);
+		panelBuscarEmpleado.add(scrollPaneEmpleadoBuscado);
+		
+		textAreaEmpleadoBuscado = new JTextArea();
+		scrollPaneEmpleadoBuscado.setViewportView(textAreaEmpleadoBuscado);
+		textAreaEmpleadoBuscado.setText((String) null);
+		textAreaEmpleadoBuscado.setForeground(Color.WHITE);
+		textAreaEmpleadoBuscado.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textAreaEmpleadoBuscado.setBackground(new Color(0, 0, 139));
+		
+		JScrollPane scrollPaneEmpleadoABuscar = new JScrollPane();
+		scrollPaneEmpleadoABuscar.setBounds(271, 28, 169, 166);
+		panelBuscarEmpleado.add(scrollPaneEmpleadoABuscar);
+		
+		JTextArea textAreaLegajosDeEmpleados = new JTextArea();
+		scrollPaneEmpleadoABuscar.setViewportView(textAreaLegajosDeEmpleados);
+		textAreaLegajosDeEmpleados.setText(tiendaDeRopa.devolverNombreYApellidoEmpleadosConLegajo());
+		textAreaLegajosDeEmpleados.setForeground(Color.WHITE);
+		textAreaLegajosDeEmpleados.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textAreaLegajosDeEmpleados.setBackground(new Color(0, 0, 139));
+		
+		JLabel lblEmpleadosParaBuscar = new JLabel("Empleados");
+		lblEmpleadosParaBuscar.setForeground(Color.WHITE);
+		lblEmpleadosParaBuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblEmpleadosParaBuscar.setBounds(271, 0, 87, 28);
+		panelBuscarEmpleado.add(lblEmpleadosParaBuscar);
+		
+		/*
+		 * Panel para buscar una prenda 
+		 */
+		
+		panelBuscarPrenda = new JPanel();
+		panelBuscarPrenda.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelBuscarPrenda, "name_177382188622900");
+		panelBuscarPrenda.setLayout(null);
+		
+		textFieldPrendaABuscar = new JTextField();
+		textFieldPrendaABuscar.setForeground(Color.WHITE);
+		textFieldPrendaABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldPrendaABuscar.setColumns(10);
+		textFieldPrendaABuscar.setBackground(new Color(0, 0, 139));
+		textFieldPrendaABuscar.setBounds(10, 30, 75, 26);
+		panelBuscarPrenda.add(textFieldPrendaABuscar);
+		
+		JLabel labelCodigoPrendaABuscar = new JLabel("Codigo de prenda a buscar");
+		labelCodigoPrendaABuscar.setForeground(Color.WHITE);
+		labelCodigoPrendaABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		labelCodigoPrendaABuscar.setBounds(10, 0, 212, 28);
+		panelBuscarPrenda.add(labelCodigoPrendaABuscar);
+		
+		botonParaBuscarUnaPrenda = new JButton("Buscar prenda");
+		botonParaBuscarUnaPrenda.setForeground(Color.WHITE);
+		botonParaBuscarUnaPrenda.setFont(new Font("Tahoma", Font.BOLD, 14));
+		botonParaBuscarUnaPrenda.setBackground(new Color(0, 0, 128));
+		botonParaBuscarUnaPrenda.setBounds(95, 28, 166, 28);
+		panelBuscarPrenda.add(botonParaBuscarUnaPrenda);
+		
+		JScrollPane scrollPanePrendaABuscar = new JScrollPane();
+		scrollPanePrendaABuscar.setBounds(272, 29, 167, 164);
+		panelBuscarPrenda.add(scrollPanePrendaABuscar);
+		
+		JTextArea textAreaPrendaABuscar = new JTextArea();
+		scrollPanePrendaABuscar.setViewportView(textAreaPrendaABuscar);
+		textAreaPrendaABuscar.setText(tiendaDeRopa.devolverPrendasConSuCodigo());
+		
+		textAreaPrendaABuscar.setForeground(Color.WHITE);
+		textAreaPrendaABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textAreaPrendaABuscar.setBackground(new Color(0, 0, 139));
+		
+		JLabel labelPrendasABuscar = new JLabel("Prendas");
+		labelPrendasABuscar.setForeground(Color.WHITE);
+		labelPrendasABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		labelPrendasABuscar.setBounds(271, 0, 87, 28);
+		panelBuscarPrenda.add(labelPrendasABuscar);
+		
+		JScrollPane scrollPanePrendaBuscada = new JScrollPane();
+		scrollPanePrendaBuscada.setBounds(11, 68, 249, 125);
+		panelBuscarPrenda.add(scrollPanePrendaBuscada);
+		
+		textAreaPrendaBuscada = new JTextArea();
+		scrollPanePrendaBuscada.setViewportView(textAreaPrendaBuscada);
+		textAreaPrendaBuscada.setText((String) null);
+		textAreaPrendaBuscada.setForeground(Color.WHITE);
+		textAreaPrendaBuscada.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textAreaPrendaBuscada.setBackground(new Color(0, 0, 139));
+		
+		/*
+		 * Panel para buscar un cliente
+		 */
+		
+		panelBuscarCliente = new JPanel();
+		panelBuscarCliente.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelBuscarCliente, "name_181533766113100");
+		panelBuscarCliente.setLayout(null);
+		
+		JLabel labelDniDelCliente = new JLabel("Dni del cliente a buscar");
+		labelDniDelCliente.setForeground(Color.WHITE);
+		labelDniDelCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
+		labelDniDelCliente.setBounds(10, 0, 212, 28);
+		panelBuscarCliente.add(labelDniDelCliente);
+		
+		textFieldDniClienteABuscar = new JTextField();
+		textFieldDniClienteABuscar.setForeground(Color.WHITE);
+		textFieldDniClienteABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textFieldDniClienteABuscar.setColumns(10);
+		textFieldDniClienteABuscar.setBackground(new Color(0, 0, 139));
+		textFieldDniClienteABuscar.setBounds(10, 30, 75, 26);
+		panelBuscarCliente.add(textFieldDniClienteABuscar);
+		
+		botonParaBuscarUnCliente = new JButton("Buscar cliente");
+		botonParaBuscarUnCliente.setForeground(Color.WHITE);
+		botonParaBuscarUnCliente.setFont(new Font("Tahoma", Font.BOLD, 14));
+		botonParaBuscarUnCliente.setBackground(new Color(0, 0, 128));
+		botonParaBuscarUnCliente.setBounds(95, 28, 166, 28);
+		panelBuscarCliente.add(botonParaBuscarUnCliente);
+		
+		JScrollPane scrollPaneClientesABuscar = new JScrollPane();
+		scrollPaneClientesABuscar.setBounds(273, 30, 165, 162);
+		panelBuscarCliente.add(scrollPaneClientesABuscar);
+		
+		JTextArea textAreaClientesABuscar = new JTextArea();
+		scrollPaneClientesABuscar.setViewportView(textAreaClientesABuscar);
+		textAreaClientesABuscar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+		textAreaClientesABuscar.setForeground(Color.WHITE);
+		textAreaClientesABuscar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textAreaClientesABuscar.setBackground(new Color(0, 0, 139));
+		
+		JLabel labelClientes = new JLabel("Clientes");
+		labelClientes.setForeground(Color.WHITE);
+		labelClientes.setFont(new Font("Tahoma", Font.BOLD, 14));
+		labelClientes.setBounds(271, 0, 87, 28);
+		panelBuscarCliente.add(labelClientes);
+		
+		JScrollPane scrollPaneClienteBuscado = new JScrollPane();
+		scrollPaneClienteBuscado.setBounds(12, 69, 247, 123);
+		panelBuscarCliente.add(scrollPaneClienteBuscado);
+		
+		textAreaClienteBuscado = new JTextArea();
+		scrollPaneClienteBuscado.setViewportView(textAreaClienteBuscado);
+		textAreaClienteBuscado.setText((String) null);
+		textAreaClienteBuscado.setForeground(Color.WHITE);
+		textAreaClienteBuscado.setFont(new Font("Tahoma", Font.BOLD, 14));
+		textAreaClienteBuscado.setBackground(new Color(0, 0, 139));
+		
+		/*
+		 * Panel para buscar una venta
+		 */
+		panelBuscarUnaVenta = new JPanel();
+		panelBuscarUnaVenta.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelBuscarUnaVenta, "name_183679230531000");
+		panelBuscarUnaVenta.setLayout(null);
+		
+		/*
+		 * Panel para agregar una prenda
+		 */
+		panelAgregarUnaPrenda = new JPanel();
+		panelAgregarUnaPrenda.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelAgregarUnaPrenda, "name_183728166038100");
+		panelAgregarUnaPrenda.setLayout(null);
+		
+		/*
+		 * Panel para agregar un cliente
+		 */
+		panelAgregarUnCliente = new JPanel();
+		panelAgregarUnCliente.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelAgregarUnCliente, "name_183910682629600");
+		panelAgregarUnCliente.setLayout(null);
+		
+		/*
+		 * Panel para modificar una prenda
+		 */
+		panelModificarUnaPrenda = new JPanel();
+		panelModificarUnaPrenda.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelModificarUnaPrenda, "name_183995662503400");
+		panelModificarUnaPrenda.setLayout(null);
+		
+		/*
+		 * Panel para modificar un cliente
+		 */
+		panelModificarUnCliente = new JPanel();
+		panelModificarUnCliente.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelModificarUnCliente, "name_184126000696700");
+		panelModificarUnCliente.setLayout(null);
+		
+		/*
 		 * Acciones
 		 */
 		accionBotonCerrarSesion();
@@ -553,21 +791,28 @@ public class VentanaOpcionesGerente extends JFrame {
 		accionBotonBorrarPrenda(tiendaDeRopa);
 		accionBotonParaBorrarCliente(tiendaDeRopa);
 		accionBotonParaBorrarVenta(tiendaDeRopa);
+		accionBotonParaBuscarEmpleado(tiendaDeRopa);
+		accionBotonParaBuscarUnaPrenda(tiendaDeRopa);
+		accionBotonParaBuscarUnCliente(tiendaDeRopa);
 		
-		accionBotonPaneles(tiendaDeRopa, botonListarEmpleados, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta );
-		accionBotonPaneles(tiendaDeRopa, botonListarPrendas, panelListarPrendas, panelListarClientes, panelListarEmpleados , panelListarVentas , panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta);
-		accionBotonPaneles(tiendaDeRopa, botonListarClientes, panelListarClientes, panelListarEmpleados, panelListarPrendas, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta);
-		accionBotonPaneles(tiendaDeRopa, botonRegistroVentas, panelListarVentas, panelListarClientes, panelListarPrendas, panelListarEmpleados,panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarUnEmpleado, panelBorrarUnEmpleado, panelListarPrendas, panelListarClientes, panelListarEmpleados, panelListarVentas, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarPrenda, panelBorrarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnCliente, panelBorrarUnaVenta);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarCliente, panelBorrarUnCliente, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnaVenta);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarUnaVenta, panelBorrarUnaVenta, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonListarEmpleados, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonListarPrendas, panelListarPrendas, panelListarClientes, panelListarEmpleados , panelListarVentas , panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonListarClientes, panelListarClientes, panelListarEmpleados, panelListarPrendas, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonRegistroVentas, panelListarVentas, panelListarClientes, panelListarPrendas, panelListarEmpleados,panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarUnEmpleado, panelBorrarUnEmpleado, panelListarPrendas, panelListarClientes, panelListarEmpleados, panelListarVentas, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarPrenda, panelBorrarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarCliente, panelBorrarUnCliente, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarUnaVenta, panelBorrarUnaVenta, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarUnEmpleado, panelBuscarEmpleado, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarPrenda, panelBuscarPrenda,panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarCliente, panelBuscarCliente, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarVenta, panelBuscarUnaVenta, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelAgregarUnaPrenda, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonAgregarPrenda, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnCliente, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonAgregarCliente, panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelModificarUnaPrenda, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, botonModificarPrendas, panelModificarUnaPrenda,panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelModificarUnCliente);
+		accionBotonPaneles(tiendaDeRopa, BotonModificarCliente, panelModificarUnCliente, panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelModificarUnaPrenda);
 		
-		
-		
-		
-		
-		
+	
 	}
 
 	
@@ -580,7 +825,7 @@ public class VentanaOpcionesGerente extends JFrame {
 	
 	}
 	
-	public void accionBotonPaneles(TiendaDeRopa tiendaDeRopa, JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5, JPanel p6, JPanel p7, JPanel p8) {
+	public void accionBotonPaneles(TiendaDeRopa tiendaDeRopa, JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5, JPanel p6, JPanel p7, JPanel p8, JPanel p9, JPanel p10, JPanel p11, JPanel p12, JPanel p13, JPanel p14, JPanel p15, JPanel p16) {
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -592,6 +837,14 @@ public class VentanaOpcionesGerente extends JFrame {
 				p6.setVisible(false);
 				p7.setVisible(false);
 				p8.setVisible(false);
+				p9.setVisible(false);
+				p10.setVisible(false);
+				p11.setVisible(false);
+				p12.setVisible(false);
+				p13.setVisible(false);
+				p14.setVisible(false);
+				p15.setVisible(false);
+				p16.setVisible(false);
 				tiendaDeRopa.actualizarTiendaDeRopa();
 				actualizarAreasDeTextoPaneles(tiendaDeRopa);
 			}
@@ -604,6 +857,14 @@ public class VentanaOpcionesGerente extends JFrame {
 		textAreaListarPrendas.setText(tiendaDeRopa.listarPrenda());
 		textAreaVerVentas.setText(tiendaDeRopa.listarVentas());
 		
+		textAreaEmpleadoBuscado.setText("");
+		textFieldEmpleadoABuscar.setText("");
+		
+		textAreaPrendaBuscada.setText("");
+		textFieldPrendaABuscar.setText("");
+		
+		textAreaClienteBuscado.setText("");
+		textFieldDniClienteABuscar.setText("");
 	}
 
 	public void accionBotonBorrarEmpleado(TiendaDeRopa tiendaDeRopa) {
@@ -645,16 +906,18 @@ public class VentanaOpcionesGerente extends JFrame {
 		botonParaBorrarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String dni = textFieldDniClienteABorrar.getText();
-				Cliente cliente = tiendaDeRopa.buscarClientePorDni(dni);
-				if(cliente != null) {
-					tiendaDeRopa.bajaCliente(cliente);
-					tiendaDeRopa.guardarTiendaDeRopa();
-					textFieldDniClienteABorrar.setText("");
-					textAreaClientesABorrar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "El cliente que ingreso no existe");
-				}
+				try {
+						Cliente cliente = tiendaDeRopa.buscarClientePorDni(dni);
+						if(cliente != null) {
+							tiendaDeRopa.bajaCliente(cliente);
+							tiendaDeRopa.guardarTiendaDeRopa();
+							textFieldDniClienteABorrar.setText("");
+							textAreaClientesABorrar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+						}
+					}
+					catch(ErrorDeBusquedaExcepcion ex) {
+						JOptionPane.showMessageDialog(null, "El cliente que ingreso no existe");
+					}
 			}
 		});
 	}
@@ -663,17 +926,75 @@ public class VentanaOpcionesGerente extends JFrame {
 		botonParaBorrarVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int id = Integer.parseInt(textFieldBorrarVenta.getText());
-				Venta venta = tiendaDeRopa.buscarVentaPorID(id);
-				if(venta != null) {
-					tiendaDeRopa.bajaVenta(venta);
-					tiendaDeRopa.guardarTiendaDeRopa();
-					textFieldBorrarVenta.setText("");
-					textAreaVentasABorrar.setText(tiendaDeRopa.devolverVentasConIDClienteVendedorYFecha());
+				try {
+					Venta venta = tiendaDeRopa.buscarVentaPorID(id);
+					if(venta != null) {
+						tiendaDeRopa.bajaVenta(venta);
+						tiendaDeRopa.guardarTiendaDeRopa();
+						textFieldBorrarVenta.setText("");
+						textAreaVentasABorrar.setText(tiendaDeRopa.devolverVentasConIDClienteVendedorYFecha());
+					}
 				}
-				else {
+				catch(ErrorDeBusquedaExcepcion ex) {
 					JOptionPane.showMessageDialog(null, "Id ingresado no existente");
 				}
 			}		
 		});
 	} 
+	
+	public void accionBotonParaBuscarEmpleado(TiendaDeRopa tiendaDeRopa) {
+		botonParaBuscarEmpleado.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String legajo = textFieldEmpleadoABuscar.getText();
+				
+				try {
+						Empleado empleado = tiendaDeRopa.buscarEmpleado(legajo);
+						textAreaEmpleadoBuscado.setText(empleado.toString());
+				}
+				catch(ErrorDeBusquedaExcepcion ex) {
+					JOptionPane.showMessageDialog(null, "El empleado buscado no existe");
+				}
+			
+			}
+		});
+	}
+	
+	public void accionBotonParaBuscarUnaPrenda(TiendaDeRopa tiendaDeRopa) {
+		botonParaBuscarUnaPrenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String codigo = textFieldPrendaABuscar.getText();
+				
+				try {
+						PrendaDeVestir prenda = tiendaDeRopa.buscarPrenda(codigo);
+						textAreaPrendaBuscada.setText(prenda.toString());
+				}
+				catch(ErrorDeBusquedaExcepcion ex) {
+					JOptionPane.showMessageDialog(null, "La prenda buscada no existe");
+				}
+			
+			}
+		});
+	}
+
+	public void accionBotonParaBuscarUnCliente(TiendaDeRopa tiendaDeRopa) {
+		botonParaBuscarUnCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String dni = textFieldDniClienteABuscar.getText();
+				
+				try {
+					Cliente cliente = tiendaDeRopa.buscarClientePorDni(dni);
+					if(cliente != null) {
+						textAreaClienteBuscado.setText(cliente.toString());
+					}
+				}
+				catch(ErrorDeBusquedaExcepcion ex) {
+					JOptionPane.showMessageDialog(null, "El cliente buscado no existe");
+				}
+				
+			}
+		});
+	}
+
 }
+

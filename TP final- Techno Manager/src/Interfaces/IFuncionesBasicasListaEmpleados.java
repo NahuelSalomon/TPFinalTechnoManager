@@ -1,6 +1,10 @@
 package Interfaces;
 
+import javax.naming.LimitExceededException;
+
 import ClasesPersona.Empleado;
+import Excepciones.ErrorDeBusquedaExcepcion;
+import Excepciones.LimiteExedidoDeGerenteExcepcion;
 
 /**
  * Esta intefaz se utiliza para que la lista de los empleados utilice los
@@ -17,8 +21,10 @@ public interface IFuncionesBasicasListaEmpleados {
 	 * @param legajo   del empleado a agregar
 	 * @param empleado agregado
 	 * @return true si se agrega correctamente, false en caso contrario
+	 * @throws LimitExceededException 
+	 * @throws LimiteExedidoDeGerenteExcepcion 
 	 */
-	boolean agregarEmpleado(String legajo, Empleado empleado);
+	boolean agregarEmpleado(String legajo, Empleado empleado) throws LimiteExedidoDeGerenteExcepcion;
 
 	/**
 	 * Da de baja un empleado de la lista.
@@ -50,6 +56,7 @@ public interface IFuncionesBasicasListaEmpleados {
 	 * 
 	 * @param legajo del empleado buscado
 	 * @return el emepleado buscado
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	Empleado buscarEmpleado(String legajo);
+	Empleado buscarEmpleado(String legajo) throws ErrorDeBusquedaExcepcion;
 }

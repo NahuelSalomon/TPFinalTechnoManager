@@ -12,6 +12,7 @@ import ClasesPersona.Cliente;
 import ClasesPersona.ClienteMayorista;
 import ClasesPersona.ClienteMinorista;
 import ContenedorGenericas.ContenedorClientesYVentas;
+import Excepciones.ErrorDeBusquedaExcepcion;
 import Interfaces.IFuncionesBasicasListaClientes;
 
 /**
@@ -63,14 +64,19 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		return clientes.buscarElemento(index);
 	}
 
-	public Cliente buscarClientePorDNI(String dni) {
+	public Cliente buscarClientePorDNI(String dni) throws ErrorDeBusquedaExcepcion {
 		
 		Cliente cliente = null;
+		boolean existe = false;
 		
 		for(int i = 0; i < clientes.cantidadElementos() ; i++) {
 			if(clientes.buscarElemento(i).getDni().equals(dni)) {
 				cliente = clientes.buscarElemento(i);
+				existe = true;
 			}
+		}
+		if(!existe) {
+			throw new ErrorDeBusquedaExcepcion("Cliente no encontrado");
 		}
 		
 		return cliente;

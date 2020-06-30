@@ -81,7 +81,7 @@ public class ClienteMayorista extends Cliente {
 
 	@Override
 	public String toString() {
-		return super.toString() + "\nCUIL: " + getCuil() + "\nCondicion frente al IVA: " + getCondicionFrenteIVA();
+		return super.toString() + "\nCUIL: " + getCuil() + "\nCondicion frente al IVA: " + getCondicionFrenteIVA()+"\n\n";
 	}
 
 	@Override

@@ -13,6 +13,8 @@ import ClaseVenta.Venta;
 import ClasesPersona.Cliente;
 import ClasesPersona.Empleado;
 import ClasesPrendasDeVestir.PrendaDeVestir;
+import Excepciones.ErrorDeBusquedaExcepcion;
+import Excepciones.LimiteExedidoDeGerenteExcepcion;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
@@ -102,8 +104,9 @@ public class TiendaDeRopa {
 	 * @param legajo   del empleado agregado
 	 * @param empleado a agregar
 	 * @return true si se agrega correctamente, false en caso contrario
+	 * @throws LimiteExedidoDeGerenteExcepcion 
 	 */
-	public boolean agregarEmpleado(String legajo, Empleado empleado) {
+	public boolean agregarEmpleado(String legajo, Empleado empleado) throws LimiteExedidoDeGerenteExcepcion {
 		return empleados.agregarEmpleado(legajo, empleado);
 	}
 
@@ -142,8 +145,9 @@ public class TiendaDeRopa {
 	 * 
 	 * @param legajo del empleado buscado
 	 * @return el empleado buscado.
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	public Empleado buscarEmpleado(String legajo) {
+	public Empleado buscarEmpleado(String legajo) throws ErrorDeBusquedaExcepcion {
 		return empleados.buscarEmpleado(legajo);
 	}
 
@@ -193,8 +197,9 @@ public class TiendaDeRopa {
 	 * 
 	 * @param codigo de la prenda buscada
 	 * @return la prenda buscada
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	public PrendaDeVestir buscarPrenda(String codigo) {
+	public PrendaDeVestir buscarPrenda(String codigo) throws ErrorDeBusquedaExcepcion {
 		return prendasDeVestir.buscarPrenda(codigo);
 	}
 	
@@ -299,8 +304,9 @@ public class TiendaDeRopa {
 	 * @param contraseña recibe la contraseña ingresada por el usuario
 	 * @param tipoDeEmpleado recibe el tipo de emleado que ingreso el usuario
 	 * @return true si los datos fueron ingresados bien, false en caso contrario
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	public boolean verificarEmpleado(String legajo, String contraseña, String tipoDeEmpleado)
+	public boolean verificarEmpleado(String legajo, String contraseña, String tipoDeEmpleado) throws ErrorDeBusquedaExcepcion
 	{
 		return empleados.verificarEmpleado(legajo, contraseña, tipoDeEmpleado);
 	}
@@ -325,8 +331,9 @@ public class TiendaDeRopa {
 	 * Busca una venta por su id
 	 * @param id de la venta a buscar
 	 * @return la venta
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	public Venta buscarVentaPorID(int id) {
+	public Venta buscarVentaPorID(int id) throws ErrorDeBusquedaExcepcion {
 		return ventas.buscarVentaPorID(id);
 	}
 	
@@ -352,8 +359,9 @@ public class TiendaDeRopa {
 	 * Busca un cliente por dni
 	 * @param dni del cliente a buscar
 	 * @return el cliente
+	 * @throws ErrorDeBusquedaExcepcion 
 	 */
-	public Cliente buscarClientePorDni(String dni) {
+	public Cliente buscarClientePorDni(String dni) throws ErrorDeBusquedaExcepcion {
 		return clientes.buscarClientePorDNI(dni);
 	}
 	

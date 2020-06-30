@@ -31,7 +31,7 @@ public class ClienteMinorista extends Cliente {
 
 	@Override
 	public String toString() {
-		return super.toString();
+		return super.toString()+"\n\n";
 	}
 
 	@Override
