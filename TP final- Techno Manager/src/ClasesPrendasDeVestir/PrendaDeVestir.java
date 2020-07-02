@@ -227,6 +227,15 @@ public abstract class PrendaDeVestir implements Serializable{
 	public boolean existeTalle(String talle) {
 		return stockPrenda.existeTalle(talle);
 	}
+	
+	/**
+	 * Devuelve un valor segun la clave indicada
+	 * @param talle String Valor asociado
+	 * @return int CAntidad asociada al Talle buscado
+	 */
+	public int getCantidadSegTalla(String talle) {
+		return stockPrenda.getCantidadSegTalla(talle);
+	}
 
 	/**
 	 * Agrega un talle al stock con una cantidad
