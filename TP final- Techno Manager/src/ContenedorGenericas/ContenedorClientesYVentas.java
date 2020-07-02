@@ -2,8 +2,12 @@ package ContenedorGenericas;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Map.Entry;
 
-
+import ClaseVenta.Venta;
 import ClasesPersona.Persona;
 
 /**
@@ -76,7 +80,6 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 		boolean modificado = false;
 		if ((index < 0) && (index < cantidadElementos())) {
 			contenedor.add(index, modificacion);
-			;
 			modificado = true;
 		}
 		return modificado;
@@ -142,6 +145,35 @@ public class ContenedorClientesYVentas<E> implements Serializable {
 		}
 		
 		return rta;
+	}
+	
+	/**
+	 * Modifica el legajo de un Vendedor en la lista de ventas para cuando se cambia el legajo en datos personale
+	 * para no perder el registro actualizado del vendedor que realizo las ventas.
+	 * @param legajoViejo String legajo anterior del vendedor.
+	 * @param legajoNuevo String legajo nuevo del vendedor.
+	 */
+	public void modificarVendedorEnListaVentas(String legajoViejo, String legajoNuevo) {
+		int index = 0;
+		ArrayList<E> copia = contenedor;
+		HashMap<Integer, Venta> cambios = new HashMap<Integer, Venta>();
+		
+		for(E venta : copia) {
+			if(((Venta) venta).getVendedor().getLegajo().equals(legajoViejo)) {
+				Venta ventaMod = (Venta) venta;
+				ventaMod.getVendedor().setLegajo(legajoNuevo);
+				cambios.put(index, ventaMod);
+			}
+			index++;
+		}
+		
+		Set<Entry<Integer, Venta>> set = cambios.entrySet();
+		Iterator<Entry<Integer, Venta>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Entry<Integer, Venta> entry = iterator.next();
+			contenedor.set(entry.getKey(), (E)entry.getValue());
+		}
 	}
 
 

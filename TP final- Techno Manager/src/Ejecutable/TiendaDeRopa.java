@@ -258,6 +258,16 @@ public class TiendaDeRopa {
 	}
 
 	/**
+	 * Modifica el legajo de un Vendedor en la lista de ventas para cuando se cambia el legajo en datos personale
+	 * para no perder el registro actualizado del vendedor que realizo las ventas.
+	 * @param legajoViejo String legajo anterior del vendedor.
+	 * @param legajoNuevo String legajo nuevo del vendedor.
+	 */
+	public void modificarVendedorEnListaVentas(String legajoViejo, String legajoNuevo) {
+		ventas.modificarVendedorEnListaVentas(legajoViejo, legajoNuevo);
+	}
+	
+	/**
 	 * Metodo para verificar si existe un cliente en la tienda de ropa
 	 * 
 	 * @param cliente a verificar

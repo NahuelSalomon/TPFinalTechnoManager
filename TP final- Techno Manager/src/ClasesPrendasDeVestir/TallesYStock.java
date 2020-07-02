@@ -55,7 +55,7 @@ public class TallesYStock implements Serializable{
 
 		if (cantidad > 0) {
 			if (existeTalle(talle)) {
-				Integer nuevaCantidad = tallesYStock.get(talle) + cantidad;
+				int nuevaCantidad = tallesYStock.get(talle) + cantidad;
 				tallesYStock.put(talle, nuevaCantidad);
 				seAgrego = true;
 			}
@@ -164,10 +164,23 @@ public class TallesYStock implements Serializable{
 		return tallesYStock;
 	}
 	
+	/**
+	 * Devuelve la cantidd de Tallas totales de la prenda
+	 * @return int cant de tallas de la prenda
+	 */
 	public int cantidadDeTallas() {
 		return tallesYStock.size();
 	}
 
+	/**
+	 * Modifica el legajo de un Vendedor en la lista de ventas para cuando se cambia el legajo en datos personale
+	 * para no perder el registro actualizado del vendedor que realizo las ventas.
+	 * @param legajoViejo String legajo anterior del vendedor.
+	 * @param legajoNuevo String legajo nuevo del vendedor.
+	 */
+	public int getCantidadSegTalla(String talle) {
+		return tallesYStock.get(talle);
+	}
 	
 	/**
 	 * Metodo para exportar a un objeto JSON los talles con sus respectivas cantidades
