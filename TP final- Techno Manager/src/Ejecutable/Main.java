@@ -139,7 +139,7 @@ public class Main {
 
 	Empleado empleado2 = null;
 	try {
-		empleado2 = tiendaDeRopa.buscarEmpleado("69343");
+		empleado2 = tiendaDeRopa.buscarEmpleado("69344");
 	} catch (ErrorDeBusquedaExcepcion e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();

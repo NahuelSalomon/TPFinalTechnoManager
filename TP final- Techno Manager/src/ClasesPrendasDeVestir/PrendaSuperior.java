@@ -31,6 +31,10 @@ public abstract class PrendaSuperior extends PrendaDeVestir {
 		this.esMangaCorta = esMangaCorta;
 	}
 
+	public boolean esMangaCorta() {
+		return esMangaCorta;
+	}
+	
 	public String getEsMangaCorta() {
 		String rta = "";
 		if(esMangaCorta) rta = "Es manga corta";
