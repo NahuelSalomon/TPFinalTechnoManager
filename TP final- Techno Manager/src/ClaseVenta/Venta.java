@@ -88,6 +88,25 @@ public class Venta implements Serializable{
 				"\nFecha: " + getFecha()+"\nMonto: "+getMonto()+"\nPRENDAS COMPRADAS\n"+listarPrendasCompradas()+"\n\n";
 	}
 
+	/**
+	 * Este metodo devuelve la cantidad de prendas vendidas
+	 * @return la cantidad de prendas con un valor como entero
+	 */
+	public int cantidadDePrendasVendidas() {
+		
+		int cantidad = 0;
+		
+		Set<Entry<PrendaDeVestir, Integer>> set = prendasCompradas.entrySet();
+		Iterator<Entry<PrendaDeVestir, Integer>> itertor = set.iterator();
+		
+		while (itertor.hasNext()) {
+			Entry<PrendaDeVestir, Integer> entry = itertor.next();
+			cantidad = cantidad + entry.getValue();
+		}
+	
+	return cantidad;
+	}
+	
 	
 	/**
 	 * Metodo para listar las prendas compradas con su respectiva cantidad en forma de String
@@ -205,6 +224,10 @@ public class Venta implements Serializable{
 		return prendasCompradas;
 	}
 	
+	/**
+	 * Calcula el monto en base a las prendas
+	 * @return
+	 */
 	public double calcularMonto() {
 		double monto = 0;
 		

@@ -104,7 +104,7 @@ public class ListaDeClientes implements IFuncionesBasicasListaClientes, Serializ
 		return listaDeclientes;
 	} 
 	
-	/**
+	/** 
 	 * Agrega varios clientes a la lista de clientes 
 	 * @param listaDeClientes en forma de ArrayList
 	 */
