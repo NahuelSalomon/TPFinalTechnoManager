@@ -142,7 +142,7 @@ public class ListaDePrendas implements IFuncionesBasicasListaPrendas, Serializab
 		ArrayList<PrendaDeVestir> arrayDeprendas = prendas.devolverElementos();
 		
 		for(PrendaDeVestir p : arrayDeprendas) {
-			builder.append(p.getCodigo()+" - "+p.getMarca()+"-"+p.getModelo()+"\n");
+			builder.append("Codigo: "+p.getCodigo()+"\nPrenda: "+p.tipoDePrenda()+" - "+p.getMarca()+"-"+p.getModelo()+"\n\n");
 		}
 		
 		return builder.toString();

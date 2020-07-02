@@ -67,6 +67,56 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 	}
 	
 	/**
+	 * Lista todas las ventas de un determinado vendedor
+	 * @param legajo del vendedor a listar ventas
+	 * @return las ventas en forma de String
+	 */
+	public String listarVentasDeUnVendedor(String legajo) {
+		StringBuilder builder = new StringBuilder();
+		
+		ArrayList<Venta> arrayVentas = devolverVentas();
+
+		for(Venta v : arrayVentas) {
+			if(v.getVendedor().getLegajo().equals(legajo)) {
+				builder.append(v.toString()+"\n");
+			}
+		}
+		
+		String ventas = builder.toString();
+		if(ventas.isEmpty()) {
+			ventas = "No hay ventas registradas";
+		}
+		
+		return ventas;
+	}
+	 
+	
+	/**
+	 * Lista todas las ventas hechas de un determinado cliente
+	 * @param dni del cliente a listar las ventas
+	 * @return las ventas en forma de String
+	 */
+	public String listarVentasDeUnCliente(String dni) {
+		
+		StringBuilder builder = new StringBuilder();
+		
+		ArrayList<Venta> arrayVentas = devolverVentas();
+
+		for(Venta v : arrayVentas) {
+			if(v.getCliente().getDni().equals(dni)) {
+				builder.append(v.toString()+"\n");
+			}
+		}
+		
+		String ventas = builder.toString();
+		if(ventas.isEmpty()) {
+			ventas = "No hay ventas registradas";
+		}
+		
+		return ventas;
+	}
+	
+	/**
 	 * Metodo para buscar una venta por id
 	 * @param id de la venta a buscar
 	 * @return la venta
@@ -180,6 +230,54 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 		return listaDeVentas;
 	} 
 	
+	/**
+	 * Metodo que devuelve las ventas promedios
+	 * @return las ventas promedios mediante un valor real 
+	 */
+	public double devolverVentasPromedio() {
+		double promedio = 0;
+		double suma = 0;
+		int cantidad = 0;
+		
+		ArrayList<Venta> arrayVentas = devolverVentas();
+		
+		for(Venta v : arrayVentas) {
+			suma = suma + v.getMonto();
+			cantidad++;
+		}
+		
+		promedio = suma/cantidad;
+		
+		return promedio;
+	}
 	
+	/**
+	 * Metodo que devuelve las ventas totales
+	 * @return las ventas totales mediante un valor real 
+	 */
+	public double devolverVentasTotales() {
+		double suma = 0;
+		
+		ArrayList<Venta> arrayVentas = devolverVentas();
+		
+		for(Venta v : arrayVentas) {
+			suma = suma + v.getMonto();
+		}
+		
+		return suma;
+	}
+	
+	public int cantidadDePrendasVendidas() {
+		int cantidad = 0;
+		
+
+		ArrayList<Venta> arrayVentas = devolverVentas();
+		
+		for(Venta v : arrayVentas) { 
+			cantidad = cantidad + v.cantidadDePrendasVendidas();
+		}
+	
+	return cantidad;
+	}
 
 }

@@ -356,6 +356,18 @@ public class TiendaDeRopa {
 	}
 	
 	/**
+	 * Metodo que agrega una determinanda cantidad de prendas a un determinado talle
+	 * @param codigo de la prenda a agregar
+	 * @param talle a agregar
+	 * @param cantidad a agregar
+	 * @throws ErrorDeBusquedaExcepcion
+	 */
+	public void agregarCantidadATalleEnPrenda(String codigo, String talle, Integer cantidad) throws ErrorDeBusquedaExcepcion {
+		prendasDeVestir.buscarPrenda(codigo).agregarCantidadATalle(talle, cantidad);
+	}
+	
+	
+	/**
 	 * Busca un cliente por dni
 	 * @param dni del cliente a buscar
 	 * @return el cliente
@@ -365,6 +377,41 @@ public class TiendaDeRopa {
 		return clientes.buscarClientePorDNI(dni);
 	}
 	
+	/**
+	 * Lista todas las ventas de un determinado vendedor
+	 * @param legajo del vendedor a listar ventas
+	 * @return las ventas en forma de String
+	 */
+	public String listarVentasDeUnVendedor(String legajo) {
+		return ventas.listarVentasDeUnVendedor(legajo);
+	
+	}
+	
+	
+	/**
+	 * Lista todas las ventas hechas de un determinado cliente
+	 * @param dni del cliente a listar las ventas
+	 * @return las ventas en forma de String
+	 */
+	public String listarVentasDeUnCliente(String dni) {
+		return ventas.listarVentasDeUnCliente(dni);
+	}
+	
+	/**
+	 * Metodo que devuelve las ventas promedios
+	 * @return las ventas promedios mediante un valor real 
+	 */
+	public double devolverVentasPromedio() {
+		return ventas.devolverVentasPromedio();
+	}
+	
+	/**
+	 * Metodo que devuelve las ventas totales
+	 * @return las ventas totales mediante un valor real 
+	 */
+	public double devolverVentasTotales() {
+		return ventas.devolverVentasTotales();
+	}
 	
 	/**
 	 * Metodo para convertir la tienda de ropa a un objecto json
@@ -421,10 +468,47 @@ public class TiendaDeRopa {
 	} 
 	
 	/**
-	 * 
+	 * Lista las ventas con su id, cliente vendedor y fecha
+	 * @return
 	 */
 	public String devolverVentasConIDClienteVendedorYFecha() {
 		return ventas.listarVentasConIdVendedorClineteYFecha();
 	}
+
 	
-}
+	/**
+	 * Devuelve la cantidad de ventas
+	 * @return la cantidad de ventas totales
+	 */
+	public int devolverCantidadDeVentas() {
+		return ventas.cantidadDeVentas();
+	}
+	
+	/**
+	 * Devuelve la cantidad de prendas vendidas a travez de un valor como entero
+	 * @return
+	 */
+	public int cantidadDePrendasVendidas() {
+		return ventas.cantidadDePrendasVendidas();
+	}
+
+	public void modificarCliente(String dniClienteAModificar, Cliente clienteModificado) {
+		
+		int i = 0;
+		boolean fueModificado = false;
+		
+			while((i < clientes.cantidadDeClientes()) && (!fueModificado)) {
+				if(clientes.buscarCliente(i).getDni().equals(dniClienteAModificar)) {
+					clientes.bajaCliente(i);
+					clientes.agregarCliente(clienteModificado);
+					fueModificado = true;
+				}
+				i++;	
+			}
+		}
+		
+	}
+	
+
+
+

@@ -202,6 +202,18 @@ public abstract class PrendaDeVestir implements Serializable{
 		return stockPrenda.listarTallesYStock();
 	}
 	
+	/**
+	 * Este metodo retorna el respectivo stock de una prenda
+	 * @return el stock en forma de Sting 
+	 */
+	public String listarStockParaString() {
+		return stockPrenda.listarTallesYStockParaString();
+	}
+	
+	/**
+	 * Devuelve la cantidad de talles
+	 * @return la cantidad de talles en forma de String
+	 */
 	public int cantidadDeTallas() {
 		return stockPrenda.cantidadDeTallas();
 	}
@@ -259,9 +271,10 @@ public abstract class PrendaDeVestir implements Serializable{
 		return stockPrenda.quitarCantidadATalle(talle, cantidad);
 	}
 
+	@Override
 	public String toString() {
-		return "\n\nMarca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() 
-				+ "\nTipo de material: "+ getTipoDeMaterial()+"\nTalles y stock: "+listarStock();
+		return "\nTipo de prenda: "+tipoDePrenda()+"\nMarca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() 
+				+ "\nTipo de material: "+ getTipoDeMaterial()+"\nTalles y stock: "+listarStockParaString();
 	}
 
 	/**
