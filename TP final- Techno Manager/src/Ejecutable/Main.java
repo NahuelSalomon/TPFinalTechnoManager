@@ -31,6 +31,7 @@ import ClasesPrendasDeVestir.Pantalon;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 import ClasesPrendasDeVestir.PrendaSuperior;
 import ClasesPrendasDeVestir.Remera;
+import Excepciones.LimiteExedidoDeGerenteExcepcion;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
@@ -87,11 +88,16 @@ public class Main {
     tiendaDeRopa.agregarCliente(cliente3);
     tiendaDeRopa.agregarCliente(cliente4);
     
+    try {
     tiendaDeRopa.agregarEmpleado(empleado.getLegajo(), empleado);
     tiendaDeRopa.agregarEmpleado(empleado2.getLegajo(), empleado2);
     tiendaDeRopa.agregarEmpleado(empleado3.getLegajo(), empleado3);
     tiendaDeRopa.agregarEmpleado(empleado4.getLegajo(), empleado4);
-
+    }
+    catch (LimiteExedidoDeGerenteExcepcion e) {
+		e.printStackTrace();
+	}
+    
     tiendaDeRopa.agregarPrenda(prenda1.getCodigo(), prenda1);
     tiendaDeRopa.agregarPrenda(prenda2.getCodigo(), prenda2);
     tiendaDeRopa.agregarPrenda(prenda3.getCodigo(), prenda3);
@@ -125,12 +131,12 @@ public class Main {
 		e.printStackTrace();
 	}
     
-	tiendaDeRopa.guardarTiendaDeRopa();*/
+	tiendaDeRopa.guardarTiendaDeRopa();
 	
 	System.out.println(tiendaDeRopa.listarClientes());
 	System.out.println(tiendaDeRopa.listarEmpleados());
 	System.out.println(tiendaDeRopa.listarPrenda());
-	System.out.println(tiendaDeRopa.listarVentas());
+	System.out.println(tiendaDeRopa.listarVentas());*/
 	
 	
 	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);

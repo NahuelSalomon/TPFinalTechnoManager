@@ -201,7 +201,7 @@ public class VentanaAltaEmpleado extends JFrame {
 		 * JCOMBOBOX
 		 */
 		comboBoxMes = new JComboBox();
-		comboBoxMes.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", ""}));
+		comboBoxMes.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
 		comboBoxMes.setForeground(Color.WHITE);
 		comboBoxMes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		comboBoxMes.setToolTipText("10");
@@ -434,10 +434,10 @@ public class VentanaAltaEmpleado extends JFrame {
 	
 	/**
 	 * Metodo para devolver el tipo de genero que se selecciono en los JRadioButton
-	 * @return
+	 * @return 1 si es hombre, 2 si es mujer, 3 si es perzonalizado, 0 si no esta seleccionado nada.
 	 */
 	public int devolverTipoDeGeneroRadioButton() {
-		int genero = 1;
+		int genero = 0;
 		
 		if(radioButtonHombre.isSelected()) {
 			genero = 1;
@@ -447,6 +447,7 @@ public class VentanaAltaEmpleado extends JFrame {
 				genero = 2;
 			}
 			else {
+				if(radioButtonPerzonalisado.isSelected())
 				genero = 3;
 			}
 		}

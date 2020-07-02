@@ -33,9 +33,18 @@ public abstract class PrendaSuperior extends PrendaDeVestir {
 
 	public String getEsMangaCorta() {
 		String rta = "";
-		if(esMangaCorta) rta = "Es manga corta";
-		if(!esMangaCorta) rta = "No es manga corta";
-		else rta = "No definido";
+		
+		if(esMangaCorta) {
+			rta = "Si";
+		}
+		else {
+			if(!esMangaCorta) {
+				rta = "No";
+			}
+			else {
+				rta = "No definido";
+			} 
+		}
 		return rta;
 	}
 
