@@ -274,7 +274,7 @@ public abstract class PrendaDeVestir implements Serializable{
 	@Override
 	public String toString() {
 		return "\nTipo de prenda: "+tipoDePrenda()+"\nMarca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() 
-				+ "\nTipo de material: "+ getTipoDeMaterial()+"\nTalles y stock: "+listarStockParaString();
+				+"\nTalles y stock: \n"+listarStockParaString()+ "Tipo de material: "+ getTipoDeMaterial();
 	}
 
 	/**

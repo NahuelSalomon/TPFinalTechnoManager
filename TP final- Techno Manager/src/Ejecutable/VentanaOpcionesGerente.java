@@ -95,6 +95,8 @@ public class VentanaOpcionesGerente extends JFrame {
 	private JTextArea textAreaVentasVendedores;
 	private JTextArea textAreaPosiblesVentasVendedores;
 	private JTextArea textAreaClientesModificables;
+	private JTextArea textAreaLegajosDeEmpleados;
+	private JTextArea textAreaClientesABuscar;
 
 	private JButton btnCerrarSesion;
 	private JButton botonListarEmpleados;
@@ -213,23 +215,13 @@ public class VentanaOpcionesGerente extends JFrame {
 		contentPane.add(layeredPane);
 		layeredPane.setVisible(true);
 		layeredPane.setLayout(new CardLayout(0, 0));
-		
-		
-		
-		
-		
-		
-		
+	
 		btnCerrarSesion = new JButton("Cerrar sesion");
 		btnCerrarSesion.setForeground(new Color(255, 255, 255));
 		btnCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		btnCerrarSesion.setBackground(new Color(0, 0, 128));
 		btnCerrarSesion.setBounds(10, 14, 130, 23);
 		contentPane.add(btnCerrarSesion);
-		
-	
-		
-		
 		
 		botonListarEmpleados = new JButton("Listar empleados\r\n");
 		botonListarEmpleados.setForeground(Color.WHITE);
@@ -708,7 +700,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		scrollPaneEmpleadoABuscar.setBounds(271, 28, 169, 166);
 		panelBuscarEmpleado.add(scrollPaneEmpleadoABuscar);
 		
-		JTextArea textAreaLegajosDeEmpleados = new JTextArea();
+		textAreaLegajosDeEmpleados = new JTextArea();
 		scrollPaneEmpleadoABuscar.setViewportView(textAreaLegajosDeEmpleados);
 		textAreaLegajosDeEmpleados.setText(tiendaDeRopa.devolverNombreYApellidoEmpleadosConLegajo());
 		textAreaLegajosDeEmpleados.setForeground(Color.WHITE);
@@ -815,7 +807,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		scrollPaneClientesABuscar.setBounds(273, 30, 165, 162);
 		panelBuscarCliente.add(scrollPaneClientesABuscar);
 		
-		JTextArea textAreaClientesABuscar = new JTextArea();
+		textAreaClientesABuscar = new JTextArea();
 		scrollPaneClientesABuscar.setViewportView(textAreaClientesABuscar);
 		textAreaClientesABuscar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
 		textAreaClientesABuscar.setForeground(Color.WHITE);
@@ -1590,7 +1582,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		panelModificarUnCliente.add(labelEmailAModificar);
 		
 		comboBoxCondicionFrenteAlIVAAModificar = new JComboBox();
-		comboBoxCondicionFrenteAlIVAAModificar.setModel(new DefaultComboBoxModel(new String[] {"R. Inscripto", "Monotributista", "Exento", "No responsable", "C. Final"}));
+		comboBoxCondicionFrenteAlIVAAModificar.setModel(new DefaultComboBoxModel(new String[] {"No definido", "R. Inscripto", "Monotributista", "Exento", "No responsable", "C. Final"}));
 		comboBoxCondicionFrenteAlIVAAModificar.setEnabled(false);
 		comboBoxCondicionFrenteAlIVAAModificar.setForeground(Color.WHITE);
 		comboBoxCondicionFrenteAlIVAAModificar.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1652,7 +1644,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		panelModificarUnCliente.add(botonBuscarClienteAModificar);
 		
 		comboBoxSexoClienteAModificar = new JComboBox();
-		comboBoxSexoClienteAModificar.setModel(new DefaultComboBoxModel(new String[] {"Mujer ", "Hombre", "Personalizado"}));
+		comboBoxSexoClienteAModificar.setModel(new DefaultComboBoxModel(new String[] {"Hombre", "Mujer ", "Personalizado"}));
 		comboBoxSexoClienteAModificar.setEnabled(false);
 		comboBoxSexoClienteAModificar.setForeground(Color.WHITE);
 		comboBoxSexoClienteAModificar.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1879,12 +1871,18 @@ public class VentanaOpcionesGerente extends JFrame {
 	 */
 	public void actualizarComponentesPaneles(TiendaDeRopa tiendaDeRopa) {
 		textAreaListarClientes.setText(tiendaDeRopa.listarClientes());
+		textAreaClientesABorrar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+		textAreaClientesABuscar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+		
 		textAreaListarEmpleados.setText(tiendaDeRopa.listarEmpleados());
 		textAreaListarPrendas.setText(tiendaDeRopa.listarPrenda());
+		
 		textAreaVerVentas.setText(tiendaDeRopa.listarVentas());
+		textAreaEmpleadoBuscado.setText(tiendaDeRopa.devolverNombreYApellidoEmpleadosConLegajo());
 		textAreaPrendaABorrar.setText(tiendaDeRopa.devolverPrendasConSuCodigo());
 		textAreaPrendaABuscar.setText(tiendaDeRopa.devolverPrendasConSuCodigo());
 		textAreaPrendasAAgregarStock.setText(tiendaDeRopa.devolverPrendasConSuCodigo());
+		textAreaLegajosDeEmpleados.setText(tiendaDeRopa.devolverNombreYApellidoEmpleadosConLegajo());
 		
 		textAreaEmpleadoBuscado.setText("");
 		textFieldEmpleadoABuscar.setText("");
@@ -1895,6 +1893,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		textAreaClienteBuscado.setText("");
 		textFieldDniClienteABuscar.setText("");
 		actualizarComponentesAgregarStock();
+		actualizarCamposPanelesAgregarPrenda();
 		limpiarComponentesAgregarCliente();
 		limpiarComponentesBuscarVentas();
 		limpiarComponentesClienteModificado();
@@ -2544,12 +2543,19 @@ public class VentanaOpcionesGerente extends JFrame {
 					textFieldApellidoAModificar.setText(cliente.getApellido());
 					textFieldEmailAModificar.setText(cliente.getEmail());
 					textFieldDomicilioAModificar.setText(cliente.getDomicilio());
-					comboBoxSexoClienteAModificar.setSelectedIndex(cliente.getGeneroInt());
+					comboBoxSexoClienteAModificar.setSelectedIndex(cliente.getGeneroInt()-1);
 					botonGuardarCambios.setEnabled(true);
 					
 					if(cliente instanceof ClienteMayorista) {
 						comboBoxCondicionFrenteAlIVAAModificar.setEnabled(true);
-						comboBoxCondicionFrenteAlIVACliente.setSelectedIndex(((ClienteMayorista) cliente).getCondicionFrenteIVAInt()-1);
+						int condicionFrenteAlIVA = (((ClienteMayorista) cliente).getCondicionFrenteIVAInt());
+						System.out.println(condicionFrenteAlIVA);
+						if(condicionFrenteAlIVA < 6) {
+							comboBoxCondicionFrenteAlIVAAModificar.setSelectedIndex(((ClienteMayorista) cliente).getCondicionFrenteIVAInt());
+						}
+						else {
+							comboBoxCondicionFrenteAlIVAAModificar.setSelectedIndex(0);
+						} 
 					}
 					else {
 						if(cliente instanceof ClienteMinorista) {
@@ -2582,23 +2588,28 @@ public class VentanaOpcionesGerente extends JFrame {
 						clienteModificado.setApellido(textFieldApellidoAModificar.getText());
 						clienteModificado.setDomicilio(textFieldDomicilioAModificar.getText());
 						clienteModificado.setEmail(textFieldEmailAModificar.getText());
+						clienteModificado.setGenero(comboBoxSexoClienteAModificar.getSelectedIndex()+1);
 						
-						tiendaDeRopa.modificarCliente(dni, clienteModificado);
-						tiendaDeRopa.guardarTiendaDeRopa();
-						textAreaClientesModificables.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
-						limpiarComponentesClienteModificado();
-						JOptionPane.showMessageDialog(null, "El cliente se ha modificado con exito");
-
 						if(clienteModificado instanceof ClienteMayorista) {
-							((ClienteMayorista) clienteModificado).setCondicionFrenteIVA(comboBoxCondicionFrenteAlIVAAModificar.getSelectedIndex()+1);
-						}		
+							((ClienteMayorista) clienteModificado).setCondicionFrenteIVA(comboBoxCondicionFrenteAlIVAAModificar.getSelectedIndex());
+						}	
+	
+						tiendaDeRopa.modificarCliente(dni, clienteModificado);
+						
+						textAreaClientesModificables.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+						limpiarComponentesClienteModificado();					
+						
+						tiendaDeRopa.guardarTiendaDeRopa();
+						JOptionPane.showMessageDialog(null, "El cliente se ha modificado con exito");
 						
 					} catch (ErrorDeBusquedaExcepcion ex) {
 						JOptionPane.showMessageDialog(null, "El cliente no existe");
 					}
 					
 				}
-
+				else {
+					JOptionPane.showMessageDialog(null, "Faltan completar campos vacios");
+				}
 			}
 		});
 	}

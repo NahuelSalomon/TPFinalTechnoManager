@@ -11,6 +11,7 @@ import Archivos.archivoPrendas;
 import Archivos.archivoVentas;
 import ClaseVenta.Venta;
 import ClasesPersona.Cliente;
+import ClasesPersona.ClienteMayorista;
 import ClasesPersona.Empleado;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 import Excepciones.ErrorDeBusquedaExcepcion;
@@ -499,8 +500,18 @@ public class TiendaDeRopa {
 		
 			while((i < clientes.cantidadDeClientes()) && (!fueModificado)) {
 				if(clientes.buscarCliente(i).getDni().equals(dniClienteAModificar)) {
-					clientes.bajaCliente(i);
-					clientes.agregarCliente(clienteModificado);
+					((Cliente) clientes.buscarCliente(i)).setNombre(clienteModificado.getNombre());
+					((Cliente) clientes.buscarCliente(i)).setApellido(clienteModificado.getApellido());
+					((Cliente) clientes.buscarCliente(i)).setDomicilio(clienteModificado.getDomicilio());
+					((Cliente) clientes.buscarCliente(i)).setEmail(clienteModificado.getEmail());
+					((Cliente) clientes.buscarCliente(i)).setGenero(clienteModificado.getGeneroInt());
+					 
+					if(clientes.buscarCliente(i) instanceof ClienteMayorista) {
+						if(clienteModificado instanceof ClienteMayorista) {
+						((ClienteMayorista) clientes.buscarCliente(i)).setCondicionFrenteIVA(((ClienteMayorista) clienteModificado).getCondicionFrenteIVAInt());
+						}
+					}
+					
 					fueModificado = true;
 				}
 				i++;	
