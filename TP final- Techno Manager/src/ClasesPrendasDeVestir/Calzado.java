@@ -35,6 +35,10 @@ public class Calzado extends PrendaDeVestir {
 	public void setTipoDeSuela(int tipoDeSuela) {
 		this.tipoDeSuela = tipoDeSuela;
 	}
+	
+	public int getTipoDeSuelaInt() {
+		return this.tipoDeSuela;
+	}
 
 	public String getTipoDeSuela() {
 		String rta = "";

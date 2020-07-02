@@ -32,6 +32,7 @@ import ClasesPrendasDeVestir.PrendaDeVestir;
 import ClasesPrendasDeVestir.PrendaSuperior;
 import ClasesPrendasDeVestir.Remera;
 import Excepciones.LimiteExedidoDeGerenteExcepcion;
+import Excepciones.ErrorDeBusquedaExcepcion;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
@@ -137,23 +138,28 @@ public class Main {
 	System.out.println(tiendaDeRopa.listarEmpleados());
 	System.out.println(tiendaDeRopa.listarPrenda());
 	System.out.println(tiendaDeRopa.listarVentas());*/
-	
-	
+
 	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
 	ventanaDeEntrada.setVisible(true);
 
-	
-	
-	/*try {
-		VentanaOpcionesEmpleado ventanaOpcionesEmpleado = new VentanaOpcionesEmpleado(claveEmpleado, tiendaDeRopa);
-		ventanaOpcionesEmpleado.setVisible(true);
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
-	} */
+//	Empleado empleado2 = null;
+//	try {
+//		empleado2 = tiendaDeRopa.buscarEmpleado("69344");
+//	} catch (ErrorDeBusquedaExcepcion e1) {
+//		// TODO Auto-generated catch block
+//		e1.printStackTrace();
+//	}
+//	
+//	try {
+//		VentanaOpcionesEmpleado ventanaOpcionesEmpleado = new VentanaOpcionesEmpleado(empleado2, tiendaDeRopa);
+//		ventanaOpcionesEmpleado.setVisible(true);
+//	} catch (FileNotFoundException e) {
+//		e.printStackTrace();
+//	} catch (ClassNotFoundException e) {
+//		e.printStackTrace();
+//	} catch (IOException e) {
+//		e.printStackTrace();
+//	} 
 	
 	    /*MenuCliente menuCliente = new MenuCliente(); 
 		
