@@ -59,6 +59,9 @@ public class TallesYStock implements Serializable{
 				tallesYStock.put(talle, nuevaCantidad);
 				seAgrego = true;
 			}
+			else {
+				agregarNuevoTalleConCantidad(talle, cantidad);
+			}
 		}
 		return seAgrego;
 	}
@@ -120,26 +123,7 @@ public class TallesYStock implements Serializable{
 		return seQuito;
 	}
 
- 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * Este metodo es para listar todos los talles con sus respectivas cantidades
 	 * 
@@ -158,6 +142,26 @@ public class TallesYStock implements Serializable{
 		builder.append("</html>");
 
 		return builder.toString();
+	}
+	
+	public String listarTallesYStockParaString() {
+		StringBuilder builder = new StringBuilder();
+
+		Set<Entry<String, Integer>> set = tallesYStock.entrySet();
+		Iterator<Entry<String, Integer>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Entry<String, Integer> entry = iterator.next();
+			builder.append("\n  Talle: " + entry.getKey() + "- Cantidad: " + entry.getValue());
+		}
+
+		String tallesYStock = builder.toString();
+		
+		if(tallesYStock.isEmpty()) {
+			tallesYStock = "No hay stock";
+		}
+		
+		return tallesYStock;
 	}
 	
 	public int cantidadDeTallas() {

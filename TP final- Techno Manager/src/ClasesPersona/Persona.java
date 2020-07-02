@@ -134,7 +134,7 @@ public class Persona implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Nombre: " + getNombre() + "\nApellido: " + getApellido() + "\nDNI: " + getDni() + "\nGenero: "
+		return "\nNombre: " + getNombre() + "\nApellido: " + getApellido() + "\nDNI: " + getDni() + "\nGenero: "
 				+ getGenero() + "\nFecha de nacimiento:" + getFechaNac();
 	}
 
