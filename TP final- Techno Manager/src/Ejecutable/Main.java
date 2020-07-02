@@ -132,12 +132,12 @@ public class Main {
 		e.printStackTrace();
 	}
     
-	tiendaDeRopa.guardarTiendaDeRopa();
+	tiendaDeRopa.guardarTiendaDeRopa();*/
 	
 	System.out.println(tiendaDeRopa.listarClientes());
 	System.out.println(tiendaDeRopa.listarEmpleados());
 	System.out.println(tiendaDeRopa.listarPrenda());
-	System.out.println(tiendaDeRopa.listarVentas());*/
+	System.out.println(tiendaDeRopa.listarVentas());
 
 	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
 	ventanaDeEntrada.setVisible(true);

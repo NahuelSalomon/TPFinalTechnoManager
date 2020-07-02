@@ -390,16 +390,20 @@ public class VentanaAltaEmpleado extends JFrame {
 				if(comprobacionDeCampos(tiendaDeRopa)) {
 					
 					if(radioButtonVendedor.isSelected()) {
-						Vendedor vendedor = new Vendedor(nombre, apellido, dni, genero, fechaNac, estadoCivil, telefono, legajo, contraseña);
-						
-						try {
-						tiendaDeRopa.agregarEmpleado(legajo, vendedor);
+						if(!jtextFieldTelefono.getText().isEmpty()) {
+							Vendedor vendedor = new Vendedor(nombre, apellido, dni, genero, fechaNac, estadoCivil, telefono, legajo, contraseña);
+							try {
+							tiendaDeRopa.agregarEmpleado(legajo, vendedor);
+							}
+							catch(LimiteExedidoDeGerenteExcepcion ex) {
+								ex.printStackTrace();
+							}
+							JOptionPane.showMessageDialog(null, "El empleado se ha dado de alta con exito");
+							altaEmpleado = true;
 						}
-						catch(LimiteExedidoDeGerenteExcepcion ex) {
-							ex.printStackTrace();
+						else {
+							JOptionPane.showMessageDialog(null, "Falta agregar un telefono");
 						}
-						JOptionPane.showMessageDialog(null, "El empleado se ha dado de alta con exito");
-						altaEmpleado = true;
 					}
 					else {
 						if(radioButtonGerente.isSelected()) {
@@ -425,6 +429,7 @@ public class VentanaAltaEmpleado extends JFrame {
 				}
 			
 				if(altaEmpleado) {
+					tiendaDeRopa.guardarTiendaDeRopa();
 					volverAtras(tiendaDeRopa);
 				}
 			}
