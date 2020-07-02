@@ -280,4 +280,7 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 	return cantidad;
 	}
 
+	public void modificarVendedorEnListaVentas(String legajoViejo, String legajoNuevo) {
+		ventas.modificarVendedorEnListaVentas(legajoViejo, legajoNuevo);
+	}
 }

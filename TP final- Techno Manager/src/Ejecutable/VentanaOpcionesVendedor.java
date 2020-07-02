@@ -27,6 +27,7 @@ import Excepciones.LimiteExedidoDeGerenteExcepcion;
 import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
+import Listas.ListaDeVentas;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -41,6 +42,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -76,7 +78,7 @@ import java.awt.event.ItemEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 
-public class VentanaOpcionesEmpleado extends JFrame {
+public class VentanaOpcionesVendedor extends JFrame {
 	
 	private TiendaDeRopa tiendaDeRopa;
 	private Empleado empleado;
@@ -115,14 +117,18 @@ public class VentanaOpcionesEmpleado extends JFrame {
 	private JTextField textAjustePrecio;
 	
 	private JTable tablePrendas;
+	private Cliente clienteSelected;
+	private JTextArea taVerMisVentas;
+	private JPanel panVerMisVentas_1;
 
 	/**
-	 * Create the frame.
+	 * Ventana de Vendedor. Entorno donde el vendedor monejara los productos, sus datos personales y registrara las ventas que 
+	 * realice a los clientes registrados
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 * @throws FileNotFoundException 
 	 */
-	public VentanaOpcionesEmpleado(Empleado emp, TiendaDeRopa tienda) throws FileNotFoundException, ClassNotFoundException, IOException {
+	public VentanaOpcionesVendedor(Empleado emp, TiendaDeRopa tienda) throws FileNotFoundException, ClassNotFoundException, IOException {
 			
 		this.tiendaDeRopa = tienda;
 		this.empleado = emp;
@@ -140,7 +146,9 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		botonAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tiendaDeRopa.guardarTiendaDeRopa();
-				System.exit(0);
+				dispose();
+				VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
+				ventanaDeEntrada.setVisible(true);
 			}
 		});
 		
@@ -199,7 +207,10 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		lpanGeneral.setLayout(new CardLayout(0, 0));
 		
 		tablePrendas = new JTable();
+		tablePrendas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
+		tablePrendas.getColumnModel().getColumn(3).setPreferredWidth(180);
+		tablePrendas.setRowHeight(50);
 		
 		JPanel panRegistrarVenta = new JPanel();
 		metodoPanelRegistrarVenta(panRegistrarVenta, tablePrendas);
@@ -207,9 +218,11 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		panRegistrarVenta.setVisible(false);		
 		panRegistrarVenta.setLayout(null);
 		
-		JPanel panVerMisVentas = new JPanel();
-		lpanGeneral.add(panVerMisVentas, "name_99930226415368");
-		panVerMisVentas.setVisible(false);
+		panVerMisVentas_1 = new JPanel();
+		metodoPanelVerMisVentas(panVerMisVentas_1);
+		lpanGeneral.add(panVerMisVentas_1, "name_99930226415368");
+		panVerMisVentas_1.setVisible(false);
+		panVerMisVentas_1.setLayout(null);
 		
 		JPanel panModificarDatosPer = new JPanel();
 		metodoPanelModificarDatosPersonales(panModificarDatosPer, botonNombreEmpleado);
@@ -244,48 +257,68 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		panVendedor.setVisible(true);
 		panVendedor.setLayout(null);
 				
-		accionBotonPaneles(botonRegistrarVenta, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas, panPrendaAjusteStock);
-		accionBotonPaneles(botonVerVentas, panVerMisVentas, panAgregarPrendas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
-		accionBotonPaneles(botonModificarDatosPersonales, panModificarDatosPer, panAgregarPrendas, panVendedor, panRegistrarVenta, panRegistrarVenta, panPrendaAjusteStock);
-		accionBotonPaneles(botonAgregarPrendaDeVestir, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
-		accionBotonPaneles(botonNombreEmpleado, panVendedor, panAgregarPrendas, panVerMisVentas, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
-		accionBotonPaneles(btnPrendaAjustarStock, panPrendaAjusteStock, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas, panVerMisVentas);
-		accionBotonPaneles(btnPrendaAjusteAtras, panAgregarPrendas, panVerMisVentas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
-		
+		accionBotonPaneles(botonRegistrarVenta, panRegistrarVenta, panAgregarPrendas, panVendedor, panVerMisVentas_1, panModificarDatosPer, panPrendaAjusteStock);
+		accionBotonPaneles(botonVerVentas, panVerMisVentas_1, panAgregarPrendas, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
+		accionBotonPaneles(botonModificarDatosPersonales, panModificarDatosPer, panAgregarPrendas, panVendedor, panVerMisVentas_1, panRegistrarVenta, panPrendaAjusteStock);
+		accionBotonPaneles(botonAgregarPrendaDeVestir, panAgregarPrendas, panVerMisVentas_1, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
+		accionBotonPaneles(botonNombreEmpleado, panVendedor, panAgregarPrendas, panVerMisVentas_1, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
+		accionBotonPaneles(btnPrendaAjustarStock, panPrendaAjusteStock, panRegistrarVenta, panAgregarPrendas, panVendedor, panModificarDatosPer, panVerMisVentas_1);
+		accionBotonPaneles(btnPrendaAjusteAtras, panAgregarPrendas, panVerMisVentas_1, panVendedor, panRegistrarVenta, panModificarDatosPer, panPrendaAjusteStock);
+				
 	}
 	
+	/**
+	 * Metodo donde de alojan las caracteristicas del panel de Registro de Ventas
+	 * @param panRegistrarVenta JPanel al que esta dedicado, el de Registro de ventas
+	 * @param tablePrendas JTable que almacenara las Prenda a vender.
+	 */
 	public void metodoPanelRegistrarVenta(JPanel panRegistrarVenta, JTable tablePrendas) {
 		//----PANEL REGISTRAR VENTA----//
+		JLabel lblPrendaCliente = new JLabel("Cliente:");
+		lblPrendaCliente.setBounds(10, 7, 70, 14);
+		panRegistrarVenta.add(lblPrendaCliente);
 		
 		JComboBox cbCliente = new JComboBox();
 		ArrayList<Cliente> clientes = tiendaDeRopa.devolverClientes();
+		
 		for(Cliente elem : clientes) {
-			cbCliente.addItem(elem.getNombre());
+			cbCliente.addItem(elem.getNombre()+" "+elem.getApellido());
 		}
-		//JOptionPane.showMessageDialog(null, clientesCadena);
-		cbCliente.setBounds(20, 4, 148, 20);
+		cbCliente.setBounds(90, 4, 120, 20);
 		panRegistrarVenta.add(cbCliente);
+		
+		cbCliente.setSelectedIndex(0);
+		clienteSelected = clientes.get(cbCliente.getSelectedIndex());
+		
+		cbCliente.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(!clienteSelected.getDni().equals(clientes.get(cbCliente.getSelectedIndex()).getDni())) {
+					clienteSelected = clientes.get(cbCliente.getSelectedIndex());
+				}
+			}
+		});
+		
 		Date fechaActual = new Date();
 		
 		JLabel lblFecha = new JLabel(fechaActual.toString());
-		lblFecha.setBounds(260, 7, 154, 14);
+		lblFecha.setBounds(235, 7, 205, 14);
 		panRegistrarVenta.add(lblFecha);
 		
 		JButton btnFinalizarVenta = new JButton("Finalizar");
 		btnFinalizarVenta.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnFinalizarVenta.setForeground(new Color(255, 255, 255));
 		btnFinalizarVenta.setBackground(new Color(0, 0, 128));
-		btnFinalizarVenta.setBounds(324, 263, 105, 25);
+		btnFinalizarVenta.setBounds(335, 263, 105, 25);
 		panRegistrarVenta.add(btnFinalizarVenta);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 32, 409, 97);
+		scrollPane.setBounds(10, 32, 430, 97);
 		panRegistrarVenta.add(scrollPane);
 		
 		scrollPane.setViewportView(tablePrendas);
 		
 		textCantidad = new JFormattedTextField();
-		textCantidad.setBounds(235, 137, 30, 20);
+		textCantidad.setBounds(252, 137, 30, 20);
 		textCantidad.setValue(new Integer(1));
 		panRegistrarVenta.add(textCantidad);
 		textCantidad.setColumns(10);
@@ -295,32 +328,33 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		panRegistrarVenta.add(lbIndiqueCantidad);
 		
 		JButton btnAgregarAlCarro = new JButton("Agregar al Carro");
-		btnAgregarAlCarro.setBounds(281, 136, 148, 23);
+		btnAgregarAlCarro.setBounds(292, 136, 148, 23);
 		panRegistrarVenta.add(btnAgregarAlCarro);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(20, 173, 409, 79);
+		scrollPane_1.setBounds(10, 173, 430, 79);
 		panRegistrarVenta.add(scrollPane_1);
 		
 		JTable tableCarro = new JTable();
 		scrollPane_1.setViewportView(tableCarro);
-		DefaultTableModel modeloTableCarro = new DefaultTableModel(new Object[] {"Modelo","Marca","Talla","Cantidad"}, 0);
+		tableCarro.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		DefaultTableModel modeloTableCarro = new DefaultTableModel(new Object[] {"Modelo","Marca","Talla","Cantidad","Codigo"}, 0);
 		tableCarro.setModel(modeloTableCarro);
 		
 		JButton btnEliminarDelCarro = new JButton("Eliminar del Carro");
-		btnEliminarDelCarro.setBounds(159, 266, 130, 23);
+		btnEliminarDelCarro.setBounds(152, 266, 130, 23);
 		panRegistrarVenta.add(btnEliminarDelCarro);
 		
 		JLabel lblSubTotal = new JLabel("Sub-Total:");
-		lblSubTotal.setBounds(30, 267, 70, 23);
+		lblSubTotal.setBounds(10, 266, 68, 23);
 		panRegistrarVenta.add(lblSubTotal);
 		
-		JLabel lblValorSubTotal = new JLabel("0");
-		lblValorSubTotal.setBounds(103, 271, 46, 14);
-		panRegistrarVenta.add(lblValorSubTotal);
+		JLabel lblPrendasSubTotal = new JLabel("0");
+		lblPrendasSubTotal.setBounds(88, 270, 46, 14);
+		panRegistrarVenta.add(lblPrendasSubTotal);
 		
 		JLabel lblIndiqueTalla = new JLabel("Indique Talla:");
-		lblIndiqueTalla.setBounds(20, 140, 80, 14);
+		lblIndiqueTalla.setBounds(10, 140, 80, 14);
 		panRegistrarVenta.add(lblIndiqueTalla);
 		
 		textTalla = new JTextField();
@@ -338,8 +372,9 @@ public class VentanaOpcionesEmpleado extends JFrame {
 				int filaSeleccionada = tablePrendas.getSelectedRow();
 				PrendaDeVestir prenda = null;
 				int cant = (Integer)textCantidad.getValue();
+				boolean flag = false;
+				
 				if(filaSeleccionada == -1) {
-					//throw new ExcepcionMensajeError("No selecciono una prenda");
 					JOptionPane.showMessageDialog(null, "No solecciono una prenda");
 				}
 				else {
@@ -347,21 +382,37 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					try {
 						prenda = tiendaDeRopa.buscarPrenda((String)tablePrendas.getValueAt(filaSeleccionada, 4));
 						if(cant < 1) {
-							//throw new ExcepcionMensajeError("Cantidad indicada no valida");
 							JOptionPane.showMessageDialog(null, "Cantidad indicada no valida");
 						}
 						else if(!prenda.existeTalle(textTalla.getText())) {
-							//throw new ExcepcionMensajeError("Talla indicada no valida");
 							JOptionPane.showMessageDialog(null, "Talla indicada no valida");
 						}
-	//					else if(prenda.getCantidadSegTalla(talle) < cant){
-	//						throw new ExcepcionMensajeError("Cantidad indicada no excede el stock disponible");
-	//						JOptionPane.showMessageDialog(null, "Cantidad indicada no excede el stock disponible");
-	//					}
+						else if(prenda.getCantidadSegTalla(textTalla.getText()) < cant) {
+							JOptionPane.showMessageDialog(null, "Cantidad indicada excede el stock disponible");
+						}
 						else {
-							//JOptionPane.showMessageDialog(null, "Todo correcto");
-							modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant});
-							tableCarro.setModel(modeloTableCarro);
+							prenda.quitarCantidadATalle(textTalla.getText(), cant);
+							tiendaDeRopa.modificarPrenda(prenda.getCodigo(), prenda);
+							
+							tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
+							tablePrendas.getColumnModel().getColumn(3).setPreferredWidth(180);
+							tablePrendas.setRowHeight(50);
+							
+							for(int i = 0; i < tableCarro.getRowCount(); i++) {
+								if(tableCarro.getValueAt(i, 4).equals(prenda.getCodigo()) && tableCarro.getValueAt(i, 2).equals(textTalla.getText())) {
+									int stock = (int) tableCarro.getValueAt(i, 3);
+									tableCarro.setValueAt(stock + cant, i, 3);
+									flag = true;
+								}
+							}
+							if(!flag) {
+								modeloTableCarro.addRow(new Object[] {prenda.getModelo(),prenda.getMarca(),textTalla.getText(),cant,prenda.getCodigo()});
+								tableCarro.setModel(modeloTableCarro);
+							}
+							
+							double subtotal = Double.parseDouble(lblPrendasSubTotal.getText());
+							subtotal = subtotal + (prenda.getPrecio() * cant);
+							lblPrendasSubTotal.setText(String.valueOf(subtotal));
 						}
 					}
 					catch(ErrorDeBusquedaExcepcion e) {
@@ -371,9 +422,131 @@ public class VentanaOpcionesEmpleado extends JFrame {
 				}
 			}
 		});
+		
+		btnEliminarDelCarro.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int filaSeleccionada = tableCarro.getSelectedRow();
+				PrendaDeVestir prenda = null;
+				
+				if(filaSeleccionada == -1) {
+					JOptionPane.showMessageDialog(null, "No solecciono una prenda para quitar del carro");
+				}
+				else {
+					
+					try {
+						prenda = tiendaDeRopa.buscarPrenda((String)tableCarro.getValueAt(filaSeleccionada, 4));
+						String talle = (String) tableCarro.getValueAt(filaSeleccionada, 2);
+						int cant = (int) tableCarro.getValueAt(filaSeleccionada, 3);
+						
+						prenda.agregarCantidadATalle(talle, cant);
+						tiendaDeRopa.modificarPrenda(prenda.getCodigo(), prenda);
+						
+						double subtotal = Double.parseDouble(lblPrendasSubTotal.getText());
+						double res = subtotal - (prenda.getPrecio() * cant);
+						lblPrendasSubTotal.setText(String.valueOf(res));
+								
+						DefaultTableModel model = (DefaultTableModel) tableCarro.getModel();
+						model.removeRow(filaSeleccionada);
+						tableCarro.setModel(model);
+						
+						tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
+						tablePrendas.getColumnModel().getColumn(3).setPreferredWidth(180);
+						tablePrendas.setRowHeight(50);					
+					}
+					catch(ErrorDeBusquedaExcepcion e) {
+						e.printStackTrace();
+					}
+				
+				}
+			}
+		});
+		
+		btnFinalizarVenta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(tableCarro.getRowCount() != 0) {
+					if(JOptionPane.showConfirmDialog(null, "Finalizar la venta?") == JOptionPane.YES_OPTION) {
+						Date fechaActual = new Date();
+						lblFecha.setText(fechaActual.toString());
+						
+						HashMap<PrendaDeVestir, Integer> prendas = new HashMap<PrendaDeVestir, Integer>();
+						for(int i = 0; i < tableCarro.getRowCount(); i++) {
+							try {
+								PrendaDeVestir pre = tiendaDeRopa.buscarPrenda((String) tableCarro.getValueAt(i, 4));
+								int cant = (Integer)tableCarro.getValueAt(i, 3);
+								
+								if(!prendas.containsKey(pre)) {
+									prendas.put(pre, cant);
+								}	
+								else {
+									int cantAgregada = cant;
+									int cantExistente = prendas.get(pre);
+									prendas.put(pre, (cantAgregada + cantExistente));
+								}
+							} catch (ErrorDeBusquedaExcepcion e) {
+								e.printStackTrace();
+							}
+						}
+						
+						Venta regVenta = null;
+						regVenta = new Venta(clienteSelected, (Vendedor)empleado, lblFecha.getText(), prendas);
+						tiendaDeRopa.agregarVenta(regVenta);
+						
+						DefaultTableModel model = (DefaultTableModel) tableCarro.getModel();
+				        int a = tableCarro.getRowCount()-1;
+				        for (int i = a; i >= 0; i--) {          
+				        	model.removeRow(model.getRowCount()-1);
+				        }
+						tableCarro.setModel(model);
+						
+						tablePrendaAjuste.setModel(cargarJTablePrendaAjuste(tiendaDeRopa.devolverPrendas()));
+						tablePrendaAjuste.getColumnModel().getColumn(3).setPreferredWidth(180);
+						tablePrendaAjuste.setRowHeight(50);
+						
+						lblPrendasSubTotal.setText("0");
+						
+						cbCliente.setSelectedIndex(0);
+						
+						taVerMisVentas.setText(tiendaDeRopa.listarVentasDeUnVendedor(empleado.getLegajo()));
+						
+						JOptionPane.showMessageDialog(null, "Venta realizada con exito!");
+					}
+				}
+				else JOptionPane.showMessageDialog(null, "El Carro esta vacio, no es posible realizar la venta");
+				
+				
+			}
+		});
 		//--------//
 	}
 	
+	/**
+	 * Metodo donde se alojan las caracteristicas del panel de Ver Mis Ventas
+	 * @param panVerMisVentas JPanel de VerMisVentas
+	 */
+	public void metodoPanelVerMisVentas(JPanel panVerMisVentas) {
+		JLabel lblVerMisVentasTitulo = new JLabel("Mis Ventas:");
+		lblVerMisVentasTitulo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblVerMisVentasTitulo.setBounds(10, 11, 120, 23);
+		panVerMisVentas.add(lblVerMisVentasTitulo);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 45, 430, 244);
+		panVerMisVentas_1.add(scrollPane);
+		
+		taVerMisVentas = new JTextArea();
+		scrollPane.setViewportView(taVerMisVentas);
+		taVerMisVentas.setEditable(false);
+		taVerMisVentas.setText(tiendaDeRopa.listarVentasDeUnVendedor(empleado.getLegajo()));
+				
+	}
+	
+	/**
+	 * Metodo donde se alojan las caracteristicas del panel de Agregar Prendas
+	 * @param panAgregarPrendas	JPanle Agregar Prendas
+	 * @param tablePrendas JTable que almacena las prendas a vender.
+	 */
 	public void metodoPanelAgregarPrenda (JPanel panAgregarPrendas, JTable tablePrendas) {
 		//----PANEL AGREGAR PRENDA----//
 		panAgregarPrendas.setLayout(null);
@@ -445,7 +618,6 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		panAgregarPrendas.add(lblPrendaPrecio);
 		
 		textPrendaPrecio = new JFormattedTextField();
-		textPrendaPrecio.setValue(new Integer(0));
 		textPrendaPrecio.setBounds(338, 106, 86, 20);
 		panAgregarPrendas.add(textPrendaPrecio);
 		textPrendaPrecio.setColumns(10);
@@ -586,7 +758,8 @@ public class VentanaOpcionesEmpleado extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(cbPrendaMarca.getSelectedIndex() == 0 || textPrendaModelo.getText().isEmpty() || textPrendaColor.getText().isEmpty() ||
-						cbPrendaTipoMaterial.getSelectedIndex() == 0) {
+						cbPrendaTipoMaterial.getSelectedIndex() == 0 || textPrendaTalla.getText().isEmpty() || textPrendaStock.getText().isEmpty()
+						|| textPrendaPrecio.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Datos Insuficientes");
 				}
 				else {
@@ -635,6 +808,8 @@ public class VentanaOpcionesEmpleado extends JFrame {
 					cbPrendaCarac2.setSelectedIndex(-1);
 					
 					tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
+					tablePrendas.getColumnModel().getColumn(3).setPreferredWidth(180);
+					tablePrendas.setRowHeight(50);
 					
 					tablePrendaAjuste.setModel(cargarJTablePrendaAjuste(tiendaDeRopa.devolverPrendas()));
 					tablePrendaAjuste.getColumnModel().getColumn(3).setPreferredWidth(180);
@@ -645,6 +820,10 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		//--------//
 	}
 	
+	/**
+	 * Metoso donde se alojan las caracteristicas del panel de Ajuste de Stock
+	 * @param panPrendaAjusteStock JPanlet de Ajuste de Stock
+	 */
 	public void metodoPanelAjuste(JPanel panPrendaAjusteStock) {
 		//----PANEL AJUSTE STOCK----//
 		
@@ -691,360 +870,407 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		panPrendaAjusteStock.add(btnAjusteGuardar);
 		
 		JLabel lblAjusteMarca = new JLabel("Marca:");
-		lblAjusteMarca.setBounds(10, 158, 80, 14);
+		lblAjusteMarca.setBounds(10, 158, 118, 14);
 		panPrendaAjusteStock.add(lblAjusteMarca);
 		
 		JLabel lblAjusteModelo = new JLabel("Modelo:");
-		lblAjusteModelo.setBounds(10, 183, 80, 14);
+		lblAjusteModelo.setBounds(10, 183, 118, 14);
 		panPrendaAjusteStock.add(lblAjusteModelo);
 		
 		JLabel lblAjusteTipoMaterial = new JLabel("Tipo de Material:");
-		lblAjusteTipoMaterial.setBounds(10, 208, 80, 14);
+		lblAjusteTipoMaterial.setBounds(10, 208, 118, 14);
 		panPrendaAjusteStock.add(lblAjusteTipoMaterial);
 		
 		JLabel lblAjusteColor = new JLabel("Color:");
-		lblAjusteColor.setBounds(10, 233, 80, 14);
+		lblAjusteColor.setBounds(10, 233, 118, 14);
 		panPrendaAjusteStock.add(lblAjusteColor);
 		
 		JLabel lblAjusteTipoPrenda = new JLabel("Tipo de Prenda: ");
-		lblAjusteTipoPrenda.setBounds(219, 158, 185, 14);
+		lblAjusteTipoPrenda.setBounds(255, 158, 185, 14);
 		panPrendaAjusteStock.add(lblAjusteTipoPrenda);
 		
 		JLabel lblAjusteCarac1 = new JLabel("Carac1");
-		lblAjusteCarac1.setBounds(219, 183, 80, 14);
+		lblAjusteCarac1.setBounds(255, 183, 99, 14);
 		panPrendaAjusteStock.add(lblAjusteCarac1);
 		
 		JLabel lblAjusteCarac2 = new JLabel("Carac2");
-		lblAjusteCarac2.setBounds(219, 208, 80, 14);
+		lblAjusteCarac2.setBounds(255, 208, 99, 14);
 		panPrendaAjusteStock.add(lblAjusteCarac2);
 		
 		JComboBox cbAjusteMarca = new JComboBox();
 		cbAjusteMarca.setModel(new DefaultComboBoxModel(new String [] {"No definido","Zara","Nike","Gucci","Adidas","Lacoste","Chanel","Levi's"}));
-		cbAjusteMarca.setBounds(118, 155, 80, 20);
+		cbAjusteMarca.setBounds(129, 155, 80, 20);
 		panPrendaAjusteStock.add(cbAjusteMarca);
 		
 		JComboBox cbAjusteTipoMaterial = new JComboBox();
 		cbAjusteTipoMaterial.setModel(new DefaultComboBoxModel(new String [] {"No definido","Algodon","Terciopelo","Calico","Fieltro","Seda"}));
-		cbAjusteTipoMaterial.setBounds(118, 205, 80, 20);
+		cbAjusteTipoMaterial.setBounds(129, 205, 80, 20);
 		panPrendaAjusteStock.add(cbAjusteTipoMaterial);
 		
 		textAjusteModelo = new JTextField();
-		textAjusteModelo.setBounds(118, 180, 80, 20);
+		textAjusteModelo.setBounds(129, 180, 80, 20);
 		panPrendaAjusteStock.add(textAjusteModelo);
 		textAjusteModelo.setColumns(10);
 		
 		textAjusteColor = new JTextField();
-		textAjusteColor.setBounds(118, 230, 80, 20);
+		textAjusteColor.setBounds(129, 230, 80, 20);
 		panPrendaAjusteStock.add(textAjusteColor);
 		textAjusteColor.setColumns(10);
 
 		textAjusteCarac1 = new JTextField();
-		textAjusteCarac1.setBounds(309, 180, 86, 20);
+		textAjusteCarac1.setBounds(354, 180, 86, 20);
 		panPrendaAjusteStock.add(textAjusteCarac1);
 		textAjusteCarac1.setColumns(10);
 		
 		JComboBox cbAjusteCarac1 = new JComboBox();
-		cbAjusteCarac1.setBounds(309, 180, 86, 20);
+		cbAjusteCarac1.setBounds(354, 180, 86, 20);
 		panPrendaAjusteStock.add(cbAjusteCarac1);
 		
 		JComboBox cbAjusteCarac2 = new JComboBox();
-		cbAjusteCarac2.setBounds(309, 205, 86, 20);
+		cbAjusteCarac2.setBounds(354, 205, 86, 20);
 		panPrendaAjusteStock.add(cbAjusteCarac2);
 		
 		JLabel lblAjustePrecio = new JLabel("Precio:");
-		lblAjustePrecio.setBounds(219, 233, 46, 14);
+		lblAjustePrecio.setBounds(255, 233, 99, 14);
 		panPrendaAjusteStock.add(lblAjustePrecio);
 		
 		textAjustePrecio = new JTextField();
-		textAjustePrecio.setBounds(309, 230, 86, 20);
+		textAjustePrecio.setBounds(354, 230, 86, 20);
 		panPrendaAjusteStock.add(textAjustePrecio);
 		textAjustePrecio.setColumns(10);
 		
 		tablePrendaAjuste.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        @Override
 			public void valueChanged(ListSelectionEvent arg0) {
-	        	PrendaDeVestir prendaCargada = null;
-				String codigo = (String) tablePrendaAjuste.getValueAt(tablePrendaAjuste.getSelectedRow(), 4);
-				try {
-					prendaCargada = tiendaDeRopa.buscarPrenda(codigo);
-				} catch (ErrorDeBusquedaExcepcion e) {
-					e.printStackTrace();
-				}
-				cbAjusteMarca.setSelectedIndex(prendaCargada.getMarcaInt() > 7 ? 0 : prendaCargada.getMarcaInt());
-				textAjusteModelo.setText(prendaCargada.getModelo());
-				cbAjusteTipoMaterial.setSelectedIndex(prendaCargada.getTipoDeMaterialInt() > 5 ? 0 : prendaCargada.getTipoDeMaterialInt());
-				textAjustePrecio.setText(String.valueOf(prendaCargada.getPrecio()));
-				textAjusteColor.setText(prendaCargada.getColor());
-				if(prendaCargada instanceof Calzado) {
-					lblAjusteTipoPrenda.setText("Tipo de Prenda: Calzado");
-					lblAjusteCarac1.setText("Tipo de Suela:");
-					textAjusteCarac1.setVisible(false);
-					cbAjusteCarac1.setVisible(true);
-					cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No definido","Poliuretano","Crepe","Suela","Cuero"}));
-					cbAjusteCarac1.setSelectedIndex(((Calzado) prendaCargada).getTipoDeSuelaInt());
-					lblAjusteCarac2.setVisible(false);
-					cbAjusteCarac2.setVisible(false);
-				}
-				if(prendaCargada instanceof Buzo) {
-					lblAjusteTipoPrenda.setText("Tipo de Prenda: Buzo");
-					lblAjusteCarac1.setText("Tiene Canguro:");
-					textAjusteCarac1.setVisible(false);
-					cbAjusteCarac1.setVisible(true);
-					cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
-					cbAjusteCarac1.setSelectedIndex(((Buzo) prendaCargada).esTipoCanguro() ? 1 : 0);
-					lblAjusteCarac2.setVisible(true);
-					lblAjusteCarac2.setText("Tipo de Manga:");
-					cbAjusteCarac2.setVisible(true);
-					cbAjusteCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
-					cbAjusteCarac2.setSelectedIndex(((Buzo) prendaCargada).esMangaCorta() ? 1 : 0);
-				}
-				if(prendaCargada instanceof Remera) {
-					lblAjusteTipoPrenda.setText("Tipo de Prenda: Remera");
-					lblAjusteCarac1.setText("Estampado:");
-					textAjusteCarac1.setVisible(true);
-					cbAjusteCarac1.setVisible(false);
-					textAjusteCarac1.setText(((Remera) prendaCargada).getTipoEstampado());
-					lblAjusteCarac2.setVisible(true);
-					lblAjusteCarac2.setText("Tipo de Manga:");
-					cbAjusteCarac2.setVisible(true);
-					cbAjusteCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
-					cbAjusteCarac2.setSelectedIndex(((Remera) prendaCargada).esMangaCorta() ? 1 : 0);
-				}
-				if(prendaCargada instanceof Pantalon) {
-					lblAjusteTipoPrenda.setText("Tipo de Prenda: Pantalon");
-					lblAjusteCarac1.setText("Es al Cuerpo:");
-					textAjusteCarac1.setVisible(false);
-					cbAjusteCarac1.setVisible(true);
-					cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
-					cbAjusteCarac1.setSelectedIndex(((Pantalon) prendaCargada).isEsAlCuerpo() ? 1 : 0);
-					lblAjusteCarac2.setVisible(false);
-					cbAjusteCarac2.setVisible(false);
-				}
-				if(prendaCargada instanceof Maya) {
-					lblAjusteTipoPrenda.setText("Tipo de Prenda: Maya");
-					lblAjusteCarac1.setText("Secado Rapido:");
-					textAjusteCarac1.setVisible(false);
-					cbAjusteCarac1.setVisible(true);
-					cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
-					cbAjusteCarac1.setSelectedIndex(((Maya) prendaCargada).isEsSecadoRapido() ? 1 : 0);
-					lblAjusteCarac2.setVisible(true);
-					lblAjusteCarac2.setText("Dimensiones:");
-					cbAjusteCarac2.setVisible(true);
-					cbAjusteCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
-					cbAjusteCarac2.setSelectedIndex(((Maya) prendaCargada).isEsPorArribaRodillas() ? 1 : 0);
-				}				
+	        	
+	        	if(tablePrendaAjuste.getSelectedRow() != -1) {
+		        	PrendaDeVestir prendaCargada = null;
+					String codigo = (String) tablePrendaAjuste.getValueAt(tablePrendaAjuste.getSelectedRow(), 4);
+					try {
+						prendaCargada = tiendaDeRopa.buscarPrenda(codigo);
+					} catch (ErrorDeBusquedaExcepcion e) {
+						e.printStackTrace();
+					}
+					cbAjusteMarca.setSelectedIndex(prendaCargada.getMarcaInt() > 7 ? 0 : prendaCargada.getMarcaInt());
+					textAjusteModelo.setText(prendaCargada.getModelo());
+					cbAjusteTipoMaterial.setSelectedIndex(prendaCargada.getTipoDeMaterialInt() > 5 ? 0 : prendaCargada.getTipoDeMaterialInt());
+					textAjustePrecio.setText(String.valueOf(prendaCargada.getPrecio()));
+					textAjusteColor.setText(prendaCargada.getColor());
+					if(prendaCargada instanceof Calzado) {
+						lblAjusteTipoPrenda.setText("Tipo de Prenda: Calzado");
+						lblAjusteCarac1.setText("Tipo de Suela:");
+						textAjusteCarac1.setVisible(false);
+						cbAjusteCarac1.setVisible(true);
+						cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No definido","Poliuretano","Crepe","Suela","Cuero"}));
+						cbAjusteCarac1.setSelectedIndex(((Calzado) prendaCargada).getTipoDeSuelaInt());
+						lblAjusteCarac2.setVisible(false);
+						cbAjusteCarac2.setVisible(false);
+					}
+					if(prendaCargada instanceof Buzo) {
+						lblAjusteTipoPrenda.setText("Tipo de Prenda: Buzo");
+						lblAjusteCarac1.setText("Tiene Canguro:");
+						textAjusteCarac1.setVisible(false);
+						cbAjusteCarac1.setVisible(true);
+						cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
+						cbAjusteCarac1.setSelectedIndex(((Buzo) prendaCargada).esTipoCanguro() ? 1 : 0);
+						lblAjusteCarac2.setVisible(true);
+						lblAjusteCarac2.setText("Tipo de Manga:");
+						cbAjusteCarac2.setVisible(true);
+						cbAjusteCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
+						cbAjusteCarac2.setSelectedIndex(((Buzo) prendaCargada).esMangaCorta() ? 1 : 0);
+					}
+					if(prendaCargada instanceof Remera) {
+						lblAjusteTipoPrenda.setText("Tipo de Prenda: Remera");
+						lblAjusteCarac1.setText("Estampado:");
+						textAjusteCarac1.setVisible(true);
+						cbAjusteCarac1.setVisible(false);
+						textAjusteCarac1.setText(((Remera) prendaCargada).getTipoEstampado());
+						lblAjusteCarac2.setVisible(true);
+						lblAjusteCarac2.setText("Tipo de Manga:");
+						cbAjusteCarac2.setVisible(true);
+						cbAjusteCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
+						cbAjusteCarac2.setSelectedIndex(((Remera) prendaCargada).esMangaCorta() ? 1 : 0);
+					}
+					if(prendaCargada instanceof Pantalon) {
+						lblAjusteTipoPrenda.setText("Tipo de Prenda: Pantalon");
+						lblAjusteCarac1.setText("Es al Cuerpo:");
+						textAjusteCarac1.setVisible(false);
+						cbAjusteCarac1.setVisible(true);
+						cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
+						cbAjusteCarac1.setSelectedIndex(((Pantalon) prendaCargada).isEsAlCuerpo() ? 1 : 0);
+						lblAjusteCarac2.setVisible(false);
+						cbAjusteCarac2.setVisible(false);
+					}
+					if(prendaCargada instanceof Maya) {
+						lblAjusteTipoPrenda.setText("Tipo de Prenda: Maya");
+						lblAjusteCarac1.setText("Secado Rapido:");
+						textAjusteCarac1.setVisible(false);
+						cbAjusteCarac1.setVisible(true);
+						cbAjusteCarac1.setModel(new DefaultComboBoxModel(new String [] {"No","Si"}));
+						cbAjusteCarac1.setSelectedIndex(((Maya) prendaCargada).isEsSecadoRapido() ? 1 : 0);
+						lblAjusteCarac2.setVisible(true);
+						lblAjusteCarac2.setText("Dimensiones:");
+						cbAjusteCarac2.setVisible(true);
+						cbAjusteCarac2.setModel(new DefaultComboBoxModel(new String [] {"Larga","Corta"}));
+						cbAjusteCarac2.setSelectedIndex(((Maya) prendaCargada).isEsPorArribaRodillas() ? 1 : 0);
+					}
+	        	}	
 			}
 	    });
 		
 		btnAjusteGuardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				PrendaDeVestir prendaCargada = null;
-				boolean modificado = false;
-				String codigo = (String) tablePrendaAjuste.getValueAt(tablePrendaAjuste.getSelectedRow(), 4);
-				try {
-					prendaCargada = tiendaDeRopa.buscarPrenda(codigo);
-				} catch (ErrorDeBusquedaExcepcion ex) {
-					ex.printStackTrace();
-				}
-				if(!textAjusteModelo.getText().isEmpty() && !textAjusteColor.getText().isEmpty() &&
-						cbAjusteMarca.getSelectedIndex() != 0 && cbAjusteTipoMaterial.getSelectedIndex() != 0 &&
-						!textAjustePrecio.getText().isEmpty()) {
-					if(!textAjusteTalla.getText().isEmpty() && !textAjusteStock.getText().isEmpty()) {
-						if(prendaCargada instanceof Calzado) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Calzado prendaMod = new Calzado();
-								prendaMod = (Calzado)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setTipoDeSuela(cbAjusteCarac1.getSelectedIndex());
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-								
-								if(prendaMod.existeTalle(textAjusteTalla.getText())) {
-									if(cbAjuste.getSelectedIndex() == 1) {
-										prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+				if(tablePrendaAjuste.getSelectedRow() != -1) {
+					PrendaDeVestir prendaCargada = null;
+					boolean modificado = false;
+					String codigo = (String) tablePrendaAjuste.getValueAt(tablePrendaAjuste.getSelectedRow(), 4);
+					try {
+						prendaCargada = tiendaDeRopa.buscarPrenda(codigo);
+					} catch (ErrorDeBusquedaExcepcion ex) {
+						ex.printStackTrace();
+					}
+					if(!textAjusteModelo.getText().isEmpty() && !textAjusteColor.getText().isEmpty() &&
+							cbAjusteMarca.getSelectedIndex() != 0 && cbAjusteTipoMaterial.getSelectedIndex() != 0 &&
+							!textAjustePrecio.getText().isEmpty()) {
+						if(!textAjusteTalla.getText().isEmpty() && !textAjusteStock.getText().isEmpty()) {
+							if(prendaCargada instanceof Calzado) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Calzado prendaMod = new Calzado();
+									prendaMod = (Calzado)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setTipoDeSuela(cbAjusteCarac1.getSelectedIndex());
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									if(prendaMod.existeTalle(textAjusteTalla.getText())) {
+										if(cbAjuste.getSelectedIndex() == 1) {
+											if(!prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()))) {
+												JOptionPane.showMessageDialog(null, "Stock a extraer superior a la cantidad disponible");
+											}
+										}
+										else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
 									}
-									else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+									else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+									
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
 								}
-								else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+							}
+							if(prendaCargada instanceof Buzo) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Buzo prendaMod = new Buzo();
+									prendaMod = (Buzo)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setEsTipoCanguro(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
+									prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									if(prendaMod.existeTalle(textAjusteTalla.getText())) {
+										if(cbAjuste.getSelectedIndex() == 1) {
+											if(!prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()))) {
+												JOptionPane.showMessageDialog(null, "Stock a extraer superior a la cantidad disponible");
+											}
+										}
+										else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+									}
+									else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+									
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
+								}
+							}
+							if(prendaCargada instanceof Remera) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Remera prendaMod = new Remera();
+									prendaMod = (Remera)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setTipoEstampado(textAjusteCarac1.getText());
+									prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									if(prendaMod.existeTalle(textAjusteTalla.getText())) {
+										if(cbAjuste.getSelectedIndex() == 1) {
+											if(!prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()))) {
+												JOptionPane.showMessageDialog(null, "Stock a extraer superior a la cantidad disponible");
+											}
+										}
+										else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+									}
+									else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
 								
-								tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
-								modificado = true;
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
+								}
+							}
+							if(prendaCargada instanceof Pantalon){
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Pantalon prendaMod = new Pantalon();
+									prendaMod = (Pantalon)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setEsAlCuerpo(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									if(prendaMod.existeTalle(textAjusteTalla.getText())) {
+										if(cbAjuste.getSelectedIndex() == 1) {
+											if(!prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()))) {
+												JOptionPane.showMessageDialog(null, "Stock a extraer superior a la cantidad disponible");
+											}
+										}
+										else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+									}
+									else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+								
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
+								}
+							}
+							if(prendaCargada instanceof Maya) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Maya prendaMod = new Maya();
+									prendaMod = (Maya)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setEsSecadoRapido(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
+									prendaMod.setEsPorArribaRodillas(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									if(prendaMod.existeTalle(textAjusteTalla.getText())) {
+										if(cbAjuste.getSelectedIndex() == 1) {
+											if(!prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()))) {
+												JOptionPane.showMessageDialog(null, "Stock a extraer superior a la cantidad disponible");
+											}
+										}
+										else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+									}
+									else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+								
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
+								}
 							}
 						}
-						if(prendaCargada instanceof Buzo) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Buzo prendaMod = new Buzo();
-								prendaMod = (Buzo)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setEsTipoCanguro(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
-								prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-								
-								if(prendaMod.existeTalle(textAjusteTalla.getText())) {
-									if(cbAjuste.getSelectedIndex() == 1) {
-										prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
-									}
-									else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+						else {
+							if(prendaCargada instanceof Calzado) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Calzado prendaMod = new Calzado();
+									prendaMod = (Calzado)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setTipoDeSuela(cbAjusteCarac1.getSelectedIndex());
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
 								}
-								else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
 							}
-						}
-						if(prendaCargada instanceof Remera) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Remera prendaMod = new Remera();
-								prendaMod = (Remera)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setTipoEstampado(textAjusteCarac1.getText());
-								prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-								
-								if(prendaMod.existeTalle(textAjusteTalla.getText())) {
-									if(cbAjuste.getSelectedIndex() == 1) {
-										prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
-									}
-									else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+							if(prendaCargada instanceof Buzo) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Buzo prendaMod = new Buzo();
+									prendaMod = (Buzo)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setEsTipoCanguro(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
+									prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
 								}
-								else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
 							}
-						}
-						if(prendaCargada instanceof Pantalon){
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Pantalon prendaMod = new Pantalon();
-								prendaMod = (Pantalon)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setEsAlCuerpo(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-								
-								if(prendaMod.existeTalle(textAjusteTalla.getText())) {
-									if(cbAjuste.getSelectedIndex() == 1) {
-										prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
-									}
-									else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+							if(prendaCargada instanceof Remera) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Remera prendaMod = new Remera();
+									prendaMod = (Remera)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setTipoEstampado(textAjusteCarac1.getText());
+									prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
 								}
-								else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
 							}
-						}
-						if(prendaCargada instanceof Maya) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Maya prendaMod = new Maya();
-								prendaMod = (Maya)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setEsSecadoRapido(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
-								prendaMod.setEsPorArribaRodillas(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-								
-								if(prendaMod.existeTalle(textAjusteTalla.getText())) {
-									if(cbAjuste.getSelectedIndex() == 1) {
-										prendaMod.quitarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
-									}
-									else prendaMod.agregarCantidadATalle(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+							if(prendaCargada instanceof Pantalon){
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Pantalon prendaMod = new Pantalon();
+									prendaMod = (Pantalon)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setEsAlCuerpo(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
 								}
-								else prendaMod.agregarNuevoTalleConCantidad(textAjusteTalla.getText(), Integer.parseInt(textAjusteStock.getText()));
+							}
+							if(prendaCargada instanceof Maya) {
+								if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
+									Maya prendaMod = new Maya();
+									prendaMod = (Maya)prendaCargada;
+									prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
+									prendaMod.setModelo(textAjusteModelo.getText());
+									prendaMod.setColor(textAjusteColor.getText());
+									prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
+									prendaMod.setEsSecadoRapido(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
+									prendaMod.setEsPorArribaRodillas(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
+									prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
+									prendaMod.setCodigo(prendaCargada.getCodigo());
+									
+									tiendaDeRopa.modificarPrenda(prendaMod.getCodigo(), prendaMod);
+									modificado = true;
+								}
 							}
 						}
 					}
 					else {
-						if(prendaCargada instanceof Calzado) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Calzado prendaMod = new Calzado();
-								prendaMod = (Calzado)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setTipoDeSuela(cbAjusteCarac1.getSelectedIndex());
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-							}
-						}
-						if(prendaCargada instanceof Buzo) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Buzo prendaMod = new Buzo();
-								prendaMod = (Buzo)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setEsTipoCanguro(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
-								prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-							}
-						}
-						if(prendaCargada instanceof Remera) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Remera prendaMod = new Remera();
-								prendaMod = (Remera)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setTipoEstampado(textAjusteCarac1.getText());
-								prendaMod.setEsMangaCorta(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-							}
-						}
-						if(prendaCargada instanceof Pantalon){
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Pantalon prendaMod = new Pantalon();
-								prendaMod = (Pantalon)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setEsAlCuerpo(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-							}
-						}
-						if(prendaCargada instanceof Maya) {
-							if(JOptionPane.showConfirmDialog(null, "Confirmar Cambios?") == JOptionPane.YES_OPTION) {
-								Maya prendaMod = new Maya();
-								prendaMod = (Maya)prendaCargada;
-								prendaMod.setMarca(cbAjusteMarca.getSelectedIndex());
-								prendaMod.setModelo(textAjusteModelo.getText());
-								prendaMod.setColor(textAjusteColor.getText());
-								prendaMod.setTipoDeMaterial(cbAjusteTipoMaterial.getSelectedIndex());
-								prendaMod.setEsSecadoRapido(convertirABoolean(cbAjusteCarac1.getSelectedIndex()));
-								prendaMod.setEsPorArribaRodillas(convertirABoolean(cbAjusteCarac2.getSelectedIndex()));
-								prendaMod.setPrecio(Double.parseDouble(textAjustePrecio.getText()));
-								prendaMod.setCodigo(prendaCargada.getCodigo());
-							}
-						}
+						JOptionPane.showMessageDialog(null, "No ha llenado todos los campos");
 					}
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "No ha llenado todos los campos");
-				}
-				
-				if(modificado) {
-					tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
 					
-					tablePrendaAjuste.getSelectionModel().removeSelectionInterval(0, 4);
-					tablePrendaAjuste.setModel(cargarJTablePrendaAjuste(tiendaDeRopa.devolverPrendas()));
-					tablePrendaAjuste.getColumnModel().getColumn(3).setPreferredWidth(180);
-					tablePrendaAjuste.setRowHeight(50);
+					if(modificado) {
+						tablePrendas.setModel(cargarJTableConArrayList(tiendaDeRopa.devolverPrendas()));
+						tablePrendas.getColumnModel().getColumn(3).setPreferredWidth(180);
+						tablePrendas.setRowHeight(50);
+						
+						tablePrendaAjuste.getSelectionModel().removeSelectionInterval(0, 4);
+						tablePrendaAjuste.setModel(cargarJTablePrendaAjuste(tiendaDeRopa.devolverPrendas()));
+						tablePrendaAjuste.getColumnModel().getColumn(3).setPreferredWidth(180);
+						tablePrendaAjuste.setRowHeight(50);
+					}
+				}				
+				else {
+					JOptionPane.showMessageDialog(null, "Seleccione una Prenda de la Tabla");
 				}
 				
 			}
@@ -1052,6 +1278,11 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		//--------//
 	}
 	
+	/**
+	 * Metoso donde se alojan las caracteristicas del panel de Datos Pesonales
+	 * @param panModificarDatosPer JPanel de Datos Personales
+	 * @param botonNombreEmpleado JButton de Nombre de Empleado, para cambiar su texto en caso de cambio de Nombro y/o Apellido
+	 */
 	public void metodoPanelModificarDatosPersonales(JPanel panModificarDatosPer, JButton botonNombreEmpleado) {
 		//----PANEL MODIFICAR DATOS PERSONALES----/
 		JLabel lblVendedorTitulo = new JLabel("Mis Datos");
@@ -1154,7 +1385,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		jLabelFondo.setForeground(new Color(255, 255, 255));
 		jLabelFondo.setBackground(new Color(255, 255, 255));
 		jLabelFondo.setBounds(0,0, 800, 475);
-		jLabelFondo.setIcon(new ImageIcon(VentanaOpcionesEmpleado.class.getResource("/Imagenes/wallPaper blue.jpg")));
+		jLabelFondo.setIcon(new ImageIcon(VentanaOpcionesVendedor.class.getResource("/Imagenes/wallPaper blue.jpg")));
 		contentPane.add(jLabelFondo);
 		
 		btnVendedorGuardar.addMouseListener(new MouseAdapter() {
@@ -1186,15 +1417,16 @@ public class VentanaOpcionesEmpleado extends JFrame {
 									tiendaDeRopa.agregarEmpleado(modificacion.getLegajo(), modificacion);
 									tiendaDeRopa.bajaEmpleado(empleado.getLegajo());
 									JOptionPane.showMessageDialog(null, "Cambios guardados con exito");
+									tiendaDeRopa.modificarVendedorEnListaVentas(empleado.getLegajo(), modificacion.getLegajo());
 									exito = true;
 								}
 							} catch (LimiteExedidoDeGerenteExcepcion e2) {
-								// TODO Auto-generated catch block
 								e2.printStackTrace();
 							}
 						}
 					}
 					if(exito && modificacion instanceof Vendedor) {
+											
 						empleado.setNombre(modificacion.getNombre());
 						empleado.setApellido(modificacion.getApellido());
 						empleado.setGenero(modificacion.getGeneroInt());
@@ -1202,6 +1434,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 						((Vendedor) empleado).setTelefono(((Vendedor) modificacion).getTelefono());
 						empleado.setLegajo(modificacion.getLegajo());
 						empleado.setContraseña(modificacion.getContraseña());
+						
 
 						recargarDatosPersonales();
 						botonNombreEmpleado.setText(empleado.getNombre()+" "+empleado.getApellido());
@@ -1215,6 +1448,9 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		//--------//
 	}
 	
+	/**
+	 * Metoso donde se alojan las caracteristicas del panel de Vendedor
+	 */
 	public void metodoPanelVendedor () {
 		//----PANEL VENDEDOR----/
 		JLabel lblTitulo = new JLabel("Mis Datos");
@@ -1317,6 +1553,9 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		//--------/
 	}
 	
+	/**
+	 * Recarga los datos almacenados en el Panel de VerMisDatos
+	 */
 	public void recargarDatosPersonales() {
 		
 		lbMostrarNombre.setText(empleado.getNombre());
@@ -1340,14 +1579,25 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		}
 	}
 	
+	/**
+	 * Convierte un valor Integer en un Boolean 
+	 * @param dato Integer dato a convertir
+	 * @return Boolean si el Dato es 0, sera False y sera True en otro caso
+	 */
 	public boolean convertirABoolean(int dato) {
 		boolean rta = false;
 		if(dato != 0) {
-			rta = false;
+			rta = true;
 		}
 		return rta;
 	}
 	
+	/**
+	 * Le da el evento a un JButton de cargan un JTable con un ArrayList
+	 * @param btn JButon a agregar el evento
+	 * @param table JTable a cargar
+	 * @param carga ArrayLista utilizada para cargar
+	 */
 	public void accionCargarTablaConBoton(JButton btn, JTable table, ArrayList carga) {
 		btn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1357,6 +1607,11 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		});
 	}
 	
+	/**
+	 * Devuelve un DefaultTableModel con los atributos de tablePrendaAjuste
+	 * @param array ArrayLista con las PrendasDeVestir a cargar
+	 * @return DefaultTableModel con el formato de tablePrendaAjuste
+	 */
 	public DefaultTableModel cargarJTablePrendaAjuste(ArrayList<PrendaDeVestir> array) {
 		DefaultTableModel modelo = new DefaultTableModel() {
 			@Override
@@ -1379,6 +1634,11 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		else modelo.addColumn("No Existen Elementos en esta tabla"); return modelo;
 	}
 	
+	/**
+	 * Devuelve un DefaultTableModel con el formato general de un JTable
+	 * @param array ArrayList con los datos a cargar
+	 * @return DefaultTableModel con el formato de la tabla
+	 */
 	public DefaultTableModel cargarJTableConArrayList(ArrayList array) {
 		DefaultTableModel modelo = new DefaultTableModel() {
 			@Override
@@ -1391,8 +1651,8 @@ public class VentanaOpcionesEmpleado extends JFrame {
 			if(aux instanceof PrendaDeVestir) {
 				modelo.addColumn("Modelo");
 				modelo.addColumn("Marca");
-				modelo.addColumn("Tipo de Material");
 				modelo.addColumn("Color");
+				modelo.addColumn("Talla/Stock");
 				modelo.addColumn("Codigo");
 			}
 			if(aux instanceof Cliente) {
@@ -1417,7 +1677,7 @@ public class VentanaOpcionesEmpleado extends JFrame {
 			for(Object elem : array){
 				if(elem instanceof PrendaDeVestir) {
 					PrendaDeVestir e = (PrendaDeVestir) elem;
-			        modelo.addRow(new Object[] {e.getModelo(),e.getMarca(),e.getTipoDeMaterial(),e.getColor(),e.getCodigo()});
+			        modelo.addRow(new Object[] {e.getModelo(),e.getMarca(),e.getColor(), e.listarStock(),e.getCodigo()});
 				} if(elem instanceof Cliente) {
 					Cliente e = (Cliente) elem;
 			        modelo.addRow(new Object[] {e.getNombre(),e.getApellido(),e.getDni(),e.getGenero(),e.getFechaNac()});
@@ -1435,6 +1695,16 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		else modelo.addColumn("No Existen Elementos en esta tabla"); return modelo;
 	}
 	
+	/**
+	 * Le da el evento a un JButton para intercambiar paneles
+	 * @param boton JButton a otorgarle los eventos
+	 * @param p1 JPanel a mostrar
+	 * @param p2 JPanel a ocultar
+	 * @param p3 JPanel a ocultar
+	 * @param p4 JPanel a ocultar
+	 * @param p5 JPanel a ocultar
+	 * @param p6 JPanel a ocultar
+	 */
 	public void accionBotonPaneles(JButton boton, JPanel p1, JPanel p2, JPanel p3, JPanel p4, JPanel p5, JPanel p6) {
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1449,21 +1719,4 @@ public class VentanaOpcionesEmpleado extends JFrame {
 		});
 	}
 	
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
-	}
 }
