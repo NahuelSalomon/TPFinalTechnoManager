@@ -284,6 +284,9 @@ public abstract class PrendaDeVestir implements Serializable{
 	 */
 	public abstract String tipoDePrenda();
 	
+	
+	
+	
 	/**
 	 * Agrega varios talles con sus respectivas cantidades a la prenda de vestir. A travez de un HashMap
 	 * @param tallesYStock talles con sus cantidades
