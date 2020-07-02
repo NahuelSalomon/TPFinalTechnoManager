@@ -124,8 +124,8 @@ public class VentanaDeEntrada extends JFrame {
 						dispose();
 						if(tipoDeEmpleado.equals("vendedor")) {
 							try {
-								VentanaOpcionesEmpleado ventanaOpEmpleado = new VentanaOpcionesEmpleado(tiendaDeRopa.buscarEmpleado(campoTextoUsuario.getText()), tiendaDeRopa);
-								ventanaOpEmpleado.setVisible(true);
+								VentanaOpcionesVendedor ventanaOpVendedor = new VentanaOpcionesVendedor(tiendaDeRopa.buscarEmpleado(campoTextoUsuario.getText()), tiendaDeRopa);
+								ventanaOpVendedor.setVisible(true);
 							} catch (FileNotFoundException e) {
 								e.printStackTrace();
 							} catch (ClassNotFoundException e) {
