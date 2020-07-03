@@ -343,7 +343,7 @@ public class VentanaOpcionesVendedor extends JFrame {
 		tableCarro.setModel(modeloTableCarro);
 		
 		JButton btnEliminarDelCarro = new JButton("Eliminar del Carro");
-		btnEliminarDelCarro.setBounds(152, 266, 130, 23);
+		btnEliminarDelCarro.setBounds(152, 266, 148, 23);
 		panRegistrarVenta.add(btnEliminarDelCarro);
 		
 		JLabel lblSubTotal = new JLabel("Sub-Total:");
