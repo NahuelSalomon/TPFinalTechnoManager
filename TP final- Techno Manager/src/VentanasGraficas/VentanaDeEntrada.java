@@ -1,4 +1,4 @@
-package Ejecutable;
+package VentanasGraficas;
 
 
 import java.awt.EventQueue;
@@ -11,6 +11,7 @@ import ClasesPersona.Empleado;
 import ClasesPersona.Vendedor;
 import Excepciones.ErrorDeBusquedaExcepcion;
 import Listas.ListaDeEmpleados;
+import TiendaDeRopa.TiendaDeRopa;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

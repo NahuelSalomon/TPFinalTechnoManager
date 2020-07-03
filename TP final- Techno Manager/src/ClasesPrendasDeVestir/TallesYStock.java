@@ -152,7 +152,7 @@ public class TallesYStock implements Serializable{
 
 		while (iterator.hasNext()) {
 			Entry<String, Integer> entry = iterator.next();
-			builder.append("\n  Talle: " + entry.getKey() + "- Cantidad: " + entry.getValue());
+			builder.append(" Talle: " + entry.getKey() + "- Cantidad: " + entry.getValue()+"\n");
 		}
 
 		String tallesYStock = builder.toString();

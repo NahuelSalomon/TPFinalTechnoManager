@@ -37,6 +37,8 @@ import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
 import Listas.ListaDeVentas;
+import TiendaDeRopa.TiendaDeRopa;
+import VentanasGraficas.VentanaDeEntrada;
 
 public class Main {
 
@@ -107,9 +109,9 @@ public class Main {
     tiendaDeRopa.agregarVenta(venta);
     tiendaDeRopa.agregarVenta(venta2);
     tiendaDeRopa.agregarVenta(venta3);
-    tiendaDeRopa.agregarVenta(venta4);
+    tiendaDeRopa.agregarVenta(venta4);*/
     
-	/*try {
+	try {
 		
 		System.out.println("Antes de JSON\n\n\n");
 		System.out.println(tiendaDeRopa.listarClientes());
@@ -132,79 +134,12 @@ public class Main {
 		e.printStackTrace();
 	}
     
-	tiendaDeRopa.guardarTiendaDeRopa();
+	//tiendaDeRopa.guardarTiendaDeRopa();
 	
-	System.out.println(tiendaDeRopa.listarClientes());
-	System.out.println(tiendaDeRopa.listarEmpleados());
-	System.out.println(tiendaDeRopa.listarPrenda());
-	System.out.println(tiendaDeRopa.listarVentas());*/
-
 	VentanaDeEntrada ventanaDeEntrada = new VentanaDeEntrada(tiendaDeRopa);
 	ventanaDeEntrada.setVisible(true);
 
-//	Empleado empleado2 = null;
-//	try {
-//		empleado2 = tiendaDeRopa.buscarEmpleado("69327");
-//	} catch (ErrorDeBusquedaExcepcion e1) {
-//		// TODO Auto-generated catch block
-//		e1.printStackTrace();
-//	}
-//	
-//	try {
-//		VentanaOpcionesEmpleado ventanaOpcionesEmpleado = new VentanaOpcionesEmpleado(empleado2, tiendaDeRopa);
-//		ventanaOpcionesEmpleado.setVisible(true);
-//	} catch (FileNotFoundException e) {
-//		e.printStackTrace();
-//	} catch (ClassNotFoundException e) {
-//		e.printStackTrace();
-//	} catch (IOException e) {
-//		e.printStackTrace();
-//	} 
-	
-	    /*MenuCliente menuCliente = new MenuCliente(); 
-		
-		ListaDeClientes listaClientes = new ListaDeClientes();
-	
-		listaClientes.agregarElemento(cliente2);
-		listaClientes.listarClientes();
-		
-		PrendaDeVestir prenda1 = new Calzado(2,"NuevoModelo","rojo",4,2);
-		PrendaDeVestir prenda2 = new Calzado(3,"OtroModelo","azul",1,5);
-		OtraListaPrendas listaPrendas = new ListaDeClientes();
-		listaPrendas.agregarElemento("1", prenda1);
-		listaPrendas.agregarElemento("2", prenda2);
-		
-		
-		try {
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		ListaDeClientes lista2 = new ListaDeClientes();
-		ListaDeClientes listaP2 = new ListaDeClientes();
-		
-		try {
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println(lista2.listarElementos());
-		System.out.println("");
-		System.out.println(listaP2.listarElementos("Claves:", "Valores:"));
-		*/	
+
 	}
 
 }

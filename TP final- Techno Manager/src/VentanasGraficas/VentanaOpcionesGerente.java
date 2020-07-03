@@ -1,4 +1,4 @@
-package Ejecutable;
+package VentanasGraficas;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +17,7 @@ import ClasesPrendasDeVestir.Pantalon;
 import ClasesPrendasDeVestir.PrendaDeVestir;
 import ClasesPrendasDeVestir.Remera;
 import Excepciones.ErrorDeBusquedaExcepcion;
+import TiendaDeRopa.TiendaDeRopa;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -62,7 +63,7 @@ public class VentanaOpcionesGerente extends JFrame {
 	private JPanel panelBuscarEmpleado;
 	private JPanel panelBuscarPrenda;
 	private JPanel panelModificarUnCliente;
-	private JPanel panelAgregarStock;
+	private JPanel panelAAgregarStock;
 	private JPanel panelAgregarUnCliente;
 	private JPanel panelBuscarUnaVenta;
 	private JPanel panelAgregarUnaPrenda;
@@ -95,6 +96,8 @@ public class VentanaOpcionesGerente extends JFrame {
 	private JTextArea textAreaVentasVendedores;
 	private JTextArea textAreaPosiblesVentasVendedores;
 	private JTextArea textAreaClientesModificables;
+	private JTextArea textAreaLegajosDeEmpleados;
+	private JTextArea textAreaClientesABuscar;
 
 	private JButton btnCerrarSesion;
 	private JButton botonListarEmpleados;
@@ -213,23 +216,13 @@ public class VentanaOpcionesGerente extends JFrame {
 		contentPane.add(layeredPane);
 		layeredPane.setVisible(true);
 		layeredPane.setLayout(new CardLayout(0, 0));
-		
-		
-		
-		
-		
-		
-		
+	
 		btnCerrarSesion = new JButton("Cerrar sesion");
 		btnCerrarSesion.setForeground(new Color(255, 255, 255));
 		btnCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		btnCerrarSesion.setBackground(new Color(0, 0, 128));
 		btnCerrarSesion.setBounds(10, 14, 130, 23);
 		contentPane.add(btnCerrarSesion);
-		
-	
-		
-		
 		
 		botonListarEmpleados = new JButton("Listar empleados\r\n");
 		botonListarEmpleados.setForeground(Color.WHITE);
@@ -343,12 +336,12 @@ public class VentanaOpcionesGerente extends JFrame {
 		botonAgregarPrenda.setBounds(255, 109, 197, 23);
 		contentPane.add(botonAgregarPrenda);
 		
-		JButton botonAgregarStock = new JButton("Agregar Stock");
-		botonAgregarStock.setForeground(Color.WHITE);
-		botonAgregarStock.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		botonAgregarStock.setBackground(new Color(0, 0, 128));
-		botonAgregarStock.setBounds(255, 211, 197, 23);
-		contentPane.add(botonAgregarStock);
+		JButton botonModificarStock = new JButton("Agregar Stock");
+		botonModificarStock.setForeground(Color.WHITE);
+		botonModificarStock.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		botonModificarStock.setBackground(new Color(0, 0, 128));
+		botonModificarStock.setBounds(255, 211, 197, 23);
+		contentPane.add(botonModificarStock);
 		
 		
 		/*
@@ -708,7 +701,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		scrollPaneEmpleadoABuscar.setBounds(271, 28, 169, 166);
 		panelBuscarEmpleado.add(scrollPaneEmpleadoABuscar);
 		
-		JTextArea textAreaLegajosDeEmpleados = new JTextArea();
+		textAreaLegajosDeEmpleados = new JTextArea();
 		scrollPaneEmpleadoABuscar.setViewportView(textAreaLegajosDeEmpleados);
 		textAreaLegajosDeEmpleados.setText(tiendaDeRopa.devolverNombreYApellidoEmpleadosConLegajo());
 		textAreaLegajosDeEmpleados.setForeground(Color.WHITE);
@@ -815,7 +808,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		scrollPaneClientesABuscar.setBounds(273, 30, 165, 162);
 		panelBuscarCliente.add(scrollPaneClientesABuscar);
 		
-		JTextArea textAreaClientesABuscar = new JTextArea();
+		textAreaClientesABuscar = new JTextArea();
 		scrollPaneClientesABuscar.setViewportView(textAreaClientesABuscar);
 		textAreaClientesABuscar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
 		textAreaClientesABuscar.setForeground(Color.WHITE);
@@ -1420,9 +1413,9 @@ public class VentanaOpcionesGerente extends JFrame {
 		/*
 		 * Panel para agregar stock
 		 */
-		panelAgregarStock = new JPanel();
-		panelAgregarStock.setBackground(new Color(0, 0, 128));
-		layeredPane.add(panelAgregarStock, "name_183995662503400");
+		panelAAgregarStock = new JPanel();
+		panelAAgregarStock.setBackground(new Color(0, 0, 128));
+		layeredPane.add(panelAAgregarStock, "name_183995662503400");
 		
 		textFieldPrendaABuscarStock = new JTextField();
 		textFieldPrendaABuscarStock.setBounds(169, 36, 75, 26);
@@ -1432,27 +1425,27 @@ public class VentanaOpcionesGerente extends JFrame {
 		textFieldPrendaABuscarStock.setBackground(new Color(0, 0, 139));
 		
 		botonBuscarPrendaStock = new JButton("Buscar prenda");
-		botonBuscarPrendaStock.setBounds(254, 34, 166, 28);
+		botonBuscarPrendaStock.setBounds(254, 34, 175, 28);
 		botonBuscarPrendaStock.setForeground(Color.WHITE);
 		botonBuscarPrendaStock.setFont(new Font("Tahoma", Font.BOLD, 14));
 		botonBuscarPrendaStock.setBackground(new Color(0, 0, 128));
 		
-		JLabel labelCodigoDePrenda = new JLabel("Codigo de prenda para agregar stock");
+		JLabel labelCodigoDePrenda = new JLabel("Codigo de prenda para modificar stock");
 		labelCodigoDePrenda.setBounds(169, 0, 281, 28);
 		labelCodigoDePrenda.setForeground(Color.WHITE);
 		labelCodigoDePrenda.setFont(new Font("Tahoma", Font.BOLD, 14));
-		panelAgregarStock.setLayout(null);
-		panelAgregarStock.add(textFieldPrendaABuscarStock);
-		panelAgregarStock.add(botonBuscarPrendaStock);
-		panelAgregarStock.add(labelCodigoDePrenda);
+		panelAAgregarStock.setLayout(null);
+		panelAAgregarStock.add(textFieldPrendaABuscarStock);
+		panelAAgregarStock.add(botonBuscarPrendaStock);
+		panelAAgregarStock.add(labelCodigoDePrenda);
 		
-		JScrollPane scrollPanePrendasAAgregar = new JScrollPane();
-		scrollPanePrendasAAgregar.setBounds(10, 38, 149, 156);
-		panelAgregarStock.add(scrollPanePrendasAAgregar);
+		JScrollPane scrollPanePrendasAAgregarStock = new JScrollPane();
+		scrollPanePrendasAAgregarStock.setBounds(10, 38, 149, 156);
+		panelAAgregarStock.add(scrollPanePrendasAAgregarStock);
 		
 		
 		textAreaPrendasAAgregarStock = new JTextArea();
-		scrollPanePrendasAAgregar.setViewportView(textAreaPrendasAAgregarStock);
+		scrollPanePrendasAAgregarStock.setViewportView(textAreaPrendasAAgregarStock);
 		textAreaPrendasAAgregarStock.setEditable(false);
 		textAreaPrendasAAgregarStock.setBackground(new Color(0, 0, 128));
 		textAreaPrendasAAgregarStock.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1464,7 +1457,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		labelPrendasAAgregarStock.setForeground(Color.WHITE);
 		labelPrendasAAgregarStock.setFont(new Font("Tahoma", Font.BOLD, 14));
 		labelPrendasAAgregarStock.setBounds(10, 0, 94, 28);
-		panelAgregarStock.add(labelPrendasAAgregarStock);
+		panelAAgregarStock.add(labelPrendasAAgregarStock);
 		
 		textFieldTalle = new JTextField();
 		textFieldTalle.setEnabled(false);
@@ -1473,13 +1466,13 @@ public class VentanaOpcionesGerente extends JFrame {
 		textFieldTalle.setColumns(10);
 		textFieldTalle.setBackground(new Color(0, 0, 139));
 		textFieldTalle.setBounds(169, 91, 75, 26);
-		panelAgregarStock.add(textFieldTalle);
+		panelAAgregarStock.add(textFieldTalle);
 		
 		JLabel labelTalle = new JLabel("Talle");
 		labelTalle.setForeground(Color.WHITE);
 		labelTalle.setFont(new Font("Tahoma", Font.BOLD, 14));
 		labelTalle.setBounds(169, 64, 94, 28);
-		panelAgregarStock.add(labelTalle);
+		panelAAgregarStock.add(labelTalle);
 		
 		
 		comboBoxCantidad = new JComboBox();
@@ -1490,17 +1483,17 @@ public class VentanaOpcionesGerente extends JFrame {
 		comboBoxCantidad.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		comboBoxCantidad.setEditable(true);
 		comboBoxCantidad.setBounds(254, 91, 62, 26);
-		panelAgregarStock.add(comboBoxCantidad);
+		panelAAgregarStock.add(comboBoxCantidad);
 		
 		JLabel labelCantidad = new JLabel("Cantidad");
 		labelCantidad.setForeground(Color.WHITE);
 		labelCantidad.setFont(new Font("Tahoma", Font.BOLD, 14));
 		labelCantidad.setBounds(254, 64, 62, 28);
-		panelAgregarStock.add(labelCantidad);
+		panelAAgregarStock.add(labelCantidad);
 		
 		JScrollPane scrollPaneDetalleDeAgregado = new JScrollPane();
 		scrollPaneDetalleDeAgregado.setBounds(169, 123, 260, 71);
-		panelAgregarStock.add(scrollPaneDetalleDeAgregado);
+		panelAAgregarStock.add(scrollPaneDetalleDeAgregado);
 		
 		
 		textAreaDetalleDeAgregado =  new JTextArea();
@@ -1517,8 +1510,8 @@ public class VentanaOpcionesGerente extends JFrame {
 		botonParaAgregarStock.setForeground(Color.WHITE);
 		botonParaAgregarStock.setFont(new Font("Tahoma", Font.BOLD, 14));
 		botonParaAgregarStock.setBackground(new Color(0, 0, 128));
-		botonParaAgregarStock.setBounds(326, 89, 94, 28);
-		panelAgregarStock.add(botonParaAgregarStock);
+		botonParaAgregarStock.setBounds(326, 89, 103, 28);
+		panelAAgregarStock.add(botonParaAgregarStock);
 		
 		
 		/*
@@ -1590,7 +1583,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		panelModificarUnCliente.add(labelEmailAModificar);
 		
 		comboBoxCondicionFrenteAlIVAAModificar = new JComboBox();
-		comboBoxCondicionFrenteAlIVAAModificar.setModel(new DefaultComboBoxModel(new String[] {"R. Inscripto", "Monotributista", "Exento", "No responsable", "C. Final"}));
+		comboBoxCondicionFrenteAlIVAAModificar.setModel(new DefaultComboBoxModel(new String[] {"No definido", "R. Inscripto", "Monotributista", "Exento", "No responsable", "C. Final"}));
 		comboBoxCondicionFrenteAlIVAAModificar.setEnabled(false);
 		comboBoxCondicionFrenteAlIVAAModificar.setForeground(Color.WHITE);
 		comboBoxCondicionFrenteAlIVAAModificar.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1652,7 +1645,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		panelModificarUnCliente.add(botonBuscarClienteAModificar);
 		
 		comboBoxSexoClienteAModificar = new JComboBox();
-		comboBoxSexoClienteAModificar.setModel(new DefaultComboBoxModel(new String[] {"Mujer ", "Hombre", "Personalizado"}));
+		comboBoxSexoClienteAModificar.setModel(new DefaultComboBoxModel(new String[] {"Hombre", "Mujer ", "Personalizado"}));
 		comboBoxSexoClienteAModificar.setEnabled(false);
 		comboBoxSexoClienteAModificar.setForeground(Color.WHITE);
 		comboBoxSexoClienteAModificar.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -1721,6 +1714,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		textFieldVentasPromedio.setEditable(false);
 		textFieldVentasPromedio.setColumns(10);
 		Double ventasPromedio = tiendaDeRopa.devolverVentasPromedio();
+		System.out.println(ventasPromedio);
 		textFieldVentasPromedio.setText(ventasPromedio.toString());
 		textFieldVentasPromedio.setBounds(207, 11, 136, 23);
 		panelDatosVentasTotales.add(textFieldVentasPromedio);
@@ -1772,23 +1766,23 @@ public class VentanaOpcionesGerente extends JFrame {
 		accionBotonGuardarCambios(tiendaDeRopa);
 		
 		
-		accionBotonPaneles(tiendaDeRopa, botonListarEmpleados, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonListarPrendas, panelListarPrendas, panelListarClientes, panelListarEmpleados , panelListarVentas , panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonListarClientes, panelListarClientes, panelListarEmpleados, panelListarPrendas, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonRegistroVentas, panelListarVentas, panelListarClientes, panelListarPrendas, panelListarEmpleados,panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarUnEmpleado, panelBorrarUnEmpleado, panelListarPrendas, panelListarClientes, panelListarEmpleados, panelListarVentas, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarPrenda, panelBorrarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarCliente, panelBorrarUnCliente, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBorrarUnaVenta, panelBorrarUnaVenta, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBuscarUnEmpleado, panelBuscarEmpleado, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBuscarPrenda, panelBuscarPrenda,panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBuscarCliente, panelBuscarCliente, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonBuscarVenta, panelBuscarUnaVenta, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonAgregarPrenda, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonAgregarCliente, panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonAgregarStock, panelAgregarStock,panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelModificarUnCliente, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, BotonModificarCliente, panelModificarUnCliente, panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarStock, panelDatosVentasTotales);
-		accionBotonPaneles(tiendaDeRopa, botonDatosDeVentasTotales, panelDatosVentasTotales, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAgregarStock, panelModificarUnCliente);	
+		accionBotonPaneles(tiendaDeRopa, botonListarEmpleados, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonListarPrendas, panelListarPrendas, panelListarClientes, panelListarEmpleados , panelListarVentas , panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonListarClientes, panelListarClientes, panelListarEmpleados, panelListarPrendas, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonRegistroVentas, panelListarVentas, panelListarClientes, panelListarPrendas, panelListarEmpleados,panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarUnEmpleado, panelBorrarUnEmpleado, panelListarPrendas, panelListarClientes, panelListarEmpleados, panelListarVentas, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarPrenda, panelBorrarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarCliente, panelBorrarUnCliente, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBorrarUnaVenta, panelBorrarUnaVenta, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarUnEmpleado, panelBuscarEmpleado, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarPrenda, panelBuscarPrenda,panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarCliente, panelBuscarCliente, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonBuscarVenta, panelBuscarUnaVenta, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonAgregarPrenda, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonAgregarCliente, panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAAgregarStock, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonModificarStock, panelAAgregarStock,panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelModificarUnCliente, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, BotonModificarCliente, panelModificarUnCliente, panelAgregarUnCliente, panelAgregarUnaPrenda, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAAgregarStock, panelDatosVentasTotales);
+		accionBotonPaneles(tiendaDeRopa, botonDatosDeVentasTotales, panelDatosVentasTotales, panelListarEmpleados, panelListarPrendas,panelListarClientes, panelListarVentas, panelBorrarUnEmpleado, panelBorrarUnaPrenda, panelBorrarUnCliente, panelBorrarUnaVenta,panelBuscarEmpleado, panelBuscarPrenda, panelBuscarCliente, panelBuscarUnaVenta, panelAgregarUnaPrenda, panelAgregarUnCliente, panelAAgregarStock, panelModificarUnCliente);	
 	
 	}
 
@@ -1879,12 +1873,28 @@ public class VentanaOpcionesGerente extends JFrame {
 	 */
 	public void actualizarComponentesPaneles(TiendaDeRopa tiendaDeRopa) {
 		textAreaListarClientes.setText(tiendaDeRopa.listarClientes());
+		textAreaClientesABorrar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+		textAreaClientesABuscar.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+		
 		textAreaListarEmpleados.setText(tiendaDeRopa.listarEmpleados());
 		textAreaListarPrendas.setText(tiendaDeRopa.listarPrenda());
+		
 		textAreaVerVentas.setText(tiendaDeRopa.listarVentas());
+		textAreaEmpleadoBuscado.setText(tiendaDeRopa.devolverNombreYApellidoEmpleadosConLegajo());
 		textAreaPrendaABorrar.setText(tiendaDeRopa.devolverPrendasConSuCodigo());
 		textAreaPrendaABuscar.setText(tiendaDeRopa.devolverPrendasConSuCodigo());
 		textAreaPrendasAAgregarStock.setText(tiendaDeRopa.devolverPrendasConSuCodigo());
+		textAreaLegajosDeEmpleados.setText(tiendaDeRopa.devolverNombreYApellidoEmpleadosConLegajo());
+
+		
+		Double promedio = tiendaDeRopa.devolverVentasPromedio();
+		textFieldVentasPromedio.setText(promedio.toString());
+		
+		Integer cantidadDeVentas = tiendaDeRopa.devolverCantidadDeVentas();
+		textFieldVentasTotales.setText(cantidadDeVentas.toString());
+		
+		Double ventasTotales = tiendaDeRopa.devolverVentasTotales();
+		textFieldVentasTotales.setText(ventasTotales.toString());
 		
 		textAreaEmpleadoBuscado.setText("");
 		textFieldEmpleadoABuscar.setText("");
@@ -1895,6 +1905,7 @@ public class VentanaOpcionesGerente extends JFrame {
 		textAreaClienteBuscado.setText("");
 		textFieldDniClienteABuscar.setText("");
 		actualizarComponentesAgregarStock();
+		actualizarCamposPanelesAgregarPrenda();
 		limpiarComponentesAgregarCliente();
 		limpiarComponentesBuscarVentas();
 		limpiarComponentesClienteModificado();
@@ -1974,6 +1985,8 @@ public class VentanaOpcionesGerente extends JFrame {
 	public void accionBotonParaBorrarVenta(TiendaDeRopa tiendaDeRopa) {
 		botonParaBorrarVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+			try {
 				int id = Integer.parseInt(textFieldBorrarVenta.getText());
 				try {
 					Venta venta = tiendaDeRopa.buscarVentaPorID(id);
@@ -1988,7 +2001,12 @@ public class VentanaOpcionesGerente extends JFrame {
 					JOptionPane.showMessageDialog(null, "Id ingresado no existente");
 				}
 			}		
-		});
+			
+			catch(Exception d) {
+				JOptionPane.showMessageDialog(null, "Solo puede ingresar numeros eneteros y sin espacios");
+			}
+		}
+	});
 	} 
 	
 	/**
@@ -2237,6 +2255,7 @@ public class VentanaOpcionesGerente extends JFrame {
 			
 				String talle = textFieldTalle.getText();
 				int cantidad = comboBoxCantidad.getSelectedIndex()+1;
+
 				String codigo = textFieldPrendaABuscarStock.getText();
 				if(!talle.isEmpty()) {
 					try {
@@ -2544,12 +2563,19 @@ public class VentanaOpcionesGerente extends JFrame {
 					textFieldApellidoAModificar.setText(cliente.getApellido());
 					textFieldEmailAModificar.setText(cliente.getEmail());
 					textFieldDomicilioAModificar.setText(cliente.getDomicilio());
-					comboBoxSexoClienteAModificar.setSelectedIndex(cliente.getGeneroInt());
+					comboBoxSexoClienteAModificar.setSelectedIndex(cliente.getGeneroInt()-1);
 					botonGuardarCambios.setEnabled(true);
 					
 					if(cliente instanceof ClienteMayorista) {
 						comboBoxCondicionFrenteAlIVAAModificar.setEnabled(true);
-						comboBoxCondicionFrenteAlIVACliente.setSelectedIndex(((ClienteMayorista) cliente).getCondicionFrenteIVAInt()-1);
+						int condicionFrenteAlIVA = (((ClienteMayorista) cliente).getCondicionFrenteIVAInt());
+						System.out.println(condicionFrenteAlIVA);
+						if(condicionFrenteAlIVA < 6) {
+							comboBoxCondicionFrenteAlIVAAModificar.setSelectedIndex(((ClienteMayorista) cliente).getCondicionFrenteIVAInt());
+						}
+						else {
+							comboBoxCondicionFrenteAlIVAAModificar.setSelectedIndex(0);
+						} 
 					}
 					else {
 						if(cliente instanceof ClienteMinorista) {
@@ -2582,23 +2608,28 @@ public class VentanaOpcionesGerente extends JFrame {
 						clienteModificado.setApellido(textFieldApellidoAModificar.getText());
 						clienteModificado.setDomicilio(textFieldDomicilioAModificar.getText());
 						clienteModificado.setEmail(textFieldEmailAModificar.getText());
+						clienteModificado.setGenero(comboBoxSexoClienteAModificar.getSelectedIndex()+1);
 						
-						tiendaDeRopa.modificarCliente(dni, clienteModificado);
-						tiendaDeRopa.guardarTiendaDeRopa();
-						textAreaClientesModificables.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
-						limpiarComponentesClienteModificado();
-						JOptionPane.showMessageDialog(null, "El cliente se ha modificado con exito");
-
 						if(clienteModificado instanceof ClienteMayorista) {
-							((ClienteMayorista) clienteModificado).setCondicionFrenteIVA(comboBoxCondicionFrenteAlIVAAModificar.getSelectedIndex()+1);
-						}		
+							((ClienteMayorista) clienteModificado).setCondicionFrenteIVA(comboBoxCondicionFrenteAlIVAAModificar.getSelectedIndex());
+						}	
+	
+						tiendaDeRopa.modificarCliente(dni, clienteModificado);
+						
+						textAreaClientesModificables.setText(tiendaDeRopa.devolverClientesConSuNombreApellidoYDni());
+						limpiarComponentesClienteModificado();					
+						
+						tiendaDeRopa.guardarTiendaDeRopa();
+						JOptionPane.showMessageDialog(null, "El cliente se ha modificado con exito");
 						
 					} catch (ErrorDeBusquedaExcepcion ex) {
 						JOptionPane.showMessageDialog(null, "El cliente no existe");
 					}
 					
 				}
-
+				else {
+					JOptionPane.showMessageDialog(null, "Faltan completar campos vacios");
+				}
 			}
 		});
 	}

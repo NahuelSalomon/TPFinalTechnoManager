@@ -1,4 +1,4 @@
-package Ejecutable;
+package VentanasGraficas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -28,6 +28,7 @@ import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
 import Listas.ListaDeVentas;
+import TiendaDeRopa.TiendaDeRopa;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
