@@ -283,7 +283,7 @@ public abstract class PrendaDeVestir implements Serializable{
 	@Override
 	public String toString() {
 		return "\nTipo de prenda: "+tipoDePrenda()+"\nMarca: " + getMarca() + "\nModelos: " + getModelo() + "\nColor: " + getColor() 
-				+ "\nTipo de material: "+ getTipoDeMaterial()+"\nTalles y stock: "+listarStockParaString();
+				+"\nTalles y stock: \n"+listarStockParaString()+ "Tipo de material: "+ getTipoDeMaterial();
 	}
 
 	/**
@@ -292,6 +292,9 @@ public abstract class PrendaDeVestir implements Serializable{
 	 * @return tipo prenda en forma de string
 	 */
 	public abstract String tipoDePrenda();
+	
+	
+	
 	
 	/**
 	 * Agrega varios talles con sus respectivas cantidades a la prenda de vestir. A travez de un HashMap

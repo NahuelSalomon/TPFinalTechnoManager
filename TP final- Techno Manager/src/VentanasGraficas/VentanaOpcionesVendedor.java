@@ -1,4 +1,4 @@
-package Ejecutable;
+package VentanasGraficas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -28,6 +28,7 @@ import Listas.ListaDeClientes;
 import Listas.ListaDeEmpleados;
 import Listas.ListaDePrendas;
 import Listas.ListaDeVentas;
+import TiendaDeRopa.TiendaDeRopa;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
@@ -342,7 +343,7 @@ public class VentanaOpcionesVendedor extends JFrame {
 		tableCarro.setModel(modeloTableCarro);
 		
 		JButton btnEliminarDelCarro = new JButton("Eliminar del Carro");
-		btnEliminarDelCarro.setBounds(152, 266, 130, 23);
+		btnEliminarDelCarro.setBounds(152, 266, 148, 23);
 		panRegistrarVenta.add(btnEliminarDelCarro);
 		
 		JLabel lblSubTotal = new JLabel("Sub-Total:");
