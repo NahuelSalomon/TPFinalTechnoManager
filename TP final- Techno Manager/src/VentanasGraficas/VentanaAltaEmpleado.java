@@ -1,4 +1,4 @@
-package Ejecutable;
+package VentanasGraficas;
 
 
 import javax.swing.ImageIcon;
@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import ClasesPersona.Gerente;
 import ClasesPersona.Vendedor;
 import Excepciones.LimiteExedidoDeGerenteExcepcion;
+import TiendaDeRopa.TiendaDeRopa;
 
 import javax.swing.JButton;
 import java.awt.Font;

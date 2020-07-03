@@ -1,4 +1,4 @@
-package Ejecutable;
+package TiendaDeRopa;
 
 import java.util.ArrayList;
 

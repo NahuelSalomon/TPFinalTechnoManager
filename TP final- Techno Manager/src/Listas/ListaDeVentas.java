@@ -236,15 +236,8 @@ public class ListaDeVentas implements IFuncionesBasicasListaVentas,Serializable 
 	 */
 	public double devolverVentasPromedio() {
 		double promedio = 0;
-		double suma = 0;
-		int cantidad = 0;
-		
-		ArrayList<Venta> arrayVentas = devolverVentas();
-		
-		for(Venta v : arrayVentas) {
-			suma = suma + v.getMonto();
-			cantidad++;
-		}
+		double suma = devolverVentasTotales();
+		int cantidad = cantidadDeVentas();
 		
 		promedio = suma/cantidad;
 		
